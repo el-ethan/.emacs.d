@@ -23,7 +23,10 @@ Emacs configuration
   (tooltip-mode -1)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
-  (scroll-bar-mode -1))
+  (scroll-bar-mode -1)
+  (set-frame-size (selected-frame) 85 90)
+)
+
 
 ;; Change theme
 ;; These were set from within emacs, learn how to set these on my own
@@ -104,5 +107,28 @@ Emacs configuration
       '(("u" tags "-DEADLINE={.+}/+TODO"))) 
 
 (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org")) 
+
+#+END_SRC
+* Auto-complete
+
+#+BEGIN_SRC emacs-lisp
+
+(require 'auto-complete)
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(ac-config-default)
+(global-auto-complete-mode t)
+
+#+END_SRC
+
+* Fill-column-indicator
+#+BEGIN_SRC emacs-lisp
+
+(add-to-list 'load-path "~/.emacs.d/fill-column-indicator-1.83")
+(require 'fill-column-indicator)
+(define-globalized-minor-mode
+ global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(global-fci-mode t)
+(setq-default fill-column 80)
 
 #+END_SRC
