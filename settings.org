@@ -1,5 +1,4 @@
-Emacs Configuration
-
+Emacs configuration
 
 * Appearance and general settings
 
@@ -30,15 +29,15 @@ Emacs Configuration
  '(custom-enabled-themes (quote (misterioso)))
  '(inhibit-default-init nil)
  '(inhibit-startup-buffer-menu t)
- '(inhibit-startup-screen t)
- '(org-agenda-files (quote ("~/Dropbox/big_plans/wang_rui_video_project.org" 
-                            "~/Dropbox/big_plans/da_guai.org"
-                            "~/Dropbox/big_plans/review.org"))))
+ '(inhibit-startup-screen t))
+ ;; '(org-agenda-files (quote ("~/Dropbox/big_plans/wang_rui_video_project.org" 
+ ;;                            "~/Dropbox/big_plans/da_guai.org"
+ ;;                            "~/Dropbox/big_plans/review.org"))))
 
 ;; Save backups elsewhere
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 #+END_SRC
-
+  
 * Deft settings
 
 #+BEGIN_SRC emacs-lisp
@@ -71,7 +70,6 @@ Emacs Configuration
 
 #+BEGIN_SRC emacs-lisp
 
-;; org mode settings
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
@@ -82,5 +80,7 @@ Emacs Configuration
       '(("u" tags "-DEADLINE={.+}/+TODO|+@NEXT"))) 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (require 'org-checklist)
+(setq org-agenda-files '("~/Dropbox/big_plans/da_guai.org")) 
+(setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 
 #+END_SRC
