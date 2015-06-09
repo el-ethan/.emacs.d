@@ -1,6 +1,7 @@
 Emacs configuration
 
 * Appearance and general settings
+** General
 
 #+BEGIN_SRC emacs-lisp
 
@@ -13,10 +14,9 @@ Emacs configuration
 ;; Turn column number on by default
 (setq column-number-mode t)
 
-;; Set tabs to four spaces
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq indent-line-function 'insert-tab)
+;; Save backups elsewhere
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
 
 ;; Make things look nice when in windowed emacs
 (when window-system
@@ -27,6 +27,25 @@ Emacs configuration
   (set-frame-size (selected-frame) 85 90)
 )
 
+#+END_SRC
+
+** Indentation
+
+#+BEGIN_SRC emacs-lisp
+
+;; Set tabs to four spaces
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq indent-line-function 'insert-tab)
+
+;; Auto-indent
+(electric-indent-mode 1)
+
+#+END_SRC
+
+** Theme
+
+#+BEGIN_SRC emacs-lisp
 
 ;; Change theme
 ;; These were set from within emacs, learn how to set these on my own
@@ -35,9 +54,6 @@ Emacs configuration
   '(inhibit-default-init nil)
   '(inhibit-startup-buffer-menu t)
   '(inhibit-startup-screen t))
-
-;; Save backups elsewhere
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
 #+END_SRC
   
