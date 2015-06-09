@@ -40,6 +40,11 @@ Emacs configuration
 
 ;; Auto-indent
 (electric-indent-mode 1)
+;; ...but not for org-mode
+(add-hook 'org-mode-hook
+          (lambda ()
+             (add-hook 'electric-indent-functions
+                            (lambda () 'no-indent) nil 'local)))
 
 #+END_SRC
 
