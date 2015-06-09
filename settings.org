@@ -73,8 +73,9 @@ Emacs configuration
 
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 
-;; Open .org files in org-mode
+;; Open .org and .txt files in org-mode
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
 
 ;; This makes it so I can have check boxes auto-uncheck when 
 ;; repea tingtask is completed              
@@ -102,6 +103,6 @@ Emacs configuration
 (setq org-agenda-custom-commands
       '(("u" tags "-DEADLINE={.+}/+TODO"))) 
 
-(setq org-agenda-files '("~/Dropbox/big_plans/da_guai.org")) 
+(setq org-agenda-files '("~/Dropbox/org_files/da_guai.org")) 
 
 #+END_SRC
