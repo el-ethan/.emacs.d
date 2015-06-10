@@ -24,8 +24,7 @@ Emacs configuration
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
-  (set-frame-size (selected-frame) 85 90)
-)
+  (set-frame-size (selected-frame) 85 90))
 
 #+END_SRC
 
@@ -41,10 +40,10 @@ Emacs configuration
 ;; Auto-indent, currently disabled because can't play nice with python...
 (electric-indent-mode -1)
 ;; ...but not for org-mode
-(add-hook 'org-mode-hook
-          (lambda ()
-             (add-hook 'electric-indent-functions
-                            (lambda () 'no-indent) nil 'local)))
+;; (add-hook 'org-mode-hook
+;;   (lambda ()
+;;     (add-hook 'electric-indent-functions
+;;       (lambda () 'no-indent) nil 'local)))
 
 #+END_SRC
 
@@ -82,10 +81,10 @@ Emacs configuration
 
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+  '("melpa" . "http://melpa.org/packages/") t)
 (when (< emacs-major-version 24)
    ;; For important compatibility libraries like cl-lib
-   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
 #+END_SRC
@@ -114,7 +113,7 @@ Emacs configuration
 
 ;; Agenda view for tasks that don't have a DEADLINE
 (setq org-agenda-custom-commands
-      '(("u" tags "-DEADLINE={.+}/+TODO"))) 
+  '(("u" tags "-DEADLINE={.+}/+TODO"))) 
 
 (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
                          "~/Dropbox/org_files/inbox.org")) 
@@ -125,16 +124,17 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 
 (setq org-capture-templates
-  '(("i" "New TODO to Inbox" entry (file+headline "~/Dropbox/org_files/inbox.org" "Inbox")
-     "* TODO %?")
+  '(("i" "New TODO to Inbox" entry (file+headline 
+    "~/Dropbox/org_files/inbox.org" "Inbox")
+    "* TODO %?")
 
-   ("d" "New journal entry" entry (file "~/Dropbox/org_files/daydayup.org")
-     "* %T\n\n%?" :prepend t :empty-lines 1)
+  ("d" "New journal entry" entry (file 
+    "~/Dropbox/org_files/daydayup.org")
+    "* %T\n\n%?" :prepend t :empty-lines 1)
 
-   ("nn" "Notes" plain (file "~/Dropbox/org_files/notes.org")
-    "----------%T----------\n\n%?" :prepend t :empty-lines 1))
-)
-
+  ("n" "Notes" plain (file 
+    "~/Dropbox/org_files/notes.org")
+    "----------%T----------\n\n%?" :prepend t :empty-lines 1)))
 
 #+END_SRC
 
@@ -150,9 +150,9 @@ Emacs configuration
 ;; Hotkeys for capture templates
 
 (define-key global-map "\C-ci" ;inbox
-    (lambda () (interactive) (org-capture nil "i")))
+  (lambda () (interactive) (org-capture nil "i")))
 (define-key global-map "\C-cnn" ;new note
-    (lambda () (interactive) (org-capture nil "nn)))
+  (lambda () (interactive) (org-capture nil "n")))
 
 #+END_SRC
 
@@ -174,7 +174,7 @@ Emacs configuration
 (add-to-list 'load-path "~/.emacs.d/fill-column-indicator-1.83")
 (require 'fill-column-indicator)
 (define-globalized-minor-mode
- global-fci-mode fci-mode (lambda () (fci-mode 1)))
+  global-fci-mode fci-mode (lambda () (fci-mode 1)))
 (global-fci-mode t)
 (setq-default fill-column 80)
 
