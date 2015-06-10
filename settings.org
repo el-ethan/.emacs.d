@@ -127,7 +127,7 @@ Emacs configuration
 (setq org-capture-templates
   '(("i" "New TODO to Inbox" entry (file+headline "~/Dropbox/org_files/inbox.org" "Inbox")
      "* TODO %?")
-   ("p" "New journal entry" entry (file "~/Dropbox/org_files/daydayup.org")
+   ("d" "New journal entry" entry (file "~/Dropbox/org_files/daydayup.org")
      "* %T\n\n%?" :prepend t :empty-lines 1))
 )
 
