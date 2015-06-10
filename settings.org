@@ -38,8 +38,8 @@ Emacs configuration
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
-;; Auto-indent
-(electric-indent-mode 1)
+;; Auto-indent, currently disabled because can't play nice with python...
+(electric-indent-mode -1)
 ;; ...but not for org-mode
 (add-hook 'org-mode-hook
           (lambda ()
