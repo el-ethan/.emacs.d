@@ -108,6 +108,28 @@ Emacs configuration
 
 #+END_SRC
 
+** Agenda views
+
+#+BEGIN_SRC emacs-lisp
+
+;; Agenda view for tasks that don't have a DEADLINE
+(setq org-agenda-custom-commands
+      '(("u" tags "-DEADLINE={.+}/+TODO"))) 
+
+(setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
+                         "~/Dropbox/org_files/inbox.org")) 
+
+#+END_SRC
+** Capture
+*** Templates
+#+BEGIN_SRC emacs-lisp
+
+(setq org-capture-templates
+  '(("i" "New TODO to Inbox" entry (file+headline "~/Dropbox/org_files/inbox.org" "Inbox")
+      "* TODO %?")))
+
+#+END_SRC
+
 ** Hotkeys
 
 #+BEGIN_SRC emacs-lisp
@@ -117,19 +139,12 @@ Emacs configuration
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-#+END_SRC
-
-** Agenda views
-
-#+BEGIN_SRC emacs-lisp
-
-;; Agenda view for tasks that don't have a DEADLINE
-(setq org-agenda-custom-commands
-      '(("u" tags "-DEADLINE={.+}/+TODO"))) 
-
-(setq org-agenda-files '("~/Dropbox/org_files/da_guai.org")) 
+;; Hot key to open inbox capture
+(define-key global-map "\C-ci"
+    (lambda () (interactive) (org-capture nil "i")))
 
 #+END_SRC
+
 * Auto-complete
 
 #+BEGIN_SRC emacs-lisp
