@@ -28,6 +28,9 @@ Emacs configuration
   (scroll-bar-mode -1)
   (set-frame-size (selected-frame) 85 90))
 
+;; Enable word-wrapping
+(global-visual-line-mode t)
+
 #+END_SRC
 
 ** Indentation
