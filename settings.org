@@ -189,3 +189,14 @@ Emacs configuration
 (setq-default fill-column 80)
 
 #+END_SRC
+
+* test
+#+BEGIN_SRC emacs-lisp
+
+;; (defun have-orgy ()
+;;   (when (eq buffer-file-name "~/Dropbox/org_files/da_guai.org")
+;;     (shell-command ("python3 ~/Dropbox/development/orgy/orgy.py"))))
+
+;; (add-hook 'after-save-hook 'have-orgy)
+
+#+END_SRC
