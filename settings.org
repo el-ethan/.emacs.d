@@ -119,13 +119,13 @@ Emacs configuration
                          "~/Dropbox/org_files/inbox.org")) 
 
 #+END_SRC
-** Capture
-*** Templates
+** Capture templates
+
 #+BEGIN_SRC emacs-lisp
 
 (setq org-capture-templates
   '(("i" "New TODO to Inbox" entry (file+headline 
-    "~/Dropbox/org_files/inbox.org" "Inbox")
+    "~/Dropbox/org_files/da_guai.org" "Inbox")
     "* TODO %?")
 
   ("d" "New journal entry" entry (file 
@@ -146,6 +146,10 @@ Emacs configuration
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+
+;; Open this config file
+(global-set-key (kbd "C-c s") 
+  (lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 
 ;; Hotkeys for capture templates
 
