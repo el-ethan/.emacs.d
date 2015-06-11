@@ -17,6 +17,8 @@ Emacs configuration
 ;; Save backups elsewhere
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
+;; Enable show-paren-mode
+(show-paren-mode 1)
 
 ;; Make things look nice when in windowed emacs
 (when window-system
