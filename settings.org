@@ -117,7 +117,8 @@ Emacs configuration
 (setq org-agenda-custom-commands
   '(("u" tags "-DEADLINE={.+}/+TODO"))) 
 
-(setq org-agenda-files '("~/Dropbox/org_files/da_guai.org")) 
+(setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
+                         "~/Dropbox/org_files/learn.org")) 
 
 #+END_SRC
 ** Capture templates
@@ -128,6 +129,10 @@ Emacs configuration
   '(("i" "New TODO to Inbox" entry (file+headline 
     "~/Dropbox/org_files/da_guai.org" "Inbox")
     "* TODO %?")
+
+  ("l" "New thing to learn" entry (file 
+    "~/Dropbox/org_files/learn.org")
+    "* %?")
 
   ("d" "New journal entry" entry (file 
     "~/Dropbox/org_files/daydayup.org")
