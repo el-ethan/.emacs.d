@@ -117,8 +117,7 @@ Emacs configuration
 (setq org-agenda-custom-commands
   '(("u" tags "-DEADLINE={.+}/+TODO"))) 
 
-(setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
-                         "~/Dropbox/org_files/inbox.org")) 
+(setq org-agenda-files '("~/Dropbox/org_files/da_guai.org")) 
 
 #+END_SRC
 ** Capture templates
