@@ -73,19 +73,21 @@ Emacs configuration
 
 #+BEGIN_SRC emacs-lisp
   
-  ;; Agenda view for tasks that don't have a DEADLINE
-  (setq org-agenda-custom-commands
-    '(("u" tags "-DEADLINE={.+}/+TODO"))) 
-  
-  ;; In agenda, show only days with tasks scheduled
-  (setq org-agenda-show-all-dates nil)
-  
   ;; Block agenda view for agenda and unscheduled tasks
   (setq org-agenda-custom-commands 
     '(("1" "Agenda and unscheduled tasks"
        ((tags "-DEADLINE={.+}/+TODO")
-        (agenda "")))))
-  
+        (agenda "")))
+      ("2" "Mobile tasks"
+       ((tags "-DEADLINE={.+}/+TODO")
+        (agenda ""))
+        ((org-agenda-prefix-format "- ")
+         (org-agenda-todo-keyword-format "")
+         (org-agenda-start-on-weekday nil)
+         (org-agenda-ndays 3)
+         (org-deadline-warning-days 0))
+         ("~/Dropbox/org_files/taskpaper_files/da_guai.taskpaper"))))
+         
   (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
                            "~/Dropbox/org_files/learn.org")) 
   
