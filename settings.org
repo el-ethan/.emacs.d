@@ -1,9 +1,19 @@
 Emacs configuration
 
+* Load path
+#+BEGIN_SRC emacs-lisp
+
+;; Emacs lisp files
+(add-to-list 'load-path "~/.emacs.d/elisp/")
+
+#+END_SRC
 * Appearance and general settings
 ** General
 
 #+BEGIN_SRC emacs-lisp
+
+;; Send customizations to another file.
+
 
 ;; Not sure what this does so it is commented out for the time being...
 ;;(custom-set-faces)                      
@@ -106,8 +116,8 @@ Emacs configuration
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
 
 ;; This makes it so I can have check boxes auto-uncheck when 
-;; repea tingtask is completed              
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;; repeating task is completed              
+
 (require 'org-checklist)
 
 #+END_SRC
@@ -184,7 +194,6 @@ Emacs configuration
 * Fill-column-indicator
 #+BEGIN_SRC emacs-lisp
 
-(add-to-list 'load-path "~/.emacs.d/fill-column-indicator-1.83")
 (require 'fill-column-indicator)
 (define-globalized-minor-mode
   global-fci-mode fci-mode (lambda () (fci-mode 1)))
