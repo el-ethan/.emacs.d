@@ -7,13 +7,13 @@ Emacs configuration
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 
 #+END_SRC
-* Appearance and general settings
-** General
+* General
 
 #+BEGIN_SRC emacs-lisp
 
-;; Send customizations to another file.
+;; Send customizations to another file and load that file
 (setq custom-file "~/.emacs.d/customizations.el")
+(load custom-file)
 
 ;; Set typeface to 18.0
 (set-face-attribute 'default nil :height 180)
@@ -40,7 +40,7 @@ Emacs configuration
 
 #+END_SRC
 
-** Indentation
+* Indentation
 
 #+BEGIN_SRC emacs-lisp
 
@@ -49,30 +49,8 @@ Emacs configuration
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
-;; Auto-indent, currently disabled because can't play nice with python...
-(electric-indent-mode -1)
-;; ...but not for org-mode
-;; (add-hook 'org-mode-hook
-;;   (lambda ()
-;;     (add-hook 'electric-indent-functions
-;;       (lambda () 'no-indent) nil 'local)))
-
 #+END_SRC
 
-** Theme
-
-#+BEGIN_SRC emacs-lisp
-
-;; Change theme
-;; These were set from within emacs, learn how to set these on my own
-(custom-set-variables
-  '(custom-enabled-themes (quote (misterioso)))
-  '(inhibit-default-init nil)
-  '(inhibit-startup-buffer-menu t)
-  '(inhibit-startup-screen t))
-
-#+END_SRC
-  
 * Deft settings
 
 #+BEGIN_SRC emacs-lisp
@@ -154,7 +132,7 @@ Emacs configuration
 
 #+END_SRC
 
-** Hotkeys
+* Hotkeys
 
 #+BEGIN_SRC emacs-lisp
 
