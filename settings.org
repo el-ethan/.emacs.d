@@ -97,17 +97,21 @@ Emacs configuration
 
 #+END_SRC
 
-** Agenda views
+** Agenda
 
 #+BEGIN_SRC emacs-lisp
-
-;; Agenda view for tasks that don't have a DEADLINE
-(setq org-agenda-custom-commands
-  '(("u" tags "-DEADLINE={.+}/+TODO"))) 
-
-(setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
-                         "~/Dropbox/org_files/learn.org")) 
-
+  
+  ;; Agenda view for tasks that don't have a DEADLINE
+  (setq org-agenda-custom-commands
+    '(("u" tags "-DEADLINE={.+}/+TODO"))) 
+  
+  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
+                           "~/Dropbox/org_files/learn.org")) 
+  
+  ;; Only ask for confirmation of kills within agenda 
+  ;; only if TODO spans more than 2 lines         
+  (setq org-agenda-confirm-kill 2)
+  
 #+END_SRC
 ** Capture templates
 
