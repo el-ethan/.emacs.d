@@ -13,10 +13,7 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 
 ;; Send customizations to another file.
-
-
-;; Not sure what this does so it is commented out for the time being...
-;;(custom-set-faces)                      
+(setq custom-file "~/.emacs.d/customizations.el")
 
 ;; Set typeface to 18.0
 (set-face-attribute 'default nil :height 180)
