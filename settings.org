@@ -11,33 +11,36 @@ Emacs configuration
 
 #+BEGIN_SRC emacs-lisp
 
-;; Send customizations to another file and load that file
-(setq custom-file "~/.emacs.d/customizations.el")
-(load custom-file)
-
-;; Set typeface to 18.0
-(set-face-attribute 'default nil :height 180)
-
-;; Turn column number on by default
-(setq column-number-mode t)
-
-;; Save backups elsewhere
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-
-;; Enable show-paren-mode
-(show-paren-mode 1)
-
-;; Make things look nice when in windowed emacs
-(when window-system
-  (tooltip-mode -1)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
-  (set-frame-size (selected-frame) 85 90))
-
-;; Enable word-wrapping
-(global-visual-line-mode t)
-
+  ;; No scratch buffer message
+  (setq initial-scratch-message nil)
+  
+  ;; Send customizations to another file and load that file
+  (setq custom-file "~/.emacs.d/customizations.el")
+  (load custom-file)
+  
+  ;; Set typeface to 18.0
+  (set-face-attribute 'default nil :height 180)
+  
+  ;; Turn column number on by default
+  (setq column-number-mode t)
+  
+  ;; Save backups elsewhere
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  
+  ;; Enable show-paren-mode
+  (show-paren-mode 1)
+  
+  ;; Make things look nice when in windowed emacs
+  (when window-system
+    (tooltip-mode -1)
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
+    (set-frame-size (selected-frame) 85 90))
+  
+  ;; Enable word-wrapping
+  (global-visual-line-mode t)
+  
 #+END_SRC
 
 * Indentation
@@ -194,13 +197,3 @@ Emacs configuration
 
 #+END_SRC
 
-* test
-#+BEGIN_SRC emacs-lisp
-
-;; (defun have-orgy ()
-;;   (when (eq buffer-file-name "~/Dropbox/org_files/da_guai.org")
-;;     (shell-command ("python3 ~/Dropbox/development/orgy/orgy.py"))))
-
-;; (add-hook 'after-save-hook 'have-orgy)
-
-#+END_SRC
