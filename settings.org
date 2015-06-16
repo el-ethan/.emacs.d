@@ -42,7 +42,7 @@ Emacs configuration
   (global-visual-line-mode t)
   
 #+END_SRC
-
+  
 * Indentation
 
 #+BEGIN_SRC emacs-lisp
@@ -124,7 +124,7 @@ Emacs configuration
 
 #+END_SRC
 
-* Deft settings
+* Deft
 
 #+BEGIN_SRC emacs-lisp
 
@@ -138,7 +138,7 @@ Emacs configuration
 
 #+END_SRC
 
-* MELPA settings
+* MELPA
 
 #+BEGIN_SRC emacs-lisp
 
@@ -150,6 +150,25 @@ Emacs configuration
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
+#+END_SRC
+
+* Fly Spell
+
+#+BEGIN_SRC emacs-lisp
+  
+  ;; Enable flyspell-mode
+  
+  (dolist (hook '(org-mode-hook))
+    (add-hook hook (lambda () (flyspell-mode 1))))
+  (dolist (hook '(text-mode-hook))
+    (add-hook hook (lambda () (flyspell-mode 1))))
+  (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+    (add-hook hook (lambda () (flyspell-mode -1)))) 
+  
+  ;; Enable flyspell for Python code comments, but not Python code
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (flyspell-prog-mode)))
 #+END_SRC
 
 * Hotkeys
