@@ -124,6 +124,23 @@ Emacs configuration
 
 #+END_SRC
 
+** Sync
+
+The code below runs a python script that parses the tasks in my org files
+and saves them in .taskpaper format to a file that can be accessed on my 
+phone.
+
+#+BEGIN_SRC emacs-lisp
+
+(defun sync-to-taskpaper ()
+  "Sync org file to taskpaper file for mobile access"
+  (when (file-equal-p buffer-file-name "/home/ethan/Dropbox/org_files/da_guai.org")
+    (shell-command "python3 ~/Dropbox/development/orgy/orgy.py")))
+
+(add-hook 'after-save-hook #'sync-to-taskpaper)
+
+#+END_SRC
+
 * Deft
 
 #+BEGIN_SRC emacs-lisp
@@ -215,4 +232,3 @@ Emacs configuration
 (setq-default fill-column 80)
 
 #+END_SRC
-
