@@ -217,8 +217,8 @@ phone.
               (flyspell-prog-mode)))
 #+END_SRC
 
-* Hotkeys
-
+* Key bindings 
+  
 #+BEGIN_SRC emacs-lisp
 
 (global-set-key "\C-cl" 'org-store-link)
@@ -230,12 +230,15 @@ phone.
 (global-set-key (kbd "C-c s") 
   (lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 
-;; Hotkeys for capture templates
+;; bindings for capture templates
 
 (define-key global-map "\C-ci" ;inbox
   (lambda () (interactive) (org-capture nil "i")))
 (define-key global-map "\C-cnn" ;new note
   (lambda () (interactive) (org-capture nil "n")))
+
+(global-set-key "\C-xp" 'pop-to-mark-command)
+(setq set-mark-command-repeat-pop t)
 
 #+END_SRC
 
