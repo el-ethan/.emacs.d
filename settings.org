@@ -217,7 +217,7 @@ phone.
               (flyspell-prog-mode)))
 #+END_SRC
 
-* Key bindings 
+* Key bindings
   
 #+BEGIN_SRC emacs-lisp
 
@@ -239,6 +239,8 @@ phone.
 
 (global-set-key "\C-xp" 'pop-to-mark-command)
 (setq set-mark-command-repeat-pop t)
+
+(global-set-key "\C-xgs" 'magit-status)
 
 #+END_SRC
 
