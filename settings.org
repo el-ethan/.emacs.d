@@ -72,6 +72,19 @@ Emacs configuration
 
 #+END_SRC
 
+** TODOs
+
+#+BEGIN_SRC emacs-lisp
+  
+  (setq org-enforce-todo-dependencies t)
+  (setq org-enforce-todo-checkbox-dependencies t)
+  
+  ;; Set to 'invisible' and blocked tasks wont show up in agenda
+  (setq org-agenda-dim-blocked-tasks t)
+  
+  
+#+END_SRC
+
 ** Agenda
 
 #+BEGIN_SRC emacs-lisp
@@ -152,6 +165,22 @@ phone.
 (setq deft-auto-save-interval 0)
 
 (global-set-key (kbd "C-c d") 'deft)
+
+#+END_SRC
+
+* Ido
+
+#+BEGIN_SRC emacs-lisp
+
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+
+;; Don't ask for confirmation when entering name of non-existent buffer 
+(setq ido-create-new-buffer 'always)
+
+;; The order in which files will appear when using ido
+(setq ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".el"))
 
 #+END_SRC
 
