@@ -46,12 +46,17 @@ Emacs configuration
 * Indentation
 
 #+BEGIN_SRC emacs-lisp
-
-;; Set tabs to four spaces
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq indent-line-function 'insert-tab)
-
+  
+  ;; Set tabs to four spaces
+  ;; (setq-default indent-tabs-mode nil)
+  ;; (setq-default tab-width 4)
+  ;; (setq indent-line-function 'insert-tab)
+  
+  (add-hook 'python-mode-hook
+        (lambda ()
+          (setq-default indent-tabs-mode nil)
+          (setq-default tab-width 4)
+          (setq-default python-indent 4)))
 #+END_SRC
 
 * Org
