@@ -128,6 +128,10 @@ Emacs configuration
     "~/Dropbox/org_files/da_guai.org" "Inbox")
     "* TODO %?" :kill-buffer t)
 
+  ("p" "New pain point" entry (file+headline 
+    "~/Dropbox/org_files/learn.org" "Pain points")
+    "* %?" :kill-buffer t)
+
   ("l" "New thing to learn" entry (file 
     "~/Dropbox/org_files/learn.org")
     "* %?" :kill-buffer t)
@@ -270,4 +274,12 @@ phone.
 (global-fci-mode t)
 (setq-default fill-column 80)
 
+#+END_SRC
+* Python
+
+#+BEGIN_SRC emacs-lisp
+  
+(setq python-shell-interpreter "python3")
+(setq python-shell-interpreter-args "")
+  
 #+END_SRC
