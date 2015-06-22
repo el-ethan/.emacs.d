@@ -280,6 +280,5 @@ phone.
 #+BEGIN_SRC emacs-lisp
   
 (setq python-shell-interpreter "python3")
-(setq python-shell-interpreter-args "")
   
 #+END_SRC
