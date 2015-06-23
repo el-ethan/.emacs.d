@@ -121,20 +121,24 @@ Emacs configuration
 ** Capture templates
 
 #+BEGIN_SRC emacs-lisp
-
-(setq org-capture-templates
-  '(("i" "New TODO to Inbox" entry (file+headline 
-    "~/Dropbox/org_files/da_guai.org" "Inbox")
-    "* TODO %?" :kill-buffer t)
-
-  ("n" "New note to Inbox" entry (file+headline 
-   "~/Dropbox/org_files/da_guai.org" "Inbox")
-   "* %?" :kill-buffer t)
-
-  ("d" "New journal entry" entry (file 
-    "~/Dropbox/org_files/daydayup.org")
-    "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
-
+  
+  (setq org-capture-templates
+    '(("i" "New TODO to Inbox" entry (file+headline 
+      "~/Dropbox/org_files/da_guai.org" "Inbox")
+      "* TODO %?" :kill-buffer t)
+  
+    ("n" "New note to Inbox" entry (file+headline 
+     "~/Dropbox/org_files/da_guai.org" "Inbox")
+     "* %?" :kill-buffer t)
+  
+    ("j" "New journal entry" entry (file+headline 
+      "~/Dropbox/org_files/riji.org" "日记")
+      "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)
+  
+    ("d" "New journal entry" entry (file 
+      "~/Dropbox/org_files/daydayup.org")
+      "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
+  
 #+END_SRC
 
 ** Sync
@@ -151,6 +155,29 @@ phone.
     (shell-command "python3 ~/Dropbox/development/orgy/orgy.py")))
 
 (add-hook 'after-save-hook #'sync-to-taskpaper)
+
+#+END_SRC
+
+** Org-crypt
+
+#+BEGIN_SRC emacs-lisp
+
+(require 'org-crypt)
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+(setq org-crypt-key "ED55AE6D")
+
+;; GPG key to use for encryption
+;; Either the Key ID or set to nil to use symmetric encryption.
+
+;; Auto-saving does not cooperate with org-crypt.el: so you need
+;; to turn it off if you plan to use org-crypt.el quite often.
+;; Otherwise, you’ll get an (annoying) message each time you
+;; start Org.
+;; To turn it off only locally, you can insert this:
+;;
+;; # -*- buffer-auto-save-file-name: nil; -*-
+
 
 #+END_SRC
 
