@@ -7,7 +7,8 @@
  '(custom-enabled-themes (quote (misterioso)))
  '(inhibit-default-init nil)
  '(inhibit-startup-buffer-menu t)
- '(inhibit-startup-screen t))
+ '(inhibit-startup-screen t)
+ '(safe-local-variable-values (quote ((buffer-auto-save-file-name)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
