@@ -109,8 +109,7 @@ Emacs configuration
          (org-deadline-warning-days 0))
          ("~/Dropbox/org_files/taskpaper_files/da_guai.taskpaper"))))
          
-  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
-                           "~/Dropbox/org_files/learn.org")) 
+  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org")) 
   
   ;; Only ask for confirmation of kills within agenda 
   ;; only if TODO spans more than 2 lines         
@@ -128,21 +127,13 @@ Emacs configuration
     "~/Dropbox/org_files/da_guai.org" "Inbox")
     "* TODO %?" :kill-buffer t)
 
-  ("p" "New pain point" entry (file+headline 
-    "~/Dropbox/org_files/learn.org" "Pain points")
-    "* %?" :kill-buffer t)
-
-  ("l" "New thing to learn" entry (file 
-    "~/Dropbox/org_files/learn.org")
-    "* %?" :kill-buffer t)
+  ("n" "New note to Inbox" entry (file+headline 
+   "~/Dropbox/org_files/da_guai.org" "Inbox")
+   "* %?" :kill-buffer t)
 
   ("d" "New journal entry" entry (file 
     "~/Dropbox/org_files/daydayup.org")
-    "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)
-
-  ("n" "Notes" plain (file 
-    "~/Dropbox/org_files/notes.org")
-    "----------%T----------\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
+    "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
 
 #+END_SRC
 
