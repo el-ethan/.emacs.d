@@ -10,13 +10,16 @@ Emacs configuration
 * General
 
 #+BEGIN_SRC emacs-lisp
-
+  
   ;; No scratch buffer message
   (setq initial-scratch-message nil)
   
   ;; Send customizations to another file and load that file
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
+  
+  ;; Highlight current line
+  (global-hl-line-mode 1)
   
   ;; Set typeface to 18.0
   (set-face-attribute 'default nil :height 180)
