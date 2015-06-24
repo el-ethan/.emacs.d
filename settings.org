@@ -164,7 +164,7 @@ Emacs configuration
       "~/Dropbox/org_files/riji.org" "日记")
       "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)
   
-    ("d" "New journal entry" entry (file 
+    ("d" "New daydayup entry" entry (file 
       "~/Dropbox/org_files/daydayup.org")
       "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
   
