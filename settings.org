@@ -11,6 +11,12 @@ Emacs configuration
 
 #+BEGIN_SRC emacs-lisp
   
+  
+  ;; Save a list of recent files visited. (open recent file with C-x f)
+  (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
+  (recentf-mode 1)
+  (setq recentf-max-saved-items 100) ;; just 20 is too recent
+  
   ;; No scratch buffer message
   (setq initial-scratch-message nil)
   
@@ -53,6 +59,19 @@ Emacs configuration
   
 #+END_SRC
   
+* History
+#+BEGIN_SRC emacs-lisp
+(setq savehist-file "~/.emacs.d/savehist")
+(savehist-mode 1)
+(setq history-length t)
+(setq history-delete-duplicates t)
+(setq savehist-save-minibuffer-history 1)
+(setq savehist-additional-variables
+      '(kill-ring
+        search-ring
+        regexp-search-ring))
+#+END_SRC
+
 * Indentation
 
 #+BEGIN_SRC emacs-lisp
