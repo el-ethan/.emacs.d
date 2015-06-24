@@ -31,7 +31,7 @@ Emacs configuration
   (load custom-file)
   
   ;; Highlight current line
-  (global-hl-line-mode 1)
+  ;;(global-hl-line-mode 1)
   
   ;; Set typeface to 18.0
   (set-face-attribute 'default nil :height 180)
@@ -122,6 +122,10 @@ Emacs configuration
 ** Agenda
 
 #+BEGIN_SRC emacs-lisp
+  
+  ;; Enable highlight line only for org-agenda-mode (it is annoying in other modes)
+  
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
   
   ;; Block agenda view for agenda and unscheduled tasks
   (setq org-agenda-custom-commands 
