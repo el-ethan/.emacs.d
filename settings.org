@@ -39,6 +39,7 @@ Emacs configuration
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
+    (setq frame-title-format '(buffer-file-name "%f" ("%b")))
     (set-frame-size (selected-frame) 85 90))
   
   ;; Enable word-wrapping
