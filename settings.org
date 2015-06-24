@@ -14,6 +14,9 @@ Emacs configuration
   ;; No scratch buffer message
   (setq initial-scratch-message nil)
   
+  ;; Answering just 'y' or 'n' will do
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  
   ;; Send customizations to another file and load that file
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
