@@ -15,7 +15,7 @@ Emacs configuration
   (setq initial-scratch-message nil)
   
   ;; Send customizations to another file and load that file
-  (setq custom-file "~/.emacs.d/customizations.el")
+  (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
   
   ;; Set typeface to 18.0
