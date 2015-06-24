@@ -17,6 +17,9 @@ Emacs configuration
   ;; Answering just 'y' or 'n' will do
   (defalias 'yes-or-no-p 'y-or-n-p)
   
+  ;; Remove text in active region if inserting text
+  (delete-selection-mode 1)
+  
   ;; Send customizations to another file and load that file
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
