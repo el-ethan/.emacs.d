@@ -201,7 +201,7 @@ phone.
 (require 'org-crypt)
 (org-crypt-use-before-save-magic)
 (setq org-tags-exclude-from-inheritance (quote ("crypt")))
-(setq org-crypt-key "ED55AE6D")
+(setq org-crypt-key nil)
 
 ;; GPG key to use for encryption
 ;; Either the Key ID or set to nil to use symmetric encryption.
