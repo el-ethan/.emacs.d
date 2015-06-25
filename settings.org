@@ -60,6 +60,7 @@ Emacs configuration
 #+END_SRC
   
 * History
+
 #+BEGIN_SRC emacs-lisp
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
@@ -73,6 +74,7 @@ Emacs configuration
 #+END_SRC
 
 * Indentation
+Probably I have some code duplication here
 
 #+BEGIN_SRC emacs-lisp
   
@@ -86,8 +88,9 @@ Emacs configuration
           (setq-default indent-tabs-mode nil)
           (setq-default tab-width 4)
           (setq-default python-indent 4)))
-#+END_SRC
 
+#+END_SRC
+** TODO fix code duplication
 * Org
 ** General settings
 
@@ -213,7 +216,7 @@ phone.
 
 
 #+END_SRC
-
+   
 * Deft
 
 #+BEGIN_SRC emacs-lisp
@@ -258,7 +261,7 @@ phone.
 
 #+END_SRC
 
-* Fly Spell
+* Fly spell
 
 #+BEGIN_SRC emacs-lisp
   
@@ -291,7 +294,6 @@ phone.
   (lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 
 ;; bindings for capture templates
-
 (define-key global-map "\C-ci" ;inbox
   (lambda () (interactive) (org-capture nil "i")))
 (define-key global-map "\C-cnn" ;new note
