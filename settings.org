@@ -88,7 +88,13 @@ Probably I have some code duplication here
           (setq-default indent-tabs-mode nil)
           (setq-default tab-width 4)
           (setq-default python-indent 4)))
-
+  
+  
+  (add-hook 'inferior-python-mode-hook
+            (lambda ()
+              (setq-default indent-tabs-mode nil)
+              (setq-default tab-width 4)
+              (setq-default python-indent 4)))
 #+END_SRC
 ** TODO fix code duplication
 * Org
@@ -333,5 +339,13 @@ phone.
 #+BEGIN_SRC emacs-lisp
   
 (setq python-shell-interpreter "python3")
+  
+#+END_SRC
+* Expand region
+
+#+BEGIN_SRC emacs-lisp
+  
+  (require 'expand-region)
+  (global-set-key (kbd "M-SPC") 'er/expand-region)
   
 #+END_SRC
