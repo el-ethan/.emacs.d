@@ -295,6 +295,8 @@ phone.
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
+(global-set-key (kbd "C-k") 'kill-whole-line)
+
 ;; Open this config file
 (global-set-key (kbd "C-c s") 
   (lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
