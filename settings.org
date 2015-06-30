@@ -119,6 +119,8 @@ Probably I have some code duplication here
   ;; Set to 'invisible' and blocked tasks wont show up in agenda
   (setq org-agenda-dim-blocked-tasks t)
   
+  ;; Don't keep track of completed repeating tasks
+  (setq org-log-repeat nil)
   
 #+END_SRC
 
@@ -235,29 +237,29 @@ phone.
 
 #+BEGIN_SRC emacs-lisp
   
-  (setq ido-enable-flex-matching t)
-  (setq ido-everywhere t)
-  (ido-mode 1)
+  ;; (setq ido-enable-flex-matching t)
+  ;; (setq ido-everywhere t)
+  ;; (ido-mode 1)
   
-  ;; Don't ask for confirmation when entering name of non-existent buffer 
-  (setq ido-create-new-buffer 'always)
+  ;; ;; Don't ask for confirmation when entering name of non-existent buffer 
+  ;; (setq ido-create-new-buffer 'always)
   
-  ;; The order in which files will appear when using ido
-  (setq ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".el"))
+  ;; ;; The order in which files will appear when using ido
+  ;; (setq ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".el"))
   
   
-  ;; Save a list of recent files visited. (open recent file with C-x f)
-  (global-set-key (kbd "C-x f") 'ido-recentf-open)
-  (recentf-mode 1)
-  (setq recentf-max-saved-items 100)
+  ;; ;; Save a list of recent files visited. (open recent file with C-x f)
+  ;; (global-set-key (kbd "C-x f") 'ido-recentf-open)
+  ;; (recentf-mode 1)
+  ;; (setq recentf-max-saved-items 100)
   
-  ;; Use ido for recentf
-  (defun ido-recentf-open ()
-    "Use `ido-completing-read' to \\[find-file] a recent file"
-    (interactive)
-    (if (find-file (ido-completing-read "Find recent file: " recentf-list))
-        (message "Opening file...")
-      (message "Aborting")))
+  ;; ;; Use ido for recentf
+  ;; (defun ido-recentf-open ()
+  ;;   "Use `ido-completing-read' to \\[find-file] a recent file"
+  ;;   (interactive)
+  ;;   (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+  ;;       (message "Opening file...")
+  ;;     (message "Aborting")))
   
 #+END_SRC
 
