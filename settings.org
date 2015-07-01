@@ -7,6 +7,20 @@ Emacs configuration
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 
 #+END_SRC
+
+* MELPA
+
+#+BEGIN_SRC emacs-lisp
+
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+   ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize)
+
+#+END_SRC
 * General
 
 #+BEGIN_SRC emacs-lisp
@@ -217,8 +231,7 @@ phone.
 ;; # -*- buffer-auto-save-file-name: nil; -*-
 
 
-#+END_SRC
-   
+#+END_SRC   
 * Deft
 
 #+BEGIN_SRC emacs-lisp
@@ -263,18 +276,17 @@ phone.
   
 #+END_SRC
 
-* MELPA
+* Projectile
 
 #+BEGIN_SRC emacs-lisp
+  
 
-(require 'package)
-(add-to-list 'package-archives
-  '("melpa" . "http://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-   ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize)
-
+  (projectile-global-mode)
+  
+  ;; To enable Projectile only in select modes: 
+  
+  ;; (add-hook 'ruby-mode-hook 'projectile-mode)
+  
 #+END_SRC
 
 * Magit
