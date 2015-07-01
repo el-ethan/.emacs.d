@@ -87,16 +87,15 @@ Probably I have some code duplication here
 #+BEGIN_SRC emacs-lisp
   
   ;; Set tabs to four spaces
-  ;; (setq-default indent-tabs-mode nil)
-  ;; (setq-default tab-width 4)
-  ;; (setq indent-line-function 'insert-tab)
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+  (setq indent-line-function 'insert-tab)
   
   (add-hook 'python-mode-hook
         (lambda ()
           (setq-default indent-tabs-mode nil)
           (setq-default tab-width 4)
           (setq-default python-indent 4)))
-  
   
   (add-hook 'inferior-python-mode-hook
             (lambda ()
