@@ -8,6 +8,7 @@
  '(inhibit-default-init nil)
  '(inhibit-startup-buffer-menu t)
  '(inhibit-startup-screen t)
+ '(line-move-visual nil)
  '(safe-local-variable-values (quote ((buffer-auto-save-file-name)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

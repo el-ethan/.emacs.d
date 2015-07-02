@@ -81,6 +81,17 @@ Emacs configuration
         regexp-search-ring))
 #+END_SRC
 
+* Fill-column-indicator
+#+BEGIN_SRC emacs-lisp
+
+(require 'fill-column-indicator)
+(define-globalized-minor-mode
+  global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(global-fci-mode t)
+(setq-default fill-column 80)
+
+#+END_SRC
+
 * Indentation
 Probably I have some code duplication here
 
@@ -245,6 +256,14 @@ phone.
 
 #+END_SRC
 
+* Helm
+
+#+BEGIN_SRC emacs-lisp
+
+  (helm-mode 1)
+
+#+END_SRC
+  
 * Ido
 
 #+BEGIN_SRC emacs-lisp
@@ -352,17 +371,6 @@ phone.
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
 (global-auto-complete-mode t)
-
-#+END_SRC
-
-* Fill-column-indicator
-#+BEGIN_SRC emacs-lisp
-
-(require 'fill-column-indicator)
-(define-globalized-minor-mode
-  global-fci-mode fci-mode (lambda () (fci-mode 1)))
-(global-fci-mode t)
-(setq-default fill-column 80)
 
 #+END_SRC
 * Python
