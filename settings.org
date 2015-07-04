@@ -128,7 +128,6 @@ Probably I have some code duplication here
 
 ;; This makes it so I can have check boxes auto-uncheck when 
 ;; repeating task is completed              
-
 (require 'org-checklist)
 
 #+END_SRC
@@ -144,10 +143,10 @@ Probably I have some code duplication here
   (setq org-agenda-dim-blocked-tasks t)
   
   ;; Don't keep track of completed repeating tasks
-  (setq org-log-repeat nil)
+  ;; (setq org-log-repeat nil)
   
 #+END_SRC
-
+   
 ** Agenda
 
 #+BEGIN_SRC emacs-lisp
@@ -335,20 +334,16 @@ phone.
 * Fly spell
 
 #+BEGIN_SRC emacs-lisp
-  
+
   ;; Enable flyspell-mode
-  
-  (dolist (hook '(org-mode-hook))
-    (add-hook hook (lambda () (flyspell-mode 1))))
-  (dolist (hook '(text-mode-hook))
-    (add-hook hook (lambda () (flyspell-mode 1))))
-  (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-    (add-hook hook (lambda () (flyspell-mode -1)))) 
-  
-  ;; Enable flyspell for Python code comments, but not Python code
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (flyspell-prog-mode)))
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook  'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+   
+  ;; ;; Enable flyspell for Python code comments, but not Python code
+  ;; (add-hook 'python-mode-hook
+  ;;           (lambda ()
+  ;;             (flyspell-prog-mode)))
 #+END_SRC
 
 * Key bindings

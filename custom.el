@@ -9,6 +9,7 @@
  '(inhibit-startup-buffer-menu t)
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
+ '(org-modules (quote (org-docview org-habit org-info org-mhe org-w3m)))
  '(safe-local-variable-values (quote ((buffer-auto-save-file-name)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
