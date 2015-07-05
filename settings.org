@@ -157,11 +157,11 @@ Probably I have some code duplication here
   
   ;; Block agenda view for agenda and unscheduled tasks
   (setq org-agenda-custom-commands 
-    '(("1" "Agenda and unscheduled tasks"
-       ((tags "-DEADLINE={.+}/+TODO")
+    '(("j" "Agenda and unscheduled tasks"
+       ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
         (agenda "")))
       ("2" "Mobile tasks"
-       ((tags "-DEADLINE={.+}/+TODO")
+       ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
         (agenda ""))
         ((org-agenda-prefix-format "- ")
          (org-agenda-todo-keyword-format "")
@@ -274,11 +274,10 @@ phone.
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
   ;; Fuzziness
-  (setq helm-buffers-fuzzy-matching t
-        helm-recentf-fuzzy-match    t
+  (setq helm-recentf-fuzzy-match t
+        helm-buffers-fuzzy-matching t
         helm-completion-in-region-fuzzy-match t
-        helm-mode-fuzzy-match t
-        helm-recentf-fuzzy-match t)
+        helm-mode-fuzzy-match t)
 #+END_SRC
 * Ido
 
