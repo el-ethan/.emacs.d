@@ -159,7 +159,8 @@ Probably I have some code duplication here
   (setq org-agenda-custom-commands 
     '(("j" "Agenda and unscheduled tasks"
        ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
-        (agenda "")))
+        (agenda ""))
+        ((org-agenda-start-on-weekday nil)))
       ("2" "Mobile tasks"
        ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
         (agenda ""))
