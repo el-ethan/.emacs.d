@@ -135,16 +135,16 @@ Probably I have some code duplication here
 ** TODOs
 
 #+BEGIN_SRC emacs-lisp
-  
-  (setq org-enforce-todo-dependencies t)
-  (setq org-enforce-todo-checkbox-dependencies t)
-  
+
+  ;; (setq org-enforce-todo-dependencies t)
+  ;; (setq org-enforce-todo-checkbox-dependencies t)
+
   ;; Set to 'invisible' and blocked tasks wont show up in agenda
-  (setq org-agenda-dim-blocked-tasks t)
-  
+  ;;(setq org-agenda-dim-blocked-tasks t)
+
   ;; Don't keep track of completed repeating tasks
   ;; (setq org-log-repeat nil)
-  
+
 #+END_SRC
    
 ** Agenda
@@ -354,8 +354,6 @@ phone.
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-
-(global-set-key (kbd "C-k") 'kill-whole-line)
 
 ;; Open this config file
 (global-set-key (kbd "C-c s") 
