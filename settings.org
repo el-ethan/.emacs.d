@@ -160,7 +160,8 @@ Probably I have some code duplication here
     '(("j" "Agenda and unscheduled tasks"
        ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
         (agenda ""))
-        ((org-agenda-start-on-weekday nil)))
+        ((org-agenda-start-on-weekday nil)
+         (org-deadline-warning-days 0)))
       ("2" "Mobile tasks"
        ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
         (agenda ""))
