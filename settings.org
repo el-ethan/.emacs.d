@@ -265,6 +265,18 @@ phone.
 
 #+END_SRC
 
+* Yasnippet
+
+#+BEGIN_SRC emacs-lisp
+
+;; Yasnippet directory
+(setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"))
+
+(yas-global-mode 1) 
+
+#+END_SRC
+  
 * Helm
 #+BEGIN_SRC emacs-lisp
   (require 'helm-config)
