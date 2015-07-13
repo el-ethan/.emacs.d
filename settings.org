@@ -194,12 +194,12 @@ Probably I have some code duplication here
 #+BEGIN_SRC emacs-lisp
   
   (setq org-capture-templates
-    '(("i" "New TODO to Inbox" entry (file+headline 
-      "~/Dropbox/org_files/da_guai.org" "Inbox")
+    '(("i" "New TODO to Uncategorized TODOs" entry (file+headline 
+      "~/Dropbox/org_files/da_guai.org" "Uncategorized TODOs")
       "* TODO %?" :kill-buffer t)
   
-    ("n" "New note to Inbox" entry (file+headline 
-     "~/Dropbox/org_files/da_guai.org" "Inbox")
+    ("n" "New note to Uncategorized TODOs" entry (file+headline 
+     "~/Dropbox/org_files/da_guai.org" "Uncategorized TODOs")
      "* %?" :kill-buffer t)
   
     ("j" "New journal entry" entry (file+headline 
