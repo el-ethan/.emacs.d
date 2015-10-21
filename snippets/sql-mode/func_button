@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: func_button
+# key: ffunc
+# binding: direct-keybinding
+# --
+
+INSERT INTO \`aeris_fpanel_function\` (\`name\`, \`access\`, \`command\`, \`controller\`, \`data\`, \`version\`, \`description\`) VALUES
+('${1:Controller}::${2:method_name}', '', '$2', '$1', NULL, NULL, 'Signature: $1::$2($3)');
