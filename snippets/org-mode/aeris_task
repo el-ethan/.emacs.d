@@ -1,0 +1,19 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: aeris_task
+# key: aer
+# binding: direct-keybinding
+# --
+
+* AER-$1: $2
+
+Description:
+
+$3
+
+** converstations
+
+** questions
+
+** todo
+
+** brainstorming
