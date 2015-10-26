@@ -18,6 +18,7 @@
  '(org-modules
    (quote
     (org-docview org-habit org-info org-mhe org-w3m org-drill)))
+ '(python-check-command "/usr/local/bin/pyflakes")
  '(safe-local-variable-values (quote ((buffer-auto-save-file-name)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
