@@ -13,3 +13,6 @@ tutorial/
 settings.el
 projectile-bookmarks.eld
 projectile.cache
+helm-doc.org
+ido.last
+recentf
