@@ -1,0 +1,10 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: lisp-in-org
+# key: <se
+# binding: direct-keybinding
+# --
+#+BEGIN_SRC emacs-lisp 
+
+$0
+
+#+END_SRC
