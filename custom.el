@@ -49,4 +49,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(term-color-blue ((t (:background "#61AFEF" :foreground "#61AFEF"))))
+ '(term-color-green ((t (:background "#98C379" :foreground "#98C379"))))
+ '(term-color-red ((t (:background "#E06C75" :foreground "#E06C75"))))
+ '(term-color-white ((t (:background "#AAAAAA" :foreground "#AAAAAA"))))
+ '(term-color-yellow ((t (:background "#E5C07B" :foreground "#E5C07B")))))
