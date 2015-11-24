@@ -20,6 +20,7 @@
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(org-modules (quote (org-docview org-habit org-info org-mhe org-w3m)))
+ '(projectile-globally-ignored-file-suffixes (quote ("png" "pyc")))
  '(python-check-command "/usr/local/bin/pyflakes")
  '(safe-local-variable-values (quote ((encoding . utf-8) (buffer-auto-save-file-name))))
  '(vc-annotate-background "#2B3B40")
