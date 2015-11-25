@@ -23,6 +23,8 @@
  '(projectile-globally-ignored-file-suffixes (quote ("png" "pyc" "elc")))
  '(python-check-command "/usr/local/bin/pyflakes")
  '(safe-local-variable-values (quote ((encoding . utf-8) (buffer-auto-save-file-name))))
+ '(split-width-threshold nil)
+ '(split-height-threshold 80)
  '(vc-annotate-background "#2B3B40")
  '(vc-annotate-color-map
    (quote
