@@ -303,7 +303,8 @@
 (define-key tenjin-mode-map (kbd "C-c #") 'tenjin-insert-comment)
 
 ;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.tenjin\\'" . tenjin-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
+(add-to-list 'auto-mode-alist '("\\.pyhtml\\'" . tenjin-mode))
 
 (provide 'tenjin-mode)
 
