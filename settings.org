@@ -188,7 +188,7 @@ point reaches the beginning or end of the buffer, stop there."
 
   ;; Open this config file
   (global-set-key (kbd "C-c s") 
-    (lambda () (interactive) (find-file "~/Dropbox/configs/settings.org")))
+    (lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 
   ;; bindings for capture templates
   (define-key global-map "\C-ci" ;inbox
@@ -650,7 +650,7 @@ This mode allows more fine-grained movement and editing commands
   :ensure t
   :defer t
   :init
-  ;;(fullframe magit-status magit-mode-quit-window)
+  (fullframe magit-status magit-mode-quit-window)
   (fullframe projectile-vc magit-mode-quit-window)
   (fullframe magit-diff-staged magit-quit-window)
   (fullframe magit-diff-unstaged magit-quit-window)
@@ -689,14 +689,10 @@ This mode allows more fine-grained movement and editing commands
 
 * Multiple-cursors
 #+BEGIN_SRC emacs-lisp 
-
-(require 'multiple-cursors)
-(global-set-key (kbd "M-N") 'mc/mark-next-like-this)
-(global-set-key (kbd "M-P") 'mc/mark-previous-like-this)
-(global-set-key (kbd "M-n") 'mc/mark-next-lines)
-(global-set-key (kbd "M-p") 'mc/mark-previous-lines)
-
-
+(use-package multiple-cursors
+  :ensure t
+  :bind (("M-N" . mc/mark-next-like-this)
+	 ("M-P". mc/mark-previous-like-this)))
 #+END_SRC
 * Open terminal from emacs
 #+BEGIN_SRC emacs-lisp 
