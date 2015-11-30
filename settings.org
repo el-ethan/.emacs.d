@@ -587,6 +587,8 @@ phone.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
+    :init
+    (setq magit-push-always-verify nil)
     :bind ("C-c g" . magit-status))
 #+END_SRC
 
