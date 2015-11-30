@@ -1,1 +1,712 @@
-/home/ethan/Dropbox/configs/settings.org
+Emacs configuration
+* GUI stuff
+#+BEGIN_SRC emacs-lisp 
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'tooltip-mode) (tooltip-mode -1))
+;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+(when window-system
+  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+  (add-hook 'window-setup-hook 'toggle-frame-maximized t)
+  ;;(set-frame-size (selected-frame) 85 90)
+  )
+
+#+END_SRC
+* Load path
+#+BEGIN_SRC emacs-lisp
+;; Emacs lisp files
+(add-to-list 'load-path "~/.emacs.d/elisp/") 
+#+END_SRC
+
+* MELPA and other repositories
+
+#+BEGIN_SRC emacs-lisp
+
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/") t)
+
+  (when (< emacs-major-version 24)
+     ;; For important compatibility libraries like cl-lib
+    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+
+  (package-initialize)
+
+#+END_SRC
+
+* Use-package
+
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+
+  (setq use-package-verbose t)
+
+  (require 'use-package)
+#+END_SRC
+
+* General defaults
+#+BEGIN_SRC emacs-lisp
+;; No scratch buffer message
+(setq initial-scratch-message nil)
+(setq initial-major-mode 'org-mode)
+
+;; Make sure emacs is not suspended when I accidently hit C-z
+(global-unset-key (kbd "C-z"))
+
+;; Answering just 'y' or 'n' will do
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Remove text in active region if inserting text
+(delete-selection-mode 1)
+
+;; Send customizations to another file and load that file
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
+;; Set typeface to 15 .0
+(set-face-attribute 'default nil :height 150)
+
+;; Turn column number on by default
+(setq column-number-mode t)
+
+;; Save backups elsewhere
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+;; Enable show-paren-mode
+(show-paren-mode 1)
+
+;; Enable word-wrapping
+(global-visual-line-mode t)
+
+(global-set-key "\C-xp" 'pop-to-mark-command)
+(setq set-mark-command-repeat-pop t)
+
+;(use-package aurora)
+;;Get an ok-looking theme in command line
+;; (if (display-graphic-p) 
+;;     (enable-theme 'aurora)
+;;   (load-theme 'manoj-dark))
+#+END_SRC
+  
+* Killing buffers
+#+BEGIN_SRC emacs-lisp 
+
+(global-set-key [(super k)] 'kill-this-buffer)
+
+#+END_SRC
+
+* Scratch files
+#+BEGIN_SRC emacs-lisp
+(defun make-scratch-buffer ()
+  "makes a new scratch buffer, uniquely named"
+  (interactive)
+  (switch-to-buffer "_scratch")
+  (rename-uniquely)
+  (funcall (and initial-major-mode)))
+
+(global-set-key (kbd "<f9>") 'make-scratch-buffer)
+#+END_SRC
+
+* Custom function for movement
+#+BEGIN_SRC emacs-lisp 
+(defun smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
+
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+(global-set-key (kbd "C-a") 'smarter-move-beginning-of-line) 
+#+END_SRC
+* History
+#+BEGIN_SRC emacs-lisp
+(setq savehist-file "~/.emacs.d/savehist")
+(savehist-mode 1)
+;; t means no truncation
+(setq history-length t)
+(setq history-delete-duplicates t)
+(setq savehist-save-minibuffer-history 1)
+(setq savehist-additional-variables
+      '(kill-ring
+        search-ring
+        regexp-search-ring))
+#+END_SRC
+
+* Fill-column-indicator
+#+BEGIN_SRC emacs-lisp
+  (use-package fill-column-indicator
+    :ensure t
+    :init
+    (define-globalized-minor-mode
+      global-fci-mode fci-mode (lambda () (fci-mode 1)))
+    (global-fci-mode t)
+    (setq-default fill-column 80)
+    (setq-default fci-rule-color "#546D7A"))
+#+END_SRC
+  
+* Org
+** General settings
+
+#+BEGIN_SRC emacs-lisp
+(setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+
+;; Open .org and .txt files in org-mode
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
+
+;; This makes it so I can have check boxes auto-uncheck when 
+;; repeating task is completed              
+(require 'org-checklist)
+
+#+END_SRC
+** Keybindings
+#+BEGIN_SRC emacs-lisp 
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-cc" 'org-capture)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cb" 'org-iswitchb)
+
+  (define-key org-agenda-mode-map "d" 'org-agenda-deadline)
+
+  ;; Open this config file
+  (global-set-key (kbd "C-c s") 
+    (lambda () (interactive) (find-file "~/Dropbox/configs/settings.org")))
+
+  ;; bindings for capture templates
+  (define-key global-map "\C-ci" ;inbox
+    (lambda () (interactive) (org-capture nil "i")))
+  (define-key global-map "\C-cnn" ;new note
+    (lambda () (interactive) (org-capture nil "n")))
+
+  (add-hook 'org-mode-hook
+        (lambda ()
+          (local-unset-key (kbd "C-c SPC"))))
+#+END_SRC
+** TODOs
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-enforce-todo-dependencies t)
+  ;; (setq org-enforce-todo-checkbox-dependencies t)
+
+  ;; Set to 'invisible and blocked tasks wont show up in agenda, t and they will be dimmed 
+  (setq org-agenda-dim-blocked-tasks 'invisible)
+
+  ;; Don't keep track of completed repeating tasks
+  (setq org-log-repeat nil)
+
+#+END_SRC
+   
+** Agenda
+
+#+BEGIN_SRC emacs-lisp
+;; Enable highlight line only for org-agenda-mode (it is annoying in other modes)
+(add-hook 'org-agenda-mode-hook 'hl-line-mode)
+
+;; Make agenda full screen without typing 'o'
+(add-hook 'org-agenda-finalize-hook (lambda () (delete-other-windows)))
+
+(defun my-skip-unless-work ()
+  "Skip trees that are not waiting"
+  (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (if (re-search-forward ":work:" subtree-end t)
+	nil ; tag found, do not skip
+      subtree-end))) ; tag not found, continue after end of subtree
+
+;; Block agenda view for agenda and unscheduled tasks
+(setq org-agenda-custom-commands 
+      '(("j" "Agenda and unscheduled tasks"
+	 ((tags-todo 
+	   "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects")
+	  (agenda ""))
+	 ((org-agenda-start-on-weekday nil)
+	  (org-deadline-warning-days 0)))
+	("w" "Work tasks"
+	 ((tags-todo 
+	   "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects")
+	  (agenda ""))
+	 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp ":home:"))
+	  (org-agenda-start-on-weekday nil)
+	  (org-deadline-warning-days 0)))
+	("f" "Talking points"
+         ((tags-todo "+beilei")
+          (tags-todo "+mom")
+          (tags-todo "+dad"))
+	 ((org-agenda-prefix-format "- ")
+	  (org-show-context-detail 'minimal)
+	  (org-agenda-todo-keyword-format "")))
+	(";" "Someday"
+	 ((tags-todo "+someday"))
+	 ((org-agenda-prefix-format "- ")
+	  (org-show-context-detail 'minimal)
+	  (org-agenda-remove-tags t)
+	  (org-agenda-todo-keyword-format "")))
+	("l" "Emacs"
+	 ((tags-todo "+emacs"))
+	 ((org-agenda-prefix-format "- ")
+	  (org-show-context-detail 'minimal)
+	  (org-agenda-remove-tags t)
+	  (org-agenda-todo-keyword-format "")))
+	("2" "Mobile tasks"
+	 ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
+	  (agenda ""))
+	 ((org-agenda-prefix-format "- ")
+	  (org-agenda-todo-keyword-format "")
+	  (org-agenda-start-on-weekday nil)
+	  (org-agenda-ndays 3)
+	  (org-deadline-warning-days 0))
+         ("~/Dropbox/org_files/taskpaper_files/da_guai.taskpaper"))))
+         
+  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org" 
+                           "~/Dropbox/org_files/talkingpoints.org")) 
+
+  ;; Only ask for confirmation of kills within agenda 
+  ;; only if TODO spans more than 2 lines         
+  (setq org-agenda-confirm-kill 2)
+
+  (setq org-deadline-warning-days 3)
+#+END_SRC
+** Habits
+
+#+BEGIN_SRC emacs-lisp
+
+  (require 'org-habit)
+
+#+END_SRC
+
+** Capture templates
+
+#+BEGIN_SRC emacs-lisp
+  
+  (setq org-capture-templates
+    '(("i" "New TODO to Uncategorized TODOs" entry (file+headline 
+      "~/Dropbox/org_files/da_guai.org" "Uncategorized TODOs")
+      "* TODO %?" :kill-buffer t)
+  
+    ("n" "New note to notes.org" entry (file 
+     "~/Dropbox/org_files/notes.org")
+     "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
+  
+    ("w" "New work note" entry (file 
+      "~/Dropbox/org_files/worknotes.org")
+      "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
+  
+    ("d" "New daydayup entry" entry (file 
+      "~/Dropbox/org_files/daydayup.org")
+      "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
+  
+#+END_SRC
+
+** Sync
+
+The code below runs a python script that parses the tasks in my org files
+and saves them in .taskpaper format to a file that can be accessed on my 
+phone.
+
+#+BEGIN_SRC emacs-lisp
+
+  (defun sync-to-taskpaper ()
+    "Sync org file to taskpaper file for mobile access"
+    (when (file-equal-p buffer-file-name "/home/ethan/Dropbox/org_files/da_guai.org")
+      (shell-command "~/corgi.sh taskpapersync")))
+
+  (add-hook 'after-save-hook #'sync-to-taskpaper)
+
+  (defun sync-with-corgi ()
+    "Sync org file with to_sync.txt from corgi capture and mobile capture"
+    (when (window-system nil)
+      (message (shell-command-to-string "~/corgi.sh orgsync"))))
+
+  (add-hook 'after-init-hook #'sync-with-corgi)
+
+#+END_SRC
+
+** Org-crypt
+
+#+BEGIN_SRC emacs-lisp
+
+(require 'org-crypt)
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+(setq org-crypt-key nil)
+
+;; GPG key to use for encryption
+;; Either the Key ID or set to nil to use symmetric encryption.
+
+;; Auto-saving does not cooperate with org-crypt.el: so you need
+;; to turn it off if you plan to use org-crypt.el quite often.
+;; Otherwise, you’ll get an (annoying) message each time you
+;; start Org.
+;; To turn it off only locally, you can insert this:
+;;
+;; # -*- buffer-auto-save-file-name: nil; -*-
+
+
+#+END_SRC
+
+** make things look nice
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-src-fontify-natively t
+        org-src-window-setup 'current-window
+        org-src-strip-leading-and-trailing-blank-lines t
+        org-src-preserve-indentation t
+        org-src-tab-acts-natively t)
+
+#+END_SRC
+
+** Babel
+
+#+BEGIN_SRC emacs-lisp
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (sh . t)))
+
+#+END_SRC
+* Deft
+#+BEGIN_SRC emacs-lisp
+
+  ;; (require 'deft)
+  (use-package deft
+    :ensure t
+    :config
+    (setq deft-directory "~/Dropbox/org_files")
+    (setq deft-default-extension "org")
+    (setq deft-text-mode 'org-mode)
+    (setq deft-use-filename-as-title t)
+    (setq deft-use-filter-string-for-filename t)
+    :bind (("C-c d" . deft)))
+  ;;(setq deft-auto-save-interval 0)
+
+
+#+END_SRC
+* Yasnippet
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :init
+    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    :config
+    (add-hook 'term-mode-hook (lambda()
+				(setq yas-dont-activate t)))
+    (yas-global-mode 1)) 
+#+END_SRC
+
+* Projectile
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :init
+    (setq projectile-enable-caching t)  
+    (setq projectile-indexing-method 'alien)
+    (setq projectile-completion-system 'helm)
+    (setq projectile-switch-project-action 'helm-projectile)
+    (projectile-global-mode))
+#+END_SRC
+
+* Helm
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :ensure t
+    :init
+    (require 'helm-config)
+    (helm-mode 1)
+    (setq helm-recentf-fuzzy-match t
+        helm-buffers-fuzzy-matching t
+        helm-completion-in-region-fuzzy-match t
+        helm-mode-fuzzy-match t)
+    (setq helm-source-recentf 
+    (helm-make-source "Recentf" 'helm-recentf-source
+      :fuzzy-match t))
+    :bind (("C-x b" . helm-mini)
+           ("C-x f" . helm-recentf)
+           ("M-y" . helm-show-kill-ring)))
+
+(use-package helm-projectile
+  :ensure t
+  :init
+  (helm-projectile-on))
+#+END_SRC
+
+* Helm-swoop
+#+BEGIN_SRC emacs-lisp
+(use-package helm-swoop
+  :ensure t
+  :init
+  (setq helm-multi-swoop-edit-save t)
+  (setq helm-swoop-move-to-line-cycle t)
+  (setq helm-swoop-use-line-number-face t)
+  ;; disable pre-input, but set input to selection if there is one
+  (setq helm-swoop-pre-input-function
+	(lambda () ""))
+  :bind (("C-s" . helm-swoop))
+  )
+#+END_SRC
+* Fly spell
+
+#+BEGIN_SRC emacs-lisp
+
+  ;; Enable flyspell-mode
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook  'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+   
+#+END_SRC
+
+* Auto-complete
+
+#+BEGIN_SRC emacs-lisp
+  ;; (require 'auto-complete)
+  (use-package auto-complete
+    :ensure t
+    :init
+    (require 'auto-complete-config)
+    (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+    (ac-config-default)
+    (global-auto-complete-mode t))
+#+END_SRC
+* Python
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
+(add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
+(setq python-shell-interpreter "ipython")
+;; (setenv "PYTHONPATH" "$PYTHONPATH:/home/ethan/Dropbox/development/kivy_fork/kivy")
+(add-hook 'python-mode-hook (lambda ()
+			      (linum-mode)
+			      (git-gutter:linum-setup)))
+
+(defun comment-or-uncomment-line-or-region ()
+  "Comments or uncomments the current line or region."
+  (interactive)
+  (if (region-active-p)
+      (comment-or-uncomment-region (region-beginning) (region-end))
+    (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
+
+(global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
+
+(setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
+
+#+END_SRC
+* Elpy
+
+#+BEGIN_SRC emacs-lisp
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable)
+  (elpy-use-ipython)
+  (setq elpy-rpc-backend "jedi")
+  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst")
+  :bind ("C-c C-x C-f" . elpy-find-file))
+#+END_SRC
+
+* Expand region
+
+#+BEGIN_SRC emacs-lisp
+
+  ;(require 'expand-region)
+  (use-package expand-region
+    :ensure t
+    :bind ("M-SPC" . er/expand-region))
+
+#+END_SRC
+
+* Git Gutter
+
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter
+    :ensure t
+    :init
+    (global-git-gutter-mode +1)
+    ;; This messes things up if you are not using linum-mode
+    ;;(git-gutter:linum-setup)
+    (set-face-foreground 'git-gutter:added "green")
+    (set-face-foreground 'git-gutter:deleted "red")
+    :bind (("<f8>" . git-gutter:next-hunk)
+           ("<f7>" . git-gutter:previous-hunk)
+	   ("C-x v =" . git-gutter:popup-hunk)))
+#+END_SRC
+
+* Ace-jump-mode
+
+#+BEGIN_SRC emacs-lisp
+;;
+;; ace jump mode major function
+;; 
+(add-to-list 'load-path "/home/ethan/.emacs.d/elisp/ace-jump-mode/")
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
+
+;; you can select the key you prefer to
+;;(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(global-set-key (kbd "M-s") 'ace-jump-mode)
+
+;; 
+;; enable a more powerful jump back function from ace jump mode
+;;
+(autoload
+  'ace-jump-mode-pop-mark
+  "ace-jump-mode"
+  "Ace jump back:-)"
+  t)
+(eval-after-load "ace-jump-mode"
+  '(ace-jump-mode-enable-mark-sync))
+(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+(setq ace-jump-mode-submode-list '(ace-jump-char-mode ace-jump-line-mode ace-jump-word-mode))
+#+END_SRC
+
+* Magit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :bind ("C-c g" . magit-status))
+#+END_SRC
+
+* Editor-config
+
+#+BEGIN_SRC emacs-lisp
+
+(load "editorconfig")
+(editorconfig-mode 1)
+
+#+END_SRC
+
+* Kivy-mode
+
+#+BEGIN_SRC emacs-lisp
+;; (use-package kivy-mode
+;;   :ensure t
+;;   :init
+;;   (add-hook 'kivy-mode-hook
+;; 	    (lambda ()
+;; 	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol))))
+
+;; Use YAML mode since kivy-mode doesn't seem to work...
+(add-hook 'yaml-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol)))
+(add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
+#+END_SRC
+
+* Syntax-subword
+This mode allows more fine-grained movement and editing commands
+
+#+BEGIN_SRC emacs-lisp
+(use-package syntax-subword
+  :ensure t
+  :init
+  (setq syntax-subword-skip-spaces t)
+  :config
+  (global-syntax-subword-mode))
+
+;; Add this to delete spaces too
+#+END_SRC
+
+* Work
+
+#+BEGIN_SRC emacs-lisp
+
+(setq is-work (equal system-name "ethan-work"))
+(when is-work
+  (load "~/.emacs.d/work.el"))
+
+#+END_SRC
+* Bookmarks
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key "\C-xrj" 'bookmark-jump)
+#+END_SRC
+* Fullframe
+#+BEGIN_SRC emacs-lisp 
+(use-package fullframe
+  :ensure t
+  :defer t
+  :init
+  ;;(fullframe magit-status magit-mode-quit-window)
+  (fullframe projectile-vc magit-mode-quit-window)
+  (fullframe magit-diff-staged magit-quit-window)
+  (fullframe magit-diff-unstaged magit-quit-window)
+  (fullframe magit-diff magit-mode-quit-window))
+#+END_SRC
+* Wrap-region
+#+BEGIN_SRC emacs-lisp 
+(use-package wrap-region
+  :ensure t
+  :config
+  (wrap-region-add-wrappers
+   '(("(" ")" nil (python-mode org-mode lisp-mode))
+     ("'" "'" nil python-mode)
+     ("\"" "\"" nil (org-mode python-mode lisp-mode))))
+  (add-hook 'org-mode-hook 'wrap-region-mode)
+  (add-hook 'python-mode-hook 'wrap-region-mode)
+  (add-hook 'lisp-mode-hook 'wrap-region-mode))
+#+END_SRC
+* Rainbow-delimiters
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
+
+* Ace-isearh
+#+BEGIN_SRC emacs-lisp 
+;; (use-package ace-isearch
+;;   :ensure t
+;;   :init
+;;   (global-ace-isearch-mode +1)
+;;   (setq ace-isearch-function 'ace-jump-char-mode)
+;;   )
+#+END_SRC
+
+* Multiple-cursors
+#+BEGIN_SRC emacs-lisp 
+
+(require 'multiple-cursors)
+(global-set-key (kbd "M-N") 'mc/mark-next-like-this)
+(global-set-key (kbd "M-P") 'mc/mark-previous-like-this)
+(global-set-key (kbd "M-n") 'mc/mark-next-lines)
+(global-set-key (kbd "M-p") 'mc/mark-previous-lines)
+
+
+#+END_SRC
+* Open terminal from emacs
+#+BEGIN_SRC emacs-lisp 
+(global-set-key (kbd "<f10>") (kbd "M-& terminator"))
+(add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
+#+END_SRC
+* Experimental staging area
+#+BEGIN_SRC emacs-lisp 
+;;(add-to-list 'load-path "~/.emacs.d/elisp/tenjin-mode")
+;;(require 'tenjin-mode)
+
+
+#+END_SRC
