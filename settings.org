@@ -652,7 +652,7 @@ This mode allows more fine-grained movement and editing commands
   :init
   (fullframe magit-status magit-mode-quit-window)
   (fullframe projectile-vc magit-mode-quit-window)
-  (fullframe magit-diff-staged magit-quit-window)
+  (fullframe magit-diff magit-quit-window)
   (fullframe magit-diff-unstaged magit-quit-window)
   (fullframe magit-diff magit-mode-quit-window))
 #+END_SRC
