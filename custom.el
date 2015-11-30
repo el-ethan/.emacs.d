@@ -23,8 +23,9 @@
  '(projectile-globally-ignored-file-suffixes (quote ("png" "pyc" "elc")))
  '(python-check-command "/usr/local/bin/pyflakes")
  '(safe-local-variable-values (quote ((encoding . utf-8) (buffer-auto-save-file-name))))
- '(split-width-threshold nil)
- '(split-height-threshold 80)
+ ;; '(split-height-threshold 80)
+ ;; '(split-width-threshold nil)
+ '(term-completion-autolist nil)
  '(vc-annotate-background "#2B3B40")
  '(vc-annotate-color-map
    (quote
@@ -46,14 +47,17 @@
      (320 . "#82B1FF")
      (340 . "#D9F5DD")
      (360 . "#FFCB6B"))))
- '(vc-annotate-very-old-color "#FFCB6B"))
+ '(vc-annotate-very-old-color "#FFCB6B")
+ '(yaml-indent-offset 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(kivy-tab-face ((t nil)))
  '(term-color-blue ((t (:background "#61AFEF" :foreground "#61AFEF"))))
  '(term-color-green ((t (:background "#98C379" :foreground "#98C379"))))
  '(term-color-red ((t (:background "#E06C75" :foreground "#E06C75"))))
  '(term-color-white ((t (:background "#AAAAAA" :foreground "#AAAAAA"))))
- '(term-color-yellow ((t (:background "#E5C07B" :foreground "#E5C07B")))))
+ '(term-color-yellow ((t (:background "#E5C07B" :foreground "#E5C07B"))))
+ '(yaml-tab-face ((t nil))))

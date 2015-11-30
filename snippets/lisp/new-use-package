@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: new-use-package
+# key: xup
+# binding: direct-keybinding
+# --
+(use-package $1
+  :ensure ${2:t}	
+  $3)
