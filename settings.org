@@ -709,3 +709,9 @@ This mode allows more fine-grained movement and editing commands
 
 
 #+END_SRC
+* Pdb
+#+BEGIN_SRC emacs-lisp 
+
+(add-hook 'gud-mode-hook 'hl-line-mode)
+
+#+END_SRC
