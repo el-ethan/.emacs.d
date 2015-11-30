@@ -245,6 +245,7 @@ point reaches the beginning or end of the buffer, stop there."
 	  (agenda ""))
 	 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp ":home:"))
 	  (org-agenda-start-on-weekday nil)
+	  (org-agenda-ndays 1)
 	  (org-deadline-warning-days 0)))
 	("f" "Talking points"
          ((tags-todo "+beilei")
