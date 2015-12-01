@@ -539,15 +539,13 @@ phone.
 #+END_SRC
 
 * Magit
-
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
-    :init
+    :config
     (setq magit-push-always-verify nil)
     :bind ("C-c g" . magit-status))
 #+END_SRC
-
 * Git Gutter
 
 #+BEGIN_SRC emacs-lisp
@@ -574,7 +572,9 @@ phone.
 	 ("<f7>" . git-gutter+-previous-hunk)
 	 ("C-x v =" . git-gutter+-show-hunk)
 	 ("C-?" . git-gutter+-revert-hunk)
-	 ))
+	 )
+  :diminish (git-gutter+-mode . "gg")
+  )
 #+END_SRC
 
 * Ace-jump-mode
