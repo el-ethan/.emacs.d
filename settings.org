@@ -407,9 +407,8 @@ phone.
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :ensure t
-    :init
-    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
     :config
+    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
     (add-hook 'term-mode-hook (lambda()
 				(setq yas-dont-activate t)))
     (yas-global-mode 1)) 
@@ -539,17 +538,34 @@ phone.
 * Git Gutter
 
 #+BEGIN_SRC emacs-lisp
-  (use-package git-gutter
-    :ensure t
-    :init
-    (global-git-gutter-mode +1)
-    ;; This messes things up if you are not using linum-mode
-    ;;(git-gutter:linum-setup)
-    (set-face-foreground 'git-gutter:added "green")
-    (set-face-foreground 'git-gutter:deleted "red")
-    :bind (("<f8>" . git-gutter:next-hunk)
-           ("<f7>" . git-gutter:previous-hunk)
-	   ("C-x v =" . git-gutter:popup-hunk)))
+  ;; (use-package git-gutter
+  ;;   :ensure t
+  ;;   :init
+  ;;   (global-git-gutter-mode +1)
+  ;;   ;; This messes things up if you are not using linum-mode
+  ;;   ;;(git-gutter:linum-setup)
+  ;;   (set-face-foreground 'git-gutter:added "green")
+  ;;   (set-face-foreground 'git-gutter:deleted "red")
+  ;;   :bind (("<f8>" . git-gutter:next-hunk)
+  ;;          ("<f7>" . git-gutter:previous-hunk)
+;; 	   ("C-x v =" . git-gutter:popup-hunk)))
+
+(use-package git-gutter+
+  :ensure t
+  :init
+  (global-git-gutter+-mode)
+  :config
+  (use-package git-gutter-fringe+)
+  :bind (("<f8>" . git-gutter+-next-hunk)
+	 ("<f7>" . git-gutter+-previous-hunk)
+	 ("C-x v =" . git-gutter+-show-hunk)
+	 ("C-?" . git-gutter+-revert-hunk)
+	 ))
+
+(use-package git-gutter-fringe+
+  :ensure t
+  :defer t
+  )
 #+END_SRC
 
 * Ace-jump-mode
@@ -651,7 +667,6 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp 
 (use-package fullframe
   :ensure t
-  :defer t
   :init
   (fullframe magit-status magit-mode-quit-window)
   (fullframe projectile-vc magit-mode-quit-window)
