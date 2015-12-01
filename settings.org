@@ -498,9 +498,9 @@ phone.
 (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
 (setq python-shell-interpreter "ipython")
 ;; (setenv "PYTHONPATH" "$PYTHONPATH:/home/ethan/Dropbox/development/kivy_fork/kivy")
-(add-hook 'python-mode-hook (lambda ()
-			      (linum-mode)
-			      (git-gutter:linum-setup)))
+;; (add-hook 'python-mode-hook (lambda ()
+;; 			      (linum-mode)
+;; 			      (git-gutter:linum-setup)))
 
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
@@ -512,7 +512,6 @@ phone.
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
 
 (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
-
 #+END_SRC
 * Elpy
 
@@ -630,10 +629,7 @@ phone.
 ;; 	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol))))
 
 ;; Use YAML mode since kivy-mode doesn't seem to work...
-(add-hook 'yaml-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol)))
-(add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
+
 #+END_SRC
 
 * Syntax-subword
@@ -736,4 +732,15 @@ This mode allows more fine-grained movement and editing commands
 (use-package sane-term
   :ensure t
   :bind (("<f10>" . sane-term-create)))
+#+END_SRC
+* Yaml-mode
+#+BEGIN_SRC emacs-lisp 
+(use-package yaml-mode
+  :ensure t	
+  :config
+  (add-hook 'yaml-mode-hook
+	    (lambda ()
+	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol)))
+  (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
+  )
 #+END_SRC
