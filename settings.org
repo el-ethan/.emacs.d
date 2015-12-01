@@ -555,17 +555,13 @@ phone.
   :init
   (global-git-gutter+-mode)
   :config
-  (use-package git-gutter-fringe+)
+  (use-package git-gutter-fringe+
+    :ensure t)
   :bind (("<f8>" . git-gutter+-next-hunk)
 	 ("<f7>" . git-gutter+-previous-hunk)
 	 ("C-x v =" . git-gutter+-show-hunk)
 	 ("C-?" . git-gutter+-revert-hunk)
 	 ))
-
-(use-package git-gutter-fringe+
-  :ensure t
-  :defer t
-  )
 #+END_SRC
 
 * Ace-jump-mode
