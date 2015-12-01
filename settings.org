@@ -80,6 +80,9 @@ Emacs configuration
 ;; Enable word-wrapping
 (global-visual-line-mode t)
 
+;; Highlight lines (with some themes this is distracting, disable if necessary) 
+(global-hl-line-mode t)
+
 (global-set-key "\C-xp" 'pop-to-mark-command)
 (setq set-mark-command-repeat-pop t)
 
@@ -730,5 +733,5 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
 (use-package sane-term
   :ensure t
-  :bind (("<f10>" . sane-term)))
+  :bind (("<f10>" . sane-term-create)))
 #+END_SRC
