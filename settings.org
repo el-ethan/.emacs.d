@@ -537,18 +537,18 @@ phone.
 
 * Git Gutter
 
-# #+BEGIN_SRC emacs-lisp
-#   ;; (use-package git-gutter
-#   ;;   :ensure t
-#   ;;   :init
-#   ;;   (global-git-gutter-mode +1)
-#   ;;   ;; This messes things up if you are not using linum-mode
-#   ;;   ;;(git-gutter:linum-setup)
-#   ;;   (set-face-foreground 'git-gutter:added "green")
-#   ;;   (set-face-foreground 'git-gutter:deleted "red")
-#   ;;   :bind (("<f8>" . git-gutter:next-hunk)
-#   ;;          ("<f7>" . git-gutter:previous-hunk)
-# ;; 	   ("C-x v =" . git-gutter:popup-hunk)))
+#+BEGIN_SRC emacs-lisp
+   ;; (use-package git-gutter
+   ;;   :ensure t
+   ;;   :init
+   ;;   (global-git-gutter-mode +1)
+   ;;   ;; This messes things up if you are not using linum-mode
+   ;;   ;;(git-gutter:linum-setup)
+   ;;   (set-face-foreground 'git-gutter:added "green")
+   ;;   (set-face-foreground 'git-gutter:deleted "red")
+   ;;   :bind (("<f8>" . git-gutter:next-hunk)
+   ;;          ("<f7>" . git-gutter:previous-hunk)
+ ;; 	   ("C-x v =" . git-gutter:popup-hunk)))
 
 (use-package git-gutter+
   :ensure t
