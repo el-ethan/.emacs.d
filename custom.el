@@ -11,7 +11,7 @@
    (quote
     ("4904daa168519536b08ca4655d798ca0fb50d3545e6244cefcf7d0c7b338af7e" "3e72e20b462954ec339684cb4d0d2d71293f4b8b1564dde1fc94c818dc427ed3" "4f5bb895d88b6fe6a983e63429f154b8d939b4a8c581956493783b2515e22d6d" default)))
  '(fci-rule-color "#232A2F")
- '(git-gutter+-hide-gutter t)
+ '(git-gutter+-hide-gutter nil)
  '(gud-chdir-before-run nil t)
  '(hl-sexp-background-color "#1c1f26")
  '(inhibit-default-init nil)

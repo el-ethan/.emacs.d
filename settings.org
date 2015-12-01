@@ -538,6 +538,16 @@ phone.
 
 #+END_SRC
 
+* Magit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :init
+    (setq magit-push-always-verify nil)
+    :bind ("C-c g" . magit-status))
+#+END_SRC
+
 * Git Gutter
 
 #+BEGIN_SRC emacs-lisp
@@ -596,16 +606,6 @@ phone.
   '(ace-jump-mode-enable-mark-sync))
 (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
 (setq ace-jump-mode-submode-list '(ace-jump-char-mode ace-jump-line-mode ace-jump-word-mode))
-#+END_SRC
-
-* Magit
-
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :ensure t
-    :init
-    (setq magit-push-always-verify nil)
-    :bind ("C-c g" . magit-status))
 #+END_SRC
 
 * Editor-config
