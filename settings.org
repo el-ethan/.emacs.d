@@ -478,7 +478,7 @@ phone.
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
    
 #+END_SRC
-
+  
 * Auto-complete
 
 #+BEGIN_SRC emacs-lisp
@@ -563,6 +563,7 @@ phone.
 
 (use-package git-gutter+
   :ensure t
+  :disabled t
   :init
   (global-git-gutter+-mode)
   :config
@@ -574,6 +575,21 @@ phone.
 	 ("C-?" . git-gutter+-revert-hunk)
 	 )
   :diminish (git-gutter+-mode . "gg")
+  )
+#+END_SRC
+
+* Diff-hl
+
+#+BEGIN_SRC emacs-lisp 
+(use-package diff-hl
+  :ensure t	
+  :init
+  (global-diff-hl-mode t)
+  :bind (("<f8>" . diff-hl-next-hunk)
+	 ("<f7>" . diff-hl-previous-hunk)
+	 ("C-x v =" . diff-hl-goto-hunk)
+	 ("C-?" . diff-hl-revert-hunk)
+	 ) 
   )
 #+END_SRC
 
