@@ -547,20 +547,7 @@ phone.
     :bind ("C-c g" . magit-status))
 #+END_SRC
 * Git Gutter
-
 #+BEGIN_SRC emacs-lisp
-   ;; (use-package git-gutter
-   ;;   :ensure t
-   ;;   :init
-   ;;   (global-git-gutter-mode +1)
-   ;;   ;; This messes things up if you are not using linum-mode
-   ;;   ;;(git-gutter:linum-setup)
-   ;;   (set-face-foreground 'git-gutter:added "green")
-   ;;   (set-face-foreground 'git-gutter:deleted "red")
-   ;;   :bind (("<f8>" . git-gutter:next-hunk)
-   ;;          ("<f7>" . git-gutter:previous-hunk)
- ;; 	   ("C-x v =" . git-gutter:popup-hunk)))
-
 (use-package git-gutter+
   :ensure t
   :disabled t
@@ -579,20 +566,19 @@ phone.
 #+END_SRC
 
 * Diff-hl
-
 #+BEGIN_SRC emacs-lisp 
 (use-package diff-hl
-  :ensure t	
+  :ensure t
   :init
   (global-diff-hl-mode t)
   :bind (("<f8>" . diff-hl-next-hunk)
 	 ("<f7>" . diff-hl-previous-hunk)
-	 ("C-x v =" . diff-hl-goto-hunk)
+	 ("C-x v =" . diff-hl-diff-goto-hunk)
 	 ("C-?" . diff-hl-revert-hunk)
 	 ) 
   )
 #+END_SRC
-
+  
 * Ace-jump-mode
 
 #+BEGIN_SRC emacs-lisp
