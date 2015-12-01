@@ -744,3 +744,19 @@ This mode allows more fine-grained movement and editing commands
   (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
   )
 #+END_SRC
+* Key-chord
+#+BEGIN_SRC emacs-lisp 
+(defun my/switch-to-previous-buffer ()
+  "Switch to previously open buffer.
+Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(use-package key-chord
+  :ensure t
+  :init
+  (progn
+    (key-chord-mode 1)
+    (key-chord-define-global "BB" 'helm-mini)
+    (key-chord-define-global "bb" 'my/switch-to-previous-buffer)))
+#+END_SRC
