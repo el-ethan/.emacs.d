@@ -610,15 +610,15 @@ phone.
 * Kivy-mode
 
 #+BEGIN_SRC emacs-lisp
-;; (use-package kivy-mode
-;;   :ensure t
-;;   :init
-;;   (add-hook 'kivy-mode-hook
-;; 	    (lambda ()
-;; 	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol))))
+(use-package kivy-mode
+  :ensure t
+  :disabled t
+  :init
+  (add-hook 'kivy-mode-hook
+	    (lambda ()
+	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol))))
 
-;; Use YAML mode since kivy-mode doesn't seem to work...
-
+Use YAML mode since kivy-mode doesn't seem to work...
 #+END_SRC
 
 * Syntax-subword
