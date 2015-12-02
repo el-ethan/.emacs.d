@@ -238,7 +238,7 @@ point reaches the beginning or end of the buffer, stop there."
 (setq org-agenda-custom-commands 
       '(("j" "Agenda and unscheduled tasks"
 	 ((tags-todo 
-	   "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects")
+	   "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects-work")
 	  (agenda ""))
 	 ((org-agenda-start-on-weekday nil)
 	  (org-deadline-warning-days 0)))
