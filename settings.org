@@ -492,16 +492,7 @@ phone.
     (global-auto-complete-mode t))
 #+END_SRC
 * Python
-
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
-(add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
-(setq python-shell-interpreter "ipython")
-;; (setenv "PYTHONPATH" "$PYTHONPATH:/home/ethan/Dropbox/development/kivy_fork/kivy")
-;; (add-hook 'python-mode-hook (lambda ()
-;; 			      (linum-mode)
-;; 			      (git-gutter:linum-setup)))
-
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
   (interactive)
@@ -511,18 +502,16 @@ phone.
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
 
-(setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
-#+END_SRC
-* Elpy
-
-#+BEGIN_SRC emacs-lisp
 (use-package elpy
   :ensure t
   :init
   (elpy-enable)
-  (elpy-use-ipython)
   (setq elpy-rpc-backend "jedi")
+  (elpy-use-ipython)
   (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst")
+  (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
+  (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
+  (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
   :bind ("C-c C-x C-f" . elpy-find-file))
 #+END_SRC
 
