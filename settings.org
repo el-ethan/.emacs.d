@@ -420,14 +420,23 @@ phone.
 * Projectile
 
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :ensure t
-    :init
+(use-package projectile
+  :ensure t
+  :defer t
+  :diminish projectile-mode
+  :config
+  (progn
     (setq projectile-enable-caching t)  
     (setq projectile-indexing-method 'alien)
-    (setq projectile-completion-system 'helm)
+    (setq projectile-completion-system 'default)
     (setq projectile-switch-project-action 'helm-projectile)
-    (projectile-global-mode))
+    (projectile-global-mode)))
+
+(use-package helm-projectile
+  :ensure t
+  :defer t
+  :init
+  (helm-projectile-on))
 #+END_SRC
 
 * Helm
@@ -447,11 +456,6 @@ phone.
     :bind (("C-x b" . helm-mini)
            ("C-x f" . helm-recentf)
            ("M-y" . helm-show-kill-ring)))
-
-(use-package helm-projectile
-  :ensure t
-  :init
-  (helm-projectile-on))
 #+END_SRC
 
 * Helm-swoop
