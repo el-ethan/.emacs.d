@@ -1,5 +1,6 @@
 Emacs configuration
-* GUI stuff
+* Basic setup
+** GUI stuff
 #+BEGIN_SRC emacs-lisp 
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -13,13 +14,13 @@ Emacs configuration
   )
 
 #+END_SRC
-* Load path
+** Load path
 #+BEGIN_SRC emacs-lisp
 ;; Emacs lisp files
 (add-to-list 'load-path "~/.emacs.d/elisp/") 
 #+END_SRC
 
-* MELPA and other repositories
+** MELPA and other repositories
 
 #+BEGIN_SRC emacs-lisp
 
@@ -35,7 +36,7 @@ Emacs configuration
 
 #+END_SRC
 
-* Use-package
+** Use-package
 
 #+BEGIN_SRC emacs-lisp
   (unless (package-installed-p 'use-package)
@@ -46,7 +47,7 @@ Emacs configuration
   (require 'use-package)
 #+END_SRC
 
-* General defaults
+** General defaults
 #+BEGIN_SRC emacs-lisp
 ;; No scratch buffer message
 (setq initial-scratch-message nil)
@@ -157,7 +158,7 @@ point reaches the beginning or end of the buffer, stop there."
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
     :ensure t
-    :init
+    :config
     (define-globalized-minor-mode
       global-fci-mode fci-mode (lambda () (fci-mode 1)))
     (global-fci-mode t)
