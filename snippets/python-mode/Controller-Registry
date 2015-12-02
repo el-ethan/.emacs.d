@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: Controller Registry
+# key: cr
+# binding: direct-keybinding
+# --
+from gryphus.controller import ControllerRegistry as CR$0
