@@ -512,6 +512,8 @@ phone.
   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
+  ;; Wrapped source code is really hard to read...
+  (add-hook 'python-mode-hook (setq visual-line-mode -1))
   :bind ("C-c C-x C-f" . elpy-find-file))
 #+END_SRC
 
