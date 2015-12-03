@@ -487,6 +487,7 @@ phone.
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
+    :disabled t
     :init
     (require 'auto-complete-config)
     (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
