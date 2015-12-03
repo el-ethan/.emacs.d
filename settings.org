@@ -53,7 +53,7 @@ Emacs configuration
 (setq initial-scratch-message nil)  ;; No scratch buffer message
 (setq initial-major-mode 'org-mode)
 
-(setq mouse-yank-at-point t)    ;; Cut buffer paste at point only
+;;(setq mouse-yank-at-point t)    ;; Cut buffer paste at point only
 (global-unset-key (kbd "C-z"))  ;; Don't suspended when I accidently hit C-z
 (windmove-default-keybindings)  ;; Move between windows with shift and arrow
 
@@ -538,6 +538,17 @@ phone.
     (setq magit-push-always-verify nil)
     :bind ("C-c g" . magit-status))
 #+END_SRC
+* Undo-tree
+#+BEGIN_SRC emacs-lisp 
+(use-package undo-tree
+  :ensure t
+  :diminish undo-tree-mode
+  :config
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)))
+#+END_SRC
 * Git Gutter
 #+BEGIN_SRC emacs-lisp
 (use-package git-gutter+
@@ -747,6 +758,9 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (progn
     (key-chord-mode 1)
-    (key-chord-define-global "BB" 'helm-mini)
-    (key-chord-define-global "bb" 'my/switch-to-previous-buffer)))
+    ;;(key-chord-define-global "BB" 'helm-mini)
+    ;;(key-chord-define-global "bb" 'my/switch-to-previous-buffer)
+    )
+  )
 #+END_SRC
+
