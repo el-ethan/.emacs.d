@@ -49,12 +49,13 @@ Emacs configuration
 
 ** General defaults
 #+BEGIN_SRC emacs-lisp
-;; No scratch buffer message
-(setq initial-scratch-message nil)
+
+(setq initial-scratch-message nil)  ;; No scratch buffer message
 (setq initial-major-mode 'org-mode)
 
-;; Make sure emacs is not suspended when I accidently hit C-z
-(global-unset-key (kbd "C-z"))
+(setq mouse-yank-at-point t)    ;; Cut buffer paste at point only
+(global-unset-key (kbd "C-z"))  ;; Don't suspended when I accidently hit C-z
+(windmove-default-keybindings)  ;; Move between windows with shift and arrow
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -87,11 +88,8 @@ Emacs configuration
 (global-set-key "\C-xp" 'pop-to-mark-command)
 (setq set-mark-command-repeat-pop t)
 
-;(use-package aurora)
-;;Get an ok-looking theme in command line
-;; (if (display-graphic-p) 
-;;     (enable-theme 'aurora)
-;;   (load-theme 'manoj-dark))
+(when (load "elec-pair" t t)
+  (electric-pair-mode 1))
 #+END_SRC
   
 * Killing buffers
@@ -518,6 +516,7 @@ phone.
   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
   (setq visual-line-mode -1)
+  (setq python-check-command "flake8")
   :bind ("C-c C-x C-f" . elpy-find-file))
 #+END_SRC
 
