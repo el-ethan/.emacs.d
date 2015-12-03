@@ -509,7 +509,7 @@ phone.
   :ensure t
   :init
   (elpy-enable)
-  (setq elpy-rpc-backend "jedi")
+  (setq elpy-rpc-backend "rope")  ; "jedi" is another possibility
   (elpy-use-ipython)
   (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst")
   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
