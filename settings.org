@@ -485,7 +485,6 @@ phone.
 * Auto-complete
 
 #+BEGIN_SRC emacs-lisp
-  ;; (require 'auto-complete)
   (use-package auto-complete
     :ensure t
     :init
