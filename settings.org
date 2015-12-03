@@ -701,8 +701,8 @@ This mode allows more fine-grained movement and editing commands
 #+END_SRC
 * Open terminal from emacs
 #+BEGIN_SRC emacs-lisp 
-;;(global-set-key (kbd "<f10>") (kbd "M-& terminator"))
-;;(add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
+(global-set-key (kbd "<f12>") (kbd "M-& terminator"))
+(add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
 #+END_SRC
 * Experimental staging area
 #+BEGIN_SRC emacs-lisp 
