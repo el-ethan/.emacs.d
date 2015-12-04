@@ -170,26 +170,26 @@ point reaches the beginning or end of the buffer, stop there."
 
 ** Keybindings
 #+BEGIN_SRC emacs-lisp 
-  (global-set-key "\C-cl" 'org-store-link)
-  (global-set-key "\C-cc" 'org-capture)
-  (global-set-key "\C-ca" 'org-agenda)
-  (global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
 
-  (define-key org-agenda-mode-map "d" 'org-agenda-deadline)
+(define-key org-agenda-mode-map "d" 'org-agenda-deadline)
+(define-key org-agenda-mode-map "k" 'org-agenda-kill)
+;; Open this config file
+(global-set-key (kbd "C-c s") 
+		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 
-  ;; Open this config file
-  (global-set-key (kbd "C-c s") 
-    (lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
+;; bindings for capture templates
+(define-key global-map "\C-ci" ;inbox
+  (lambda () (interactive) (org-capture nil "i")))
+(define-key global-map "\C-cnn" ;new note
+  (lambda () (interactive) (org-capture nil "n")))
 
-  ;; bindings for capture templates
-  (define-key global-map "\C-ci" ;inbox
-    (lambda () (interactive) (org-capture nil "i")))
-  (define-key global-map "\C-cnn" ;new note
-    (lambda () (interactive) (org-capture nil "n")))
-
-  (add-hook 'org-mode-hook
-        (lambda ()
-          (local-unset-key (kbd "C-c SPC"))))
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (local-unset-key (kbd "C-c SPC"))))
 #+END_SRC
 
 ** TODOs
