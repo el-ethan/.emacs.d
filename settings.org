@@ -565,10 +565,10 @@ phone.
   (use-package git-gutter-fringe+
     :ensure t)
   :bind (("<f8>" . git-gutter+-next-hunk)
-	 ("<f7>" . git-gutter+-previous-hunk)
-	 ("C-x v =" . git-gutter+-show-hunk)
-	 ("C-?" . git-gutter+-revert-hunk)
-	 )
+  	 ("<f7>" . git-gutter+-previous-hunk)
+  	 ("C-x v =" . git-gutter+-show-hunk)
+  	 ("C-?" . git-gutter+-revert-hunk)
+  	 )
   :diminish (git-gutter+-mode . "gg")
   )
 #+END_SRC
@@ -579,11 +579,11 @@ phone.
   :ensure t
   :init
   (global-diff-hl-mode t)
-  :bind (("<f8>" . diff-hl-next-hunk)
-	 ("<f7>" . diff-hl-previous-hunk)
-	 ("C-x v =" . diff-hl-diff-goto-hunk)
-	 ("C-?" . diff-hl-revert-hunk)
-	 ) 
+  ;; :bind (("<f8>" . diff-hl-next-hunk)
+  ;; 	 ("<f7>" . diff-hl-previous-hunk)
+  ;; 	 ("C-x v =" . diff-hl-diff-goto-hunk)
+  ;; 	 ("C-?" . diff-hl-revert-hunk)
+  ;; 	 ) 
   )
 #+END_SRC
   
@@ -769,3 +769,18 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
+* Hydara
+#+BEGIN_SRC emacs-lisp 
+(use-package hydra
+  :ensure t
+  :defer t
+  )
+
+(defhydra hydra-gg (global-map "<f8>")
+  "git-gutter hydra"
+  ("n" diff-hl-next-hunk  "next hunk")
+  ("p" diff-hl-previous-hunk "previous hunk")
+  ("d" diff-hl-diff-goto-hunk "show diff")
+  ("r" diff-hl-revert-hunk "revert hunk")
+  )
+#+END_SRC
