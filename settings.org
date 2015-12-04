@@ -153,6 +153,11 @@ point reaches the beginning or end of the buffer, stop there."
     (setq-default fci-rule-color "#546D7A"))
 #+END_SRC
   
+* Assorted key bindings
+#+BEGIN_SRC emacs-lisp 
+(global-set-key (kbd "C-c o") 'browse-url-of-file)
+#+END_SRC
+
 * Org
 ** General settings
 #+BEGIN_SRC emacs-lisp
@@ -165,7 +170,6 @@ point reaches the beginning or end of the buffer, stop there."
 ;; This makes it so I can have check boxes auto-uncheck when 
 ;; repeating task is completed              
 (require 'org-checklist)
-
 #+END_SRC
 
 ** Keybindings
@@ -186,10 +190,6 @@ point reaches the beginning or end of the buffer, stop there."
   (lambda () (interactive) (org-capture nil "i")))
 (define-key global-map "\C-cnn" ;new note
   (lambda () (interactive) (org-capture nil "n")))
-
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (local-unset-key (kbd "C-c SPC"))))
 #+END_SRC
 
 ** TODOs
