@@ -516,8 +516,9 @@ phone.
   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
   (setq visual-line-mode -1)
+  (add-hook 'python-mode-hook 'linum-mode)
   (setq python-check-command "flake8")
-  :bind ("C-c C-x C-f" . elpy-find-file))
+  )
 #+END_SRC
 
 * Expand region
@@ -548,7 +549,8 @@ phone.
   (progn
     (global-undo-tree-mode)
     (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)))
+    (setq undo-tree-visualizer-diff t))
+  )
 #+END_SRC
 * Git Gutter
 #+BEGIN_SRC emacs-lisp

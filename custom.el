@@ -18,6 +18,7 @@
  '(inhibit-startup-buffer-menu t)
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
+ '(linum-eager nil)
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
