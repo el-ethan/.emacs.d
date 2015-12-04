@@ -719,12 +719,15 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-* Hydara
+* Hydra
 #+BEGIN_SRC emacs-lisp 
 (use-package hydra
   :ensure t
   :defer t
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Hydras!
 
 (defhydra hydra-gg (global-map "<f8>")
   "git-gutter hydra"
@@ -732,5 +735,14 @@ Repeated invocations toggle between the two most recently open buffers."
   ("p" diff-hl-previous-hunk "previous hunk")
   ("d" diff-hl-diff-goto-hunk "show diff")
   ("r" diff-hl-revert-hunk "revert hunk")
+  )
+
+(defhydra hydra-transpose (global-map "C-x t")
+  "transposing hydra"
+  ("l" transpose-lines "lines")
+  ("w" transpose-words "words")
+  ("s" transpose-sexps "sexps")
+  ("p" transpose-paragraphs "paragraphs")
+  ("c" transpose-chars "characters")
   )
 #+END_SRC
