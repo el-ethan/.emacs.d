@@ -12,32 +12,25 @@ Emacs configuration
   (add-hook 'window-setup-hook 'toggle-frame-maximized t)
   ;;(set-frame-size (selected-frame) 85 90)
   )
-
-#+END_SRC
-** Load path
-#+BEGIN_SRC emacs-lisp
-;; Emacs lisp files
-(add-to-list 'load-path "~/.emacs.d/elisp/") 
 #+END_SRC
 
 ** MELPA and other repositories
-
 #+BEGIN_SRC emacs-lisp
+;; Emacs lisp files
+(add-to-list 'load-path "~/.emacs.d/elisp/")
 
-  (require 'package)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-  (add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/") t)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/") t)
 
-  (when (< emacs-major-version 24)
-     ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
-  (package-initialize)
-
+(package-initialize)
 #+END_SRC
 
 ** Use-package
-
 #+BEGIN_SRC emacs-lisp
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
@@ -93,13 +86,6 @@ Emacs configuration
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
 #+END_SRC
-  
-* Killing buffers
-#+BEGIN_SRC emacs-lisp 
-
-(global-set-key [(super k)] 'kill-this-buffer)
-
-#+END_SRC
 
 * Scratch files
 #+BEGIN_SRC emacs-lisp
@@ -140,6 +126,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 (global-set-key (kbd "C-a") 'smarter-move-beginning-of-line) 
 #+END_SRC
+
 * History
 #+BEGIN_SRC emacs-lisp
 (setq savehist-file "~/.emacs.d/savehist")
@@ -168,7 +155,6 @@ point reaches the beginning or end of the buffer, stop there."
   
 * Org
 ** General settings
-
 #+BEGIN_SRC emacs-lisp
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 
@@ -181,6 +167,7 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'org-checklist)
 
 #+END_SRC
+
 ** Keybindings
 #+BEGIN_SRC emacs-lisp 
   (global-set-key "\C-cl" 'org-store-link)
@@ -204,10 +191,9 @@ point reaches the beginning or end of the buffer, stop there."
         (lambda ()
           (local-unset-key (kbd "C-c SPC"))))
 #+END_SRC
+
 ** TODOs
-
 #+BEGIN_SRC emacs-lisp
-
   (setq org-enforce-todo-dependencies t)
   ;; (setq org-enforce-todo-checkbox-dependencies t)
 
@@ -216,11 +202,9 @@ point reaches the beginning or end of the buffer, stop there."
 
   ;; Don't keep track of completed repeating tasks
   (setq org-log-repeat nil)
-
 #+END_SRC
    
 ** Agenda
-
 #+BEGIN_SRC emacs-lisp
 ;; Enable highlight line only for org-agenda-mode (it is annoying in other modes)
 (add-hook 'org-agenda-mode-hook 'hl-line-mode)
@@ -289,18 +273,14 @@ point reaches the beginning or end of the buffer, stop there."
 
   (setq org-deadline-warning-days 3)
 #+END_SRC
+
 ** Habits
-
 #+BEGIN_SRC emacs-lisp
-
-  (require 'org-habit)
-
+(require 'org-habit)
 #+END_SRC
 
 ** Capture templates
-
 #+BEGIN_SRC emacs-lisp
-  
   (setq org-capture-templates
     '(("i" "New TODO to Uncategorized TODOs" entry (file+headline 
       "~/Dropbox/org_files/da_guai.org" "Uncategorized TODOs")
@@ -317,7 +297,6 @@ point reaches the beginning or end of the buffer, stop there."
     ("d" "New daydayup entry" entry (file 
       "~/Dropbox/org_files/daydayup.org")
       "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
-  
 #+END_SRC
 
 ** Sync
@@ -327,7 +306,6 @@ and saves them in .taskpaper format to a file that can be accessed on my
 phone.
 
 #+BEGIN_SRC emacs-lisp
-
   (defun sync-to-taskpaper ()
     "Sync org file to taskpaper file for mobile access"
     (when (file-equal-p buffer-file-name "/home/ethan/Dropbox/org_files/da_guai.org")
@@ -341,13 +319,11 @@ phone.
       (message (shell-command-to-string "~/corgi.sh orgsync"))))
 
   (add-hook 'after-init-hook #'sync-with-corgi)
-
 #+END_SRC
 
 ** Org-crypt
 
 #+BEGIN_SRC emacs-lisp
-
 (require 'org-crypt)
 (org-crypt-use-before-save-magic)
 (setq org-tags-exclude-from-inheritance (quote ("crypt")))
@@ -363,36 +339,27 @@ phone.
 ;; To turn it off only locally, you can insert this:
 ;;
 ;; # -*- buffer-auto-save-file-name: nil; -*-
-
-
 #+END_SRC
 
 ** make things look nice
-
 #+BEGIN_SRC emacs-lisp
-
   (setq org-src-fontify-natively t
         org-src-window-setup 'current-window
         org-src-strip-leading-and-trailing-blank-lines t
         org-src-preserve-indentation t
         org-src-tab-acts-natively t)
-
 #+END_SRC
 
 ** Babel
-
 #+BEGIN_SRC emacs-lisp
-
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)
    (sh . t)))
-
 #+END_SRC
+
 * Deft
 #+BEGIN_SRC emacs-lisp
-
-  ;; (require 'deft)
   (use-package deft
     :ensure t
     :config
@@ -403,11 +370,9 @@ phone.
     (setq deft-use-filter-string-for-filename t)
     :bind (("C-c d" . deft)))
   ;;(setq deft-auto-save-interval 0)
-
-
 #+END_SRC
-* Yasnippet
 
+* Yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :ensure t
@@ -419,7 +384,6 @@ phone.
 #+END_SRC
 
 * Projectile
-
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :ensure t
@@ -473,19 +437,16 @@ phone.
   :bind (("C-s" . helm-swoop))
   )
 #+END_SRC
+
 * Fly spell
-
 #+BEGIN_SRC emacs-lisp
-
   ;; Enable flyspell-mode
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook  'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-   
 #+END_SRC
   
 * Auto-complete
-
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
@@ -496,6 +457,7 @@ phone.
     (ac-config-default)
     (global-auto-complete-mode t))
 #+END_SRC
+
 * Python
 #+BEGIN_SRC emacs-lisp
 (defun comment-or-uncomment-line-or-region ()
@@ -524,14 +486,10 @@ phone.
 #+END_SRC
 
 * Expand region
-
 #+BEGIN_SRC emacs-lisp
-
-  ;(require 'expand-region)
   (use-package expand-region
     :ensure t
     :bind ("M-SPC" . er/expand-region))
-
 #+END_SRC
 
 * Magit
@@ -542,6 +500,7 @@ phone.
     (setq magit-push-always-verify nil)
     :bind ("C-c g" . magit-status))
 #+END_SRC
+
 * Undo-tree
 #+BEGIN_SRC emacs-lisp 
 (use-package undo-tree
@@ -554,6 +513,7 @@ phone.
     (setq undo-tree-visualizer-diff t))
   )
 #+END_SRC
+
 * Git Gutter
 #+BEGIN_SRC emacs-lisp
 (use-package git-gutter+
@@ -588,7 +548,6 @@ phone.
 #+END_SRC
   
 * Ace-jump-mode
-
 #+BEGIN_SRC emacs-lisp
 ;;
 ;; ace jump mode major function
@@ -619,12 +578,9 @@ phone.
 #+END_SRC
 
 * Editor-config
-
 #+BEGIN_SRC emacs-lisp
-
 (load "editorconfig")
 (editorconfig-mode 1)
-
 #+END_SRC
 
 * Kivy-mode
@@ -639,6 +595,7 @@ phone.
 #+END_SRC
 
 * Syntax-subword
+
 This mode allows more fine-grained movement and editing commands
 
 #+BEGIN_SRC emacs-lisp
@@ -648,14 +605,10 @@ This mode allows more fine-grained movement and editing commands
   (setq syntax-subword-skip-spaces t)
   :config
   (global-syntax-subword-mode))
-
-;; Add this to delete spaces too
 #+END_SRC
 
 * Work
-
 #+BEGIN_SRC emacs-lisp
-
 (setq is-work (equal system-name "ethan-work"))
 (when is-work
   (load "~/.emacs.d/work.el"))
@@ -677,6 +630,7 @@ This mode allows more fine-grained movement and editing commands
   (fullframe magit-diff-unstaged magit-quit-window)
   (fullframe magit-diff magit-mode-quit-window))
 #+END_SRC
+
 * Wrap-region
 #+BEGIN_SRC emacs-lisp 
 (use-package wrap-region
@@ -715,30 +669,25 @@ This mode allows more fine-grained movement and editing commands
   :bind (("M-N" . mc/mark-next-like-this)
 	 ("M-P". mc/mark-previous-like-this)))
 #+END_SRC
+
 * Open terminal from emacs
 #+BEGIN_SRC emacs-lisp 
 (global-set-key (kbd "<f12>") (kbd "M-& terminator"))
 (add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
 #+END_SRC
-* Experimental staging area
-#+BEGIN_SRC emacs-lisp 
-;;(add-to-list 'load-path "~/.emacs.d/elisp/tenjin-mode")
-;;(require 'tenjin-mode)
 
-
-#+END_SRC
 * Pdb
 #+BEGIN_SRC emacs-lisp 
-
 (add-hook 'gud-mode-hook 'hl-line-mode)
-
 #+END_SRC
+
 * Sane-term
 #+BEGIN_SRC emacs-lisp
 (use-package sane-term
   :ensure t
   :bind (("<f10>" . sane-term-create)))
 #+END_SRC
+
 * Yaml-mode
 #+BEGIN_SRC emacs-lisp 
 (use-package yaml-mode
@@ -750,6 +699,7 @@ This mode allows more fine-grained movement and editing commands
   (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
   )
 #+END_SRC
+
 * Key-chord
 #+BEGIN_SRC emacs-lisp 
 (defun my/switch-to-previous-buffer ()
