@@ -359,6 +359,7 @@ phone.
 #+BEGIN_SRC emacs-lisp
   (use-package deft
     :ensure t
+    :defer t
     :config
     (setq deft-directory "~/Dropbox/org_files")
     (setq deft-default-extension "org")
@@ -373,6 +374,7 @@ phone.
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :ensure t
+    :defer t
     :config
     (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
     (add-hook 'term-mode-hook (lambda()
@@ -629,22 +631,13 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'python-mode-hook 'wrap-region-mode)
   (add-hook 'lisp-mode-hook 'wrap-region-mode))
 #+END_SRC
+
 * Rainbow-delimiters
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-#+END_SRC
-
-* Ace-isearh
-#+BEGIN_SRC emacs-lisp 
-;; (use-package ace-isearch
-;;   :ensure t
-;;   :init
-;;   (global-ace-isearch-mode +1)
-;;   (setq ace-isearch-function 'ace-jump-char-mode)
-;;   )
 #+END_SRC
 
 * Multiple-cursors
@@ -721,6 +714,9 @@ Repeated invocations toggle between the two most recently open buffers."
   ("d" diff-hl-diff-goto-hunk "show diff")
   ("r" diff-hl-revert-hunk "revert hunk")
   )
+
+(use-package transpose-frame
+  :ensure t)
 
 (defhydra hydra-transpose (global-map "C-x t")
   "transposing hydra"
