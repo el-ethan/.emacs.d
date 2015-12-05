@@ -84,7 +84,7 @@ Emacs configuration
   (electric-pair-mode 1))
 #+END_SRC
 
-** History
+** History and auto-save
 #+BEGIN_SRC emacs-lisp
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
@@ -96,6 +96,8 @@ Emacs configuration
       '(kill-ring
         search-ring
         regexp-search-ring))
+
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 #+END_SRC
 
 ** Scratch files
