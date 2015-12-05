@@ -1,5 +1,5 @@
 Emacs configuration
-* Basic setup
+* Basics
 ** GUI stuff
 #+BEGIN_SRC emacs-lisp 
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -84,47 +84,7 @@ Emacs configuration
   (electric-pair-mode 1))
 #+END_SRC
 
-* Scratch files
-#+BEGIN_SRC emacs-lisp
-(defun make-scratch-buffer ()
-  "makes a new scratch buffer, uniquely named"
-  (interactive)
-  (switch-to-buffer "_scratch")
-  (rename-uniquely)
-  (funcall (and initial-major-mode)))
-
-(global-set-key (kbd "<f9>") 'make-scratch-buffer)
-#+END_SRC
-
-* Custom function for movement
-#+BEGIN_SRC emacs-lisp 
-(defun smarter-move-beginning-of-line (arg)
-  "Move point back to indentation of beginning of line.
-
-Move point to the first non-whitespace character on this line.
-If point is already there, move to the beginning of the line.
-Effectively toggle between the first non-whitespace character and
-the beginning of the line.
-
-If ARG is not nil or 1, move forward ARG - 1 lines first.  If
-point reaches the beginning or end of the buffer, stop there."
-  (interactive "^p")
-  (setq arg (or arg 1))
-
-  ;; Move lines first
-  (when (/= arg 1)
-    (let ((line-move-visual nil))
-      (forward-line (1- arg))))
-
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
-
-(global-set-key (kbd "C-a") 'smarter-move-beginning-of-line) 
-#+END_SRC
-
-* History
+** History
 #+BEGIN_SRC emacs-lisp
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
@@ -138,7 +98,20 @@ point reaches the beginning or end of the buffer, stop there."
         regexp-search-ring))
 #+END_SRC
 
-* Fill-column-indicator
+** Scratch files
+#+BEGIN_SRC emacs-lisp
+(defun make-scratch-buffer ()
+  "makes a new scratch buffer, uniquely named"
+  (interactive)
+  (switch-to-buffer "_scratch")
+  (rename-uniquely)
+  (funcall (and initial-major-mode)))
+
+(global-set-key (kbd "<f9>") 'make-scratch-buffer)
+#+END_SRC
+
+* Visuals
+** Fill-column-indicator
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
     :ensure t
@@ -149,10 +122,70 @@ point reaches the beginning or end of the buffer, stop there."
     (setq-default fill-column 80)
     (setq-default fci-rule-color "#546D7A"))
 #+END_SRC
-  
-* Assorted key bindings
+
+** Rainbow-delimiters
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
+
+* Keybindings
+** Assorted key bindings
 #+BEGIN_SRC emacs-lisp 
 (global-set-key (kbd "C-c o") 'browse-url-of-file)
+#+END_SRC
+
+** Key-chord
+#+BEGIN_SRC emacs-lisp 
+(defun my/switch-to-previous-buffer ()
+  "Switch to previously open buffer.
+Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(use-package key-chord
+  :ensure t
+  :init
+  (progn
+    (key-chord-mode 1)
+    ;;(key-chord-define-global "BB" 'helm-mini)
+    ;;(key-chord-define-global "bb" 'my/switch-to-previous-buffer)
+    )
+  )
+#+END_SRC
+
+* Hydra
+#+BEGIN_SRC emacs-lisp 
+(use-package hydra
+  :ensure t
+  :defer t
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Hydras!
+
+(defhydra hydra-gg (global-map "<f8>")
+  "git-gutter hydra"
+  ("n" diff-hl-next-hunk  "next hunk")
+  ("p" diff-hl-previous-hunk "previous hunk")
+  ("d" diff-hl-diff-goto-hunk "show diff")
+  ("r" diff-hl-revert-hunk "revert hunk")
+  )
+
+(use-package transpose-frame
+  :ensure t)
+
+(defhydra hydra-transpose (global-map "C-x t")
+  "transposing hydra"
+  ("l" transpose-lines "lines")
+  ("w" transpose-words "words")
+  ("s" transpose-sexps "sexps")
+  ("p" transpose-paragraphs "paragraphs")
+  ("c" transpose-chars "characters")
+  ("f" transpose-frame "frames")
+  )
 #+END_SRC
 
 * Org
@@ -354,7 +387,6 @@ phone.
  '((python . t)
    (sh . t)))
 #+END_SRC
-
 * Deft
 #+BEGIN_SRC emacs-lisp
   (use-package deft
@@ -368,18 +400,6 @@ phone.
     (setq deft-use-filter-string-for-filename t)
     :bind (("C-c d" . deft)))
   ;;(setq deft-auto-save-interval 0)
-#+END_SRC
-
-* Yasnippet
-#+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-    :ensure t
-    :defer t
-    :config
-    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-    (add-hook 'term-mode-hook (lambda()
-				(setq yas-dont-activate t)))
-    (yas-global-mode 1)) 
 #+END_SRC
 
 * Projectile
@@ -403,7 +423,51 @@ phone.
   (helm-projectile-on))
 #+END_SRC
 
-* Helm
+* Navigation
+** Custom function for movement
+#+BEGIN_SRC emacs-lisp 
+(defun smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
+
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+(global-set-key (kbd "C-a") 'smarter-move-beginning-of-line) 
+#+END_SRC
+
+** Helm-swoop
+#+BEGIN_SRC emacs-lisp
+(use-package helm-swoop
+  :ensure t
+  :init
+  (setq helm-multi-swoop-edit-save t)
+  (setq helm-swoop-move-to-line-cycle t)
+  (setq helm-swoop-use-line-number-face t)
+  ;; disable pre-input, but set input to selection if there is one
+  (setq helm-swoop-pre-input-function
+	(lambda () ""))
+  :bind (("C-s" . helm-swoop))
+  )
+#+END_SRC
+
+** Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :ensure t
@@ -421,132 +485,8 @@ phone.
            ("C-x f" . helm-recentf)
            ("M-y" . helm-show-kill-ring)))
 #+END_SRC
-
-* Helm-swoop
-#+BEGIN_SRC emacs-lisp
-(use-package helm-swoop
-  :ensure t
-  :init
-  (setq helm-multi-swoop-edit-save t)
-  (setq helm-swoop-move-to-line-cycle t)
-  (setq helm-swoop-use-line-number-face t)
-  ;; disable pre-input, but set input to selection if there is one
-  (setq helm-swoop-pre-input-function
-	(lambda () ""))
-  :bind (("C-s" . helm-swoop))
-  )
-#+END_SRC
-
-* Fly spell
-#+BEGIN_SRC emacs-lisp
-  ;; Enable flyspell-mode
-  (add-hook 'org-mode-hook 'flyspell-mode)
-  (add-hook  'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-#+END_SRC
   
-* Auto-complete
-#+BEGIN_SRC emacs-lisp
-  (use-package auto-complete
-    :ensure t
-    :disabled t
-    :init
-    (require 'auto-complete-config)
-    (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-    (ac-config-default)
-    (global-auto-complete-mode t))
-#+END_SRC
-
-* Python
-#+BEGIN_SRC emacs-lisp
-(defun comment-or-uncomment-line-or-region ()
-  "Comments or uncomments the current line or region."
-  (interactive)
-  (if (region-active-p)
-      (comment-or-uncomment-region (region-beginning) (region-end))
-    (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
-
-(global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
-
-(use-package elpy
-  :ensure t
-  :init
-  (elpy-enable)
-  (setq elpy-rpc-backend "rope")  ; "jedi" is another possibility
-  (elpy-use-ipython)
-  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst")
-  (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
-  (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
-  (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
-  (setq visual-line-mode -1)
-  (add-hook 'python-mode-hook 'linum-mode)
-  (setq python-check-command "flake8")
-  )
-#+END_SRC
-
-* Expand region
-#+BEGIN_SRC emacs-lisp
-  (use-package expand-region
-    :ensure t
-    :bind ("M-SPC" . er/expand-region))
-#+END_SRC
-
-* Magit
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :ensure t
-    :config
-    (setq magit-push-always-verify nil)
-    :bind ("C-c g" . magit-status))
-#+END_SRC
-
-* Undo-tree
-#+BEGIN_SRC emacs-lisp 
-(use-package undo-tree
-  :ensure t
-  :diminish undo-tree-mode
-  :config
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t))
-  )
-#+END_SRC
-
-* Git Gutter
-#+BEGIN_SRC emacs-lisp
-(use-package git-gutter+
-  :ensure t
-  :disabled t
-  :init
-  (global-git-gutter+-mode)
-  :config
-  (use-package git-gutter-fringe+
-    :ensure t)
-  :bind (("<f8>" . git-gutter+-next-hunk)
-  	 ("<f7>" . git-gutter+-previous-hunk)
-  	 ("C-x v =" . git-gutter+-show-hunk)
-  	 ("C-?" . git-gutter+-revert-hunk)
-  	 )
-  :diminish (git-gutter+-mode . "gg")
-  )
-#+END_SRC
-
-* Diff-hl
-#+BEGIN_SRC emacs-lisp 
-(use-package diff-hl
-  :ensure t
-  :init
-  (global-diff-hl-mode t)
-  ;; :bind (("<f8>" . diff-hl-next-hunk)
-  ;; 	 ("<f7>" . diff-hl-previous-hunk)
-  ;; 	 ("C-x v =" . diff-hl-diff-goto-hunk)
-  ;; 	 ("C-?" . diff-hl-revert-hunk)
-  ;; 	 ) 
-  )
-#+END_SRC
-  
-* Ace-jump-mode
+** Ace-jump-mode
 #+BEGIN_SRC emacs-lisp
 ;;
 ;; ace jump mode major function
@@ -576,13 +516,55 @@ phone.
 (setq ace-jump-mode-submode-list '(ace-jump-char-mode ace-jump-line-mode ace-jump-word-mode))
 #+END_SRC
 
-* Editor-config
+** Bookmarks
 #+BEGIN_SRC emacs-lisp
-(load "editorconfig")
-(editorconfig-mode 1)
+(global-set-key "\C-xrj" 'bookmark-jump)
+#+END_SRC
+* Yasnippet
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :defer t
+    :config
+    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    (add-hook 'term-mode-hook (lambda()
+				(setq yas-dont-activate t)))
+    (yas-global-mode 1)) 
 #+END_SRC
 
-* Kivy-mode
+* Languages
+** Python
+#+BEGIN_SRC emacs-lisp
+(defun comment-or-uncomment-line-or-region ()
+  "Comments or uncomments the current line or region."
+  (interactive)
+  (if (region-active-p)
+      (comment-or-uncomment-region (region-beginning) (region-end))
+    (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
+
+(global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
+
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable)
+  (setq elpy-rpc-backend "rope")  ; "jedi" is another possibility
+  (elpy-use-ipython)
+  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst")
+  (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
+  (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
+  (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
+  (setq visual-line-mode -1)
+  (add-hook 'python-mode-hook 'linum-mode)
+  (setq python-check-command "flake8")
+  )
+#+END_SRC
+
+*** Pdb
+#+BEGIN_SRC emacs-lisp 
+(add-hook 'gud-mode-hook 'hl-line-mode)
+#+END_SRC
+** Kivy-mode
 #+BEGIN_SRC emacs-lisp
 (use-package kivy-mode
   :ensure t
@@ -593,7 +575,68 @@ phone.
 	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol))))
 #+END_SRC
 
-* Syntax-subword
+** Yaml-mode
+#+BEGIN_SRC emacs-lisp 
+(use-package yaml-mode
+  :ensure t	
+  :config
+  (add-hook 'yaml-mode-hook
+	    (lambda ()
+	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol)))
+  (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
+  )
+#+END_SRC
+* Version control
+** Magit
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :config
+    (setq magit-push-always-verify nil)
+    :bind ("C-c g" . magit-status))
+#+END_SRC
+
+** Git Gutter
+#+BEGIN_SRC emacs-lisp
+(use-package git-gutter+
+  :ensure t
+  :disabled t
+  :init
+  (global-git-gutter+-mode)
+  :config
+  (use-package git-gutter-fringe+
+    :ensure t)
+  :bind (("<f8>" . git-gutter+-next-hunk)
+  	 ("<f7>" . git-gutter+-previous-hunk)
+  	 ("C-x v =" . git-gutter+-show-hunk)
+  	 ("C-?" . git-gutter+-revert-hunk)
+  	 )
+  :diminish (git-gutter+-mode . "gg")
+  )
+#+END_SRC
+
+** Diff-hl
+#+BEGIN_SRC emacs-lisp 
+(use-package diff-hl
+  :ensure t
+  :init
+  (global-diff-hl-mode t)
+  ;; :bind (("<f8>" . diff-hl-next-hunk)
+  ;; 	 ("<f7>" . diff-hl-previous-hunk)
+  ;; 	 ("C-x v =" . diff-hl-diff-goto-hunk)
+  ;; 	 ("C-?" . diff-hl-revert-hunk)
+  ;; 	 ) 
+  )
+#+END_SRC
+* Editing
+** Expand region
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :bind ("M-SPC" . er/expand-region))
+#+END_SRC
+
+** Syntax-subword
 
 This mode allows more fine-grained movement and editing commands
 
@@ -606,19 +649,7 @@ This mode allows more fine-grained movement and editing commands
   (global-syntax-subword-mode))
 #+END_SRC
 
-* Work
-#+BEGIN_SRC emacs-lisp
-(setq is-work (equal system-name "ethan-work"))
-(when is-work
-  (load "~/.emacs.d/work.el"))
-#+END_SRC
-
-* Bookmarks
-#+BEGIN_SRC emacs-lisp
-(global-set-key "\C-xrj" 'bookmark-jump)
-#+END_SRC
-
-* Wrap-region
+** Wrap-region
 #+BEGIN_SRC emacs-lisp 
 (use-package wrap-region
   :ensure t
@@ -632,15 +663,7 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'lisp-mode-hook 'wrap-region-mode))
 #+END_SRC
 
-* Rainbow-delimiters
-#+BEGIN_SRC emacs-lisp
-(use-package rainbow-delimiters
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-#+END_SRC
-
-* Multiple-cursors
+** Multiple-cursors
 #+BEGIN_SRC emacs-lisp 
 (use-package multiple-cursors
   :ensure t
@@ -648,87 +671,62 @@ This mode allows more fine-grained movement and editing commands
 	 ("M-P". mc/mark-previous-like-this)))
 #+END_SRC
 
-* Open terminal from emacs
+** Fly spell
+#+BEGIN_SRC emacs-lisp
+  ;; Enable flyspell-mode
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook  'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+#+END_SRC
+  
+** Auto-complete
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-complete
+    :ensure t
+    :disabled t
+    :init
+    (require 'auto-complete-config)
+    (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+    (ac-config-default)
+    (global-auto-complete-mode t))
+#+END_SRC
+** Undo-tree
 #+BEGIN_SRC emacs-lisp 
-(global-set-key (kbd "<f12>") (kbd "M-& terminator"))
-(add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
+(use-package undo-tree
+  :ensure t
+  :diminish undo-tree-mode
+  :config
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t))
+  )
 #+END_SRC
 
-* Pdb
-#+BEGIN_SRC emacs-lisp 
-(add-hook 'gud-mode-hook 'hl-line-mode)
+** Editor-config
+#+BEGIN_SRC emacs-lisp
+(load "editorconfig")
+(editorconfig-mode 1)
+#+END_SRC
+* Work
+#+BEGIN_SRC emacs-lisp
+(setq is-work (equal system-name "ethan-work"))
+(when is-work
+  (load "~/.emacs.d/work.el"))
 #+END_SRC
 
-* Sane-term
+* Terminal
 #+BEGIN_SRC emacs-lisp
 (use-package sane-term
   :ensure t
   :bind (("<f10>" . sane-term-create)))
 #+END_SRC
 
-* Yaml-mode
+** Open terminal from emacs
 #+BEGIN_SRC emacs-lisp 
-(use-package yaml-mode
-  :ensure t	
-  :config
-  (add-hook 'yaml-mode-hook
-	    (lambda ()
-	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol)))
-  (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
-  )
+(global-set-key (kbd "<f12>") (kbd "M-& terminator"))
+(add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
 #+END_SRC
-
-* Key-chord
-#+BEGIN_SRC emacs-lisp 
-(defun my/switch-to-previous-buffer ()
-  "Switch to previously open buffer.
-Repeated invocations toggle between the two most recently open buffers."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
-
-(use-package key-chord
-  :ensure t
-  :init
-  (progn
-    (key-chord-mode 1)
-    ;;(key-chord-define-global "BB" 'helm-mini)
-    ;;(key-chord-define-global "bb" 'my/switch-to-previous-buffer)
-    )
-  )
-#+END_SRC
-
-* Hydra
-#+BEGIN_SRC emacs-lisp 
-(use-package hydra
-  :ensure t
-  :defer t
-  )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Hydras!
-
-(defhydra hydra-gg (global-map "<f8>")
-  "git-gutter hydra"
-  ("n" diff-hl-next-hunk  "next hunk")
-  ("p" diff-hl-previous-hunk "previous hunk")
-  ("d" diff-hl-diff-goto-hunk "show diff")
-  ("r" diff-hl-revert-hunk "revert hunk")
-  )
-
-(use-package transpose-frame
-  :ensure t)
-
-(defhydra hydra-transpose (global-map "C-x t")
-  "transposing hydra"
-  ("l" transpose-lines "lines")
-  ("w" transpose-words "words")
-  ("s" transpose-sexps "sexps")
-  ("p" transpose-paragraphs "paragraphs")
-  ("c" transpose-chars "characters")
-  ("f" transpose-frame "frames")
-  )
-#+END_SRC
-
 * Windows
 #+BEGIN_SRC emacs-lisp 
 ;; Move between windows with shift and arrow  
