@@ -50,9 +50,6 @@ Emacs configuration
 ;; Don't suspended when I accidently hit C-z
 (global-unset-key (kbd "C-z"))
 
-;; Move between windows with shift and arrow  
-(windmove-default-keybindings)  
-
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -612,23 +609,11 @@ This mode allows more fine-grained movement and editing commands
 (setq is-work (equal system-name "ethan-work"))
 (when is-work
   (load "~/.emacs.d/work.el"))
-
 #+END_SRC
-* Bookmarks
 
+* Bookmarks
 #+BEGIN_SRC emacs-lisp
 (global-set-key "\C-xrj" 'bookmark-jump)
-#+END_SRC
-* Fullframe
-#+BEGIN_SRC emacs-lisp 
-(use-package fullframe
-  :ensure t
-  :init
-  (fullframe magit-status magit-mode-quit-window)
-  (fullframe projectile-vc magit-mode-quit-window)
-  (fullframe magit-diff magit-quit-window)
-  (fullframe magit-diff-unstaged magit-quit-window)
-  (fullframe magit-diff magit-mode-quit-window))
 #+END_SRC
 
 * Wrap-region
@@ -744,5 +729,50 @@ Repeated invocations toggle between the two most recently open buffers."
   ("s" transpose-sexps "sexps")
   ("p" transpose-paragraphs "paragraphs")
   ("c" transpose-chars "characters")
+  ("f" transpose-frame "frames")
   )
 #+END_SRC
+
+* Windows
+#+BEGIN_SRC emacs-lisp 
+;; Move between windows with shift and arrow  
+(windmove-default-keybindings)
+#+END_SRC
+
+** Split windows and switch at the same time
+From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
+#+BEGIN_SRC emacs-lisp 
+(defun vsplit-other-window ()
+  "Splits the window vertically and switches to that window."
+  (interactive)
+  (split-window-vertically)
+  (other-window 1 nil))
+(defun hsplit-other-window ()
+  "Splits the window horizontally and switches to that window."
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1 nil))
+
+(bind-key "C-x 2" 'vsplit-other-window)
+(bind-key "C-x 3" 'hsplit-other-window)
+#+END_SRC
+
+** Winner-mode!
+#+BEGIN_SRC emacs-lisp 
+(winner-mode 1)
+#+END_SRC
+
+** Fullframe
+#+BEGIN_SRC emacs-lisp 
+(use-package fullframe
+  :ensure t
+  :init
+  (fullframe magit-status magit-mode-quit-window)
+  (fullframe projectile-vc magit-mode-quit-window)
+  (fullframe magit-diff magit-quit-window)
+  (fullframe magit-diff-unstaged magit-quit-window)
+  (fullframe magit-diff magit-mode-quit-window))
+#+END_SRC
+
+
+* TEMP
