@@ -9,11 +9,9 @@ Emacs configuration
 
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
-  (add-hook 'window-setup-hook 'toggle-frame-maximized t)
-  ;;(set-frame-size (selected-frame) 85 90)
-  )
+  (add-hook 'window-setup-hook 'toggle-frame-maximized t))
 #+END_SRC
-
+   
 ** MELPA and other repositories
 #+BEGIN_SRC emacs-lisp
 ;; Emacs lisp files
@@ -28,36 +26,38 @@ Emacs configuration
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
 (package-initialize)
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
 #+END_SRC
 
 ** Use-package
 #+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
 
-  (setq use-package-verbose t)
+(setq use-package-verbose t)
 
-  (require 'use-package)
+(require 'use-package)
 #+END_SRC
 
 ** General defaults
 #+BEGIN_SRC emacs-lisp
+;; Send customizations to another file and load that file
 (setq initial-scratch-message nil)  ;; No scratch buffer message
 (setq initial-major-mode 'org-mode)
 
-;;(setq mouse-yank-at-point t)    ;; Cut buffer paste at point only
-(global-unset-key (kbd "C-z"))  ;; Don't suspended when I accidently hit C-z
-(windmove-default-keybindings)  ;; Move between windows with shift and arrow
+;; Don't suspended when I accidently hit C-z
+(global-unset-key (kbd "C-z"))
+
+;; Move between windows with shift and arrow  
+(windmove-default-keybindings)  
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; Remove text in active region if inserting text
 (delete-selection-mode 1)
-
-;; Send customizations to another file and load that file
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
 
 ;; Type face size stuff
 (set-face-attribute 'default nil :height 150)
