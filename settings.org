@@ -595,10 +595,28 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 *** Lisp
+#+BEGIN_SRC emacs-lisp
+(add-hook 'lisp-mode-hook 'auto-complete)
+#+END_SRC
+
 **** Slime
 #+BEGIN_SRC emacs-lisp 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 #+END_SRC
+
+**** Eldoc
+#+BEGIN_SRC emacs-lisp 
+(use-package "eldoc"
+  :ensure t
+  :diminish eldoc-mode
+  :commands turn-on-eldoc-mode
+  :defer t
+  :init
+  (progn
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)))
+#+END_SRC
+
 ** Version control
 *** Magit
 #+BEGIN_SRC emacs-lisp
@@ -696,7 +714,6 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
-    :disabled t
     :init
     (require 'auto-complete-config)
     (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -782,3 +799,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 
 ** TEMP
+#+BEGIN_SRC emacs-lisp 
+
+#+END_SRC
