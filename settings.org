@@ -73,6 +73,10 @@ Emacs configuration
 ;; Save backups elsewhere
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
+;; Show battery percentage and remaining time
+(display-battery-mode)
+(setq battery-mode-line-format "[%b%p%% %t]")
+
 ;; Enable show-paren-mode
 (show-paren-mode 1)
 

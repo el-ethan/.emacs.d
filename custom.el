@@ -6,7 +6,6 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
- '(custom-enabled-themes (quote (atom-one-dark ample wombat misterioso)))
  '(custom-safe-themes
    (quote
     ("4904daa168519536b08ca4655d798ca0fb50d3545e6244cefcf7d0c7b338af7e" "3e72e20b462954ec339684cb4d0d2d71293f4b8b1564dde1fc94c818dc427ed3" "4f5bb895d88b6fe6a983e63429f154b8d939b4a8c581956493783b2515e22d6d" default)))
