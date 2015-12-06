@@ -124,16 +124,21 @@ Emacs configuration
 ** Visuals
 *** Theme
 #+BEGIN_SRC emacs-lisp 
+(load-theme 'atom-one-dark t)
+
 (use-package atom-one-dark-theme
-  :ensure t	
+  :ensure t
+  :disabled t
   )
 
 (use-package ample-theme
   :ensure t	
+  :disabled t
   )
 
 (use-package aurora-theme
-  :ensure t	
+  :ensure t
+  :disabled t
   )
 
 ;; Theme switching stuff from Daniel Mai
@@ -517,7 +522,7 @@ point reaches the beginning or end of the buffer, stop there."
   (use-package helm
     :ensure t
     :init
-    (require 'helm-config)
+    ;;(require 'helm-config)
     (helm-mode 1)
     (setq helm-recentf-fuzzy-match t
         helm-buffers-fuzzy-matching t
