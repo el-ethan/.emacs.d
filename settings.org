@@ -122,6 +122,40 @@ Emacs configuration
 #+END_SRC
 
 ** Visuals
+*** Theme
+#+BEGIN_SRC emacs-lisp 
+(use-package atom-one-dark-theme
+  :ensure t	
+  )
+
+(use-package ample-theme
+  :ensure t	
+  )
+
+(use-package aurora-theme
+  :ensure t	
+  )
+
+;; Theme switching stuff from Daniel Mai
+(defun switch-theme (theme)
+  "Disables any currently active themes and loads THEME."
+  ;; This interactive call is taken from `load-theme'
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+                             (mapc 'symbol-name
+                                   (custom-available-themes))))))
+  (let ((enabled-themes custom-enabled-themes))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)))
+
+(defun disable-active-themes ()
+  "Disables any currently active themes listed in `custom-enabled-themes'."
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes))
+
+(bind-key "C-`" 'switch-theme)
+#+END_SRC
 *** Fill-column-indicator
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
@@ -804,5 +838,8 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp 
-
+(use-package helm-ag :ensure t)
+(setq helm-locate-command "mdfind -interpret -name %s %s"
+      helm-ff-newfile-prompt-p nil
+      helm-M-x-fuzzy-match t)
 #+END_SRC
