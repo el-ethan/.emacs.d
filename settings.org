@@ -141,6 +141,11 @@ Emacs configuration
   :disabled t
   )
 
+(use-package  seti-theme
+  :ensure t
+  :disabled t
+  )
+
 ;; Theme switching stuff from Daniel Mai
 (defun switch-theme (theme)
   "Disables any currently active themes and loads THEME."
