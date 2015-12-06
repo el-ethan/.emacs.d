@@ -593,6 +593,12 @@ point reaches the beginning or end of the buffer, stop there."
   (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
   )
 #+END_SRC
+
+*** Lisp
+**** Slime
+#+BEGIN_SRC emacs-lisp 
+(setq inferior-lisp-program "/usr/bin/sbcl")
+#+END_SRC
 ** Version control
 *** Magit
 #+BEGIN_SRC emacs-lisp
@@ -694,8 +700,7 @@ This mode allows more fine-grained movement and editing commands
     :init
     (require 'auto-complete-config)
     (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-    (ac-config-default)
-    (global-auto-complete-mode t))
+    (ac-config-default))
 #+END_SRC
 *** Undo-tree
 #+BEGIN_SRC emacs-lisp 
