@@ -572,7 +572,7 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 
-*** Registers
+*** Registers and bookmarks
 #+BEGIN_SRC emacs-lisp 
 (defhydra hydra-register (global-map "<f1>")
   "register hydra"
@@ -583,6 +583,19 @@ point reaches the beginning or end of the buffer, stop there."
   ("a" append-to-register "append text")
   ("p" prepend-to-register "prepend text")
   )
+
+
+(defun my/quick-save-bookmark ()
+  "Save bookmark with name as 'buffer:row:col'"
+  (interactive)
+  (bookmark-set (format "%s:line %s:column %s"
+			(buffer-name)
+			(line-number-at-pos)
+			(current-column)))
+  (print "Bookmarked saved at current position"))
+
+(bind-key "C-B" 'my/quick-save-bookmark)
+(bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
