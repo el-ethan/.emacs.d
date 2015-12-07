@@ -74,8 +74,11 @@ Emacs configuration
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
 ;; Show battery percentage and remaining time
-(display-battery-mode)
-(setq battery-mode-line-format "[%b%p%% %t]")
+(setq is-work (equal system-name "ethan-work"))
+
+(unless is-work
+  (setq battery-mode-line-format "[%b%p%% %t]")
+  (display-battery-mode 1))
 
 ;; Enable show-paren-mode
 (show-paren-mode 1)
@@ -809,7 +812,6 @@ This mode allows more fine-grained movement and editing commands
 #+END_SRC
 ** Work
 #+BEGIN_SRC emacs-lisp
-(setq is-work (equal system-name "ethan-work"))
 (when is-work
   (load "~/.emacs.d/work.el"))
 #+END_SRC
