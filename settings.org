@@ -854,6 +854,13 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (fullframe magit-diff magit-mode-quit-window))
 #+END_SRC
 
+*** Resizing windows
+#+BEGIN_SRC emacs-lisp 
+(bind-key "S-C-<left>"  'shrink-window-horizontally)
+(bind-key "S-C-<right>" 'enlarge-window-horizontally)
+(bind-key "S-C-<down>"  'shrink-window)
+(bind-key "S-C-<up>"    'enlarge-window)
+#+END_SRC
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp 
