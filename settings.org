@@ -574,7 +574,6 @@ point reaches the beginning or end of the buffer, stop there."
 (setq ace-jump-mode-submode-list '(ace-jump-char-mode ace-jump-line-mode ace-jump-word-mode))
 #+END_SRC
 
-
 *** Registers and bookmarks
 #+BEGIN_SRC emacs-lisp 
 (defhydra hydra-register (global-map "<f1>")
@@ -591,7 +590,8 @@ point reaches the beginning or end of the buffer, stop there."
 (defun my/quick-save-bookmark ()
   "Save bookmark with name as 'buffer:row:col'"
   (interactive)
-  (bookmark-set (format "%s:line %s:column %s"
+  (bookmark-set (format "%s:%s:line %s:column %s"
+			(thing-at-point 'symbol)
 			(buffer-name)
 			(line-number-at-pos)
 			(current-column)))
