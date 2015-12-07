@@ -586,7 +586,6 @@ point reaches the beginning or end of the buffer, stop there."
   ("p" prepend-to-register "prepend text")
   )
 
-
 (defun my/quick-save-bookmark ()
   "Save bookmark with name as 'buffer:row:col'"
   (interactive)
@@ -595,7 +594,7 @@ point reaches the beginning or end of the buffer, stop there."
 			(buffer-name)
 			(line-number-at-pos)
 			(current-column)))
-  (print "Bookmarked saved at current position"))
+  (message "Bookmarked saved at current position"))
 
 (bind-key "C-B" 'my/quick-save-bookmark)
 (bind-key "<menu>" 'helm-bookmarks)
