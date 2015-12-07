@@ -1,7 +1,7 @@
 Emacs configuration
 * Sections
   :PROPERTIES:
-  :VISIBILITY: all
+  :VISIBILITY: children
   :END:
 
 ** Basics
@@ -571,9 +571,18 @@ point reaches the beginning or end of the buffer, stop there."
 (setq ace-jump-mode-submode-list '(ace-jump-char-mode ace-jump-line-mode ace-jump-word-mode))
 #+END_SRC
 
-*** Bookmarks
-#+BEGIN_SRC emacs-lisp
-(global-set-key "\C-xrj" 'bookmark-jump)
+
+*** Registers
+#+BEGIN_SRC emacs-lisp 
+(defhydra hydra-register (global-map "<f1>")
+  "register hydra"
+  ("r" point-to-register "point")
+  ("j" jump-to-register "jump")
+  ("t" copy-to-register "copy text")
+  ("i" insert-register "insert text")
+  ("a" append-to-register "append text")
+  ("p" prepend-to-register "prepend text")
+  )
 #+END_SRC
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
@@ -848,8 +857,9 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp 
-(use-package helm-ag :ensure t)
-(setq helm-locate-command "mdfind -interpret -name %s %s"
-      helm-ff-newfile-prompt-p nil
-      helm-M-x-fuzzy-match t)
+(use-package helm-ag 
+  :ensure t
+  :init
+  (setq helm-ag-insert-at-point 'symbol)
+  )
 #+END_SRC
