@@ -874,10 +874,13 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 *** Resizing windows
 #+BEGIN_SRC emacs-lisp 
-(bind-key "S-C-<left>"  'shrink-window-horizontally)
-(bind-key "S-C-<right>" 'enlarge-window-horizontally)
-(bind-key "S-C-<down>"  'shrink-window)
-(bind-key "S-C-<up>"    'enlarge-window)
+(defhydra hydra-resize (global-map "<f2>")
+  "resizing hydra"
+  ("<left>" shrink-window-horizontally "shrink horizontal")
+  ("<right>" enlarge-window-horizontally "enlarge horizontal")
+  ("<down>" shrink-window "shrink")
+  ("<up>" enlarge-window "shrink")
+  )
 #+END_SRC
 
 ** TEMP
