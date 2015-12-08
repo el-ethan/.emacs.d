@@ -884,4 +884,9 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   :init
   (setq helm-ag-insert-at-point 'symbol)
   )
+
+(global-auto-revert-mode)
+
+(setq scroll-conservatively 10000
+      scroll-step 1)
 #+END_SRC
