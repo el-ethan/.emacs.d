@@ -760,6 +760,7 @@ This mode allows more fine-grained movement and editing commands
   (wrap-region-add-wrappers
    '(("(" ")" nil (python-mode org-mode lisp-mode))
      ("'" "'" nil python-mode)
+     ("`" "`" nil org-mode)
      ("\"" "\"" nil (org-mode python-mode lisp-mode))))
   (add-hook 'org-mode-hook 'wrap-region-mode)
   (add-hook 'python-mode-hook 'wrap-region-mode)
