@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: python-function-tracer
+# key: xin
+# binding: direct-keybinding
+# --
+print \'\{\}\\nIn: `(python-info-current-defun)`\'.format('*' * 100)
