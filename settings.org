@@ -830,8 +830,11 @@ This mode allows more fine-grained movement and editing commands
 #+END_SRC
 ** Windows
 #+BEGIN_SRC emacs-lisp 
-;; Move between windows with shift and arrow  
-(windmove-default-keybindings)
+;; Make windmove work in org-mode:
+(add-hook 'org-shiftup-final-hook 'windmove-up)
+(add-hook 'org-shiftleft-final-hook 'windmove-left)
+(add-hook 'org-shiftdown-final-hook 'windmove-down)
+(add-hook 'org-shiftright-final-hook 'windmove-right)
 #+END_SRC
 
 *** Split windows and switch at the same time
