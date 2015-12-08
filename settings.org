@@ -633,7 +633,7 @@ point reaches the beginning or end of the buffer, stop there."
   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
-  (setq visual-line-mode -1)
+  (add-hook 'python-mode-hook 'visual-line-mode)
   (add-hook 'python-mode-hook 'linum-mode)
   (setq python-check-command "flake8")
   )
