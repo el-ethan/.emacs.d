@@ -1,6 +1,16 @@
 
 ;; Stuff related to work
 
+(add-hook 'sql-interactive-mode-hook
+          (lambda ()
+            (toggle-truncate-lines t)))
+
+(setq sql-mysql-login-params
+      '((user :default "root")
+        (database :default "aeris2")
+	(password :default "")
+        (server :default "localhost")))
+
 (setq-default fill-column 120)
 (setq gud-chdir-before-run nil)
 ;; (defadvice
