@@ -846,6 +846,8 @@ This mode allows more fine-grained movement and editing commands
 #+END_SRC
 ** Windows
 #+BEGIN_SRC emacs-lisp 
+(windmove-default-keybindings)
+
 ;; Make windmove work in org-mode:
 (add-hook 'org-shiftup-final-hook 'windmove-up)
 (add-hook 'org-shiftleft-final-hook 'windmove-left)
