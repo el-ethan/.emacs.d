@@ -817,6 +817,7 @@ This mode allows more fine-grained movement and editing commands
     (global-undo-tree-mode)
     (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t))
+  :bind ("C-/" . undo-tree-undo)
   )
 #+END_SRC
 
