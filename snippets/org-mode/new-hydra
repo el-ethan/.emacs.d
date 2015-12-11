@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: new-hydra
+# key: xnh
+# binding: direct-keybinding
+# --
+(defhydra hydra-$1 (global-map "$2")
+  "$3 hydra"
+  ("$4" $5 "$6")
+  )
