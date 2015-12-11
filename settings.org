@@ -249,6 +249,7 @@ Repeated invocations toggle between the two most recently open buffers."
   "settings hydra"
   ("n" linum-mode "line numbers")
   ("v" visual-line-mode "visual line")
+  ("s" sr-speedbar-toggle "speedbar")
   )
 #+END_SRC
 
@@ -604,6 +605,15 @@ point reaches the beginning or end of the buffer, stop there."
 
 (bind-key "C-B" 'my/quick-save-bookmark)
 (bind-key "<menu>" 'helm-bookmarks)
+#+END_SRC
+
+*** Speedbar
+#+BEGIN_SRC emacs-lisp 
+(use-package sr-speedbar
+  :ensure t
+  :init
+  (add-hook 'speedbar-load-hook 'visual-line-mode)	
+  )
 #+END_SRC
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
