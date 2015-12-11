@@ -676,10 +676,6 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 *** Lisp
-#+BEGIN_SRC emacs-lisp
-(add-hook 'lisp-mode-hook 'auto-complete)
-#+END_SRC
-
 **** Slime
 #+BEGIN_SRC emacs-lisp 
 (setq inferior-lisp-program "/usr/bin/sbcl")
@@ -799,10 +795,19 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+END_SRC
   
+*** Company
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :init
+  (global-company-mode t)
+  )
+#+END_SRC
 *** Auto-complete
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
+    :disabled t
     :init
     (require 'auto-complete-config)
     (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
