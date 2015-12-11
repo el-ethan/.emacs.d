@@ -205,10 +205,10 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (use-package key-chord
   :ensure t
+  :disabled t
   :init
   (progn
     (key-chord-mode 1)
-    ;;(key-chord-define-global "BB" 'helm-mini)
     ;;(key-chord-define-global "bb" 'my/switch-to-previous-buffer)
     )
   )
@@ -235,7 +235,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package transpose-frame
   :ensure t)
 
-(defhydra hydra-transpose (global-map "C-x t")
+(defhydra hydra-transpose (global-map "C-t")
   "transposing hydra"
   ("l" transpose-lines "lines")
   ("w" transpose-words "words")
