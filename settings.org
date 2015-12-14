@@ -127,7 +127,6 @@ Emacs configuration
 ** Visuals
 *** Theme
 #+BEGIN_SRC emacs-lisp 
-(load-theme 'atom-one-dark t)
 
 (use-package atom-one-dark-theme
   :ensure t
@@ -148,6 +147,8 @@ Emacs configuration
   :ensure t
   :disabled t
   )
+
+(load-theme 'atom-one-dark t)
 
 ;; Theme switching stuff from Daniel Mai
 (defun switch-theme (theme)
