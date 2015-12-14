@@ -229,6 +229,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ("p" diff-hl-previous-hunk "previous hunk")
   ("d" diff-hl-diff-goto-hunk "show diff")
   ("r" diff-hl-revert-hunk "revert hunk")
+  ("b" magit-blame "blame")
   )
 
 (use-package transpose-frame
