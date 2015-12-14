@@ -223,8 +223,8 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hydras!
 
-(defhydra hydra-gg (global-map "<f8>")
-  "git-gutter hydra"
+(defhydra hydra-vc (global-map "<f8>")
+  "vc hydra"
   ("n" diff-hl-next-hunk  "next hunk")
   ("p" diff-hl-previous-hunk "previous hunk")
   ("d" diff-hl-diff-goto-hunk "show diff")
