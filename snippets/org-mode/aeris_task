@@ -5,18 +5,26 @@
 # --
 
 * AER-$1: $2
+  :PROPERTIES:
+  :VISIBILITY: children
+  :END:
 
-Description:
+** description:
 
 $3
 
+
 ** conversations
+
 
 ** questions
 
+
 ** todo
 
-** brainstorming
+
+** notes
+
 
 * Final checklist
 
