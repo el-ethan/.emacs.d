@@ -128,8 +128,6 @@ Emacs configuration
 (use-package atom-one-dark-theme
   :ensure t
   :disabled f
-  :init
-  (load-theme 'atom-one-dark t)
   )
 
 (use-package ample-theme
@@ -147,7 +145,9 @@ Emacs configuration
   :disabled t
   )
 
-;; Theme switching stuff from Daniel Mai
+(load-theme 'atom-one-dark t)
+
+;; THEME switching stuff from Daniel Mai
 (defun switch-theme (theme)
   "Disables any currently active themes and loads THEME."
   ;; This interactive call is taken from `load-theme'
