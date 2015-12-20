@@ -127,7 +127,7 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp 
 (use-package atom-one-dark-theme
   :ensure t
-  :disabled f
+  :disabled t
   )
 
 (use-package ample-theme
@@ -137,15 +137,20 @@ Emacs configuration
 
 (use-package aurora-theme
   :ensure t
-  :disabled t
+  :disabled f
   )
 
-(use-package  seti-theme
+(use-package darktooth-theme
   :ensure t
   :disabled t
   )
 
-(load-theme 'atom-one-dark t)
+(use-package zenburn-theme
+  :ensure t	
+  :disabled t
+  )
+
+(load-theme 'aurora t)
 
 ;; THEME switching stuff from Daniel Mai
 (defun switch-theme (theme)
