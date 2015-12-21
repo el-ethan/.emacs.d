@@ -621,14 +621,17 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-    :ensure t
-    :defer t
-    :config
-    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :init (yas-global-mode)
+  :config
+  (progn
+    (yas-global-mode)
     (add-hook 'term-mode-hook (lambda()
 				(setq yas-dont-activate t)))
-    (yas-global-mode 1)) 
+    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    (yas-global-mode 1)))
 #+END_SRC
 
 ** Languages
