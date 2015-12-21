@@ -631,6 +631,9 @@ point reaches the beginning or end of the buffer, stop there."
     (add-hook 'term-mode-hook (lambda()
 				(setq yas-dont-activate t)))
     (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    (define-key yas-minor-mode-map (kbd "<tab>") nil)
+    (define-key yas-minor-mode-map (kbd "TAB") nil)
+    (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
     (yas-global-mode 1)))
 #+END_SRC
 
