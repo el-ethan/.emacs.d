@@ -965,4 +965,10 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
 (bind-key "C-L" 'copy-line)
+
+(use-package helm-flyspell
+  :ensure t
+  :config
+  (define-key flyspell-mode-map (kbd "C-:") 'helm-flyspell-correct)
+  )
 #+END_SRC
