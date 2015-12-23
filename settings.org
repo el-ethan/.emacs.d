@@ -39,7 +39,6 @@ Emacs configuration
 *** Use-package
 #+BEGIN_SRC emacs-lisp
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
   (package-install 'use-package))
 
 (setq use-package-verbose t)
@@ -71,9 +70,9 @@ Emacs configuration
 ;; Save backups elsewhere
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
-;; Show battery percentage and remaining time
 (setq is-work (equal system-name "ethan-work"))
 
+;; Show battery percentage and remaining time
 (unless is-work
   (setq battery-mode-line-format "[%b%p%% %t]")
   (display-battery-mode 1))
@@ -92,6 +91,8 @@ Emacs configuration
 
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
+
+(global-auto-revert-mode)
 #+END_SRC
 
 *** History and auto-save
@@ -555,6 +556,15 @@ point reaches the beginning or end of the buffer, stop there."
            ("M-y" . helm-show-kill-ring)))
 #+END_SRC
   
+*** Helm-ag
+#+BEGIN_SRC emacs-lisp 
+(use-package helm-ag 
+  :ensure t
+  :init
+  (setq helm-ag-insert-at-point 'symbol)
+  )
+#+END_SRC
+
 *** Ace-jump-mode
 #+BEGIN_SRC emacs-lisp
 ;;
@@ -935,14 +945,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp 
-(use-package helm-ag 
-  :ensure t
-  :init
-  (setq helm-ag-insert-at-point 'symbol)
-  )
-
-(global-auto-revert-mode)
-
 (defun copy-line (arg)
   "Copy lines (as many as prefix argument) in the kill ring.
     Ease of use features:
