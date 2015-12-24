@@ -617,7 +617,7 @@ point reaches the beginning or end of the buffer, stop there."
 			(current-column)))
   (message "Bookmarked saved at current position"))
 
-(bind-key "C-B" 'my/quick-save-bookmark)
+(global-set-key (kbd "C-S-b") 'my/quick-save-bookmark)
 (bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
 
