@@ -6,7 +6,7 @@ Emacs configuration
 
 ** Basics
 *** GUI stuff
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'tooltip-mode) (tooltip-mode -1))
@@ -16,7 +16,7 @@ Emacs configuration
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
   (add-hook 'window-setup-hook 'toggle-frame-maximized t))
 #+END_SRC
-   
+
 *** MELPA and other repositories
 #+BEGIN_SRC emacs-lisp
 ;; Emacs lisp files
@@ -83,7 +83,7 @@ Emacs configuration
 ;; Enable word-wrapping
 (global-visual-line-mode t)
 
-;; Highlight lines (with some themes this is distracting, disable if necessary) 
+;; Highlight lines (with some themes this is distracting, disable if necessary)
 (global-hl-line-mode t)
 
 (global-set-key "\C-xp" 'pop-to-mark-command)
@@ -125,14 +125,14 @@ Emacs configuration
 
 ** Visuals
 *** Theme
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
   :ensure t
   :disabled t
   )
 
 (use-package ample-theme
-  :ensure t	
+  :ensure t
   :disabled t
   )
 
@@ -147,7 +147,7 @@ Emacs configuration
   )
 
 (use-package zenburn-theme
-  :ensure t	
+  :ensure t
   :disabled t
   )
 
@@ -195,12 +195,12 @@ Emacs configuration
 
 ** Keybindings
 *** Assorted key bindings
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c o") 'browse-url-of-file)
 #+END_SRC
 
 *** Key-chord
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (defun my/switch-to-previous-buffer ()
   "Switch to previously open buffer.
 Repeated invocations toggle between the two most recently open buffers."
@@ -219,7 +219,7 @@ Repeated invocations toggle between the two most recently open buffers."
 #+END_SRC
 
 ** Hydra
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package hydra
   :ensure t
   :defer t
@@ -267,13 +267,13 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
 
-;; This makes it so I can have check boxes auto-uncheck when 
-;; repeating task is completed              
+;; This makes it so I can have check boxes auto-uncheck when
+;; repeating task is completed
 (require 'org-checklist)
 #+END_SRC
 
 *** Keybindings
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
@@ -282,7 +282,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (define-key org-agenda-mode-map "d" 'org-agenda-deadline)
 
 ;; Open this config file
-(global-set-key (kbd "C-c s") 
+(global-set-key (kbd "C-c s")
 		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 
 ;; bindings for capture templates
@@ -297,13 +297,13 @@ Repeated invocations toggle between the two most recently open buffers."
   (setq org-enforce-todo-dependencies t)
   ;; (setq org-enforce-todo-checkbox-dependencies t)
 
-  ;; Set to 'invisible and blocked tasks wont show up in agenda, t and they will be dimmed 
+  ;; Set to 'invisible and blocked tasks wont show up in agenda, t and they will be dimmed
   (setq org-agenda-dim-blocked-tasks 'invisible)
 
   ;; Don't keep track of completed repeating tasks
   (setq org-log-repeat nil)
 #+END_SRC
-   
+
 *** Agenda
 #+BEGIN_SRC emacs-lisp
 ;; Enable highlight line only for org-agenda-mode (it is annoying in other modes)
@@ -320,15 +320,15 @@ Repeated invocations toggle between the two most recently open buffers."
       subtree-end))) ; tag not found, continue after end of subtree
 
 ;; Block agenda view for agenda and unscheduled tasks
-(setq org-agenda-custom-commands 
+(setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
-	 ((tags-todo 
+	 ((tags-todo
 	   "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects-work")
 	  (agenda ""))
 	 ((org-agenda-start-on-weekday nil)
 	  (org-deadline-warning-days 0)))
 	("w" "Work tasks"
-	 ((tags-todo 
+	 ((tags-todo
 	   "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects")
 	  (agenda ""))
 	 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp ":home:"))
@@ -363,12 +363,12 @@ Repeated invocations toggle between the two most recently open buffers."
 	  (org-agenda-ndays 3)
 	  (org-deadline-warning-days 0))
          ("~/Dropbox/org_files/taskpaper_files/da_guai.taskpaper"))))
-         
-  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org" 
-                           "~/Dropbox/org_files/talkingpoints.org")) 
 
-  ;; Only ask for confirmation of kills within agenda 
-  ;; only if TODO spans more than 2 lines         
+  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
+                           "~/Dropbox/org_files/talkingpoints.org"))
+
+  ;; Only ask for confirmation of kills within agenda
+  ;; only if TODO spans more than 2 lines
   (setq org-agenda-confirm-kill 2)
 
   (setq org-deadline-warning-days 3)
@@ -382,19 +382,19 @@ Repeated invocations toggle between the two most recently open buffers."
 *** Capture templates
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-    '(("i" "New TODO to Uncategorized TODOs" entry (file+headline 
+    '(("i" "New TODO to Uncategorized TODOs" entry (file+headline
       "~/Dropbox/org_files/da_guai.org" "Uncategorized TODOs")
       "* TODO %?" :kill-buffer t)
-  
-    ("n" "New note to notes.org" entry (file 
+
+    ("n" "New note to notes.org" entry (file
      "~/Dropbox/org_files/notes.org")
      "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
-  
-    ("w" "New work note" entry (file 
+
+    ("w" "New work note" entry (file
       "~/Dropbox/org_files/worknotes.org")
       "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
-  
-    ("d" "New daydayup entry" entry (file 
+
+    ("d" "New daydayup entry" entry (file
       "~/Dropbox/org_files/daydayup.org")
       "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
 #+END_SRC
@@ -402,7 +402,7 @@ Repeated invocations toggle between the two most recently open buffers."
 *** Sync
 
 The code below runs a python script that parses the tasks in my org files
-and saves them in .taskpaper format to a file that can be accessed on my 
+and saves them in .taskpaper format to a file that can be accessed on my
 phone.
 
 #+BEGIN_SRC emacs-lisp
@@ -480,7 +480,7 @@ phone.
   :diminish projectile-mode
   :config
   (progn
-    (setq projectile-enable-caching t)  
+    (setq projectile-enable-caching t)
     (setq projectile-indexing-method 'alien)
     (setq projectile-completion-system 'default)
     (setq projectile-switch-project-action 'helm-projectile)
@@ -495,7 +495,7 @@ phone.
 
 ** Navigation
 *** Custom function for movement
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
 
@@ -519,7 +519,7 @@ point reaches the beginning or end of the buffer, stop there."
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
 
-(global-set-key (kbd "C-a") 'smarter-move-beginning-of-line) 
+(global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
 #+END_SRC
 
 *** Helm-swoop
@@ -548,17 +548,17 @@ point reaches the beginning or end of the buffer, stop there."
         helm-buffers-fuzzy-matching t
         helm-completion-in-region-fuzzy-match t
         helm-mode-fuzzy-match t)
-    (setq helm-source-recentf 
+    (setq helm-source-recentf
     (helm-make-source "Recentf" 'helm-recentf-source
       :fuzzy-match t))
     :bind (("C-x b" . helm-mini)
            ("C-x f" . helm-recentf)
            ("M-y" . helm-show-kill-ring)))
 #+END_SRC
-  
+
 *** Helm-ag
-#+BEGIN_SRC emacs-lisp 
-(use-package helm-ag 
+#+BEGIN_SRC emacs-lisp
+(use-package helm-ag
   :ensure t
   :init
   (setq helm-ag-insert-at-point 'symbol)
@@ -569,7 +569,7 @@ point reaches the beginning or end of the buffer, stop there."
 #+BEGIN_SRC emacs-lisp
 ;;
 ;; ace jump mode major function
-;; 
+;;
 (add-to-list 'load-path "/home/ethan/.emacs.d/elisp/ace-jump-mode/")
 (autoload
   'ace-jump-mode
@@ -581,7 +581,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;;(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 (global-set-key (kbd "M-s") 'ace-jump-mode)
 
-;; 
+;;
 ;; enable a more powerful jump back function from ace jump mode
 ;;
 (autoload
@@ -596,7 +596,7 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 *** Registers and bookmarks
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (defhydra hydra-register (global-map "<f1>")
   "register hydra"
   ("r" point-to-register "point")
@@ -622,11 +622,11 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 *** Speedbar
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package sr-speedbar
   :ensure t
   :init
-  (add-hook 'speedbar-load-hook 'visual-line-mode)	
+  (add-hook 'speedbar-load-hook 'visual-line-mode)
   )
 #+END_SRC
 ** Yasnippet
@@ -685,7 +685,7 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 **** Pdb
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (add-hook 'gud-mode-hook 'hl-line-mode)
 #+END_SRC
 *** Kivy-mode
@@ -700,9 +700,9 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 *** Yaml-mode
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
-  :ensure t	
+  :ensure t
   :config
   (add-hook 'yaml-mode-hook
 	    (lambda ()
@@ -713,12 +713,12 @@ point reaches the beginning or end of the buffer, stop there."
 
 *** Lisp
 **** Slime
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (setq inferior-lisp-program "/usr/bin/sbcl")
 #+END_SRC
 
 **** Eldoc
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package "eldoc"
   :ensure t
   :diminish eldoc-mode
@@ -731,7 +731,7 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 *** SQL
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)))
@@ -766,7 +766,7 @@ point reaches the beginning or end of the buffer, stop there."
 #+END_SRC
 
 *** Diff-hl
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package diff-hl
   :ensure t
   :init
@@ -775,7 +775,7 @@ point reaches the beginning or end of the buffer, stop there."
   ;; 	 ("<f7>" . diff-hl-previous-hunk)
   ;; 	 ("C-x v =" . diff-hl-diff-goto-hunk)
   ;; 	 ("C-?" . diff-hl-revert-hunk)
-  ;; 	 ) 
+  ;; 	 )
   )
 #+END_SRC
 ** Editing
@@ -800,7 +800,7 @@ This mode allows more fine-grained movement and editing commands
 #+END_SRC
 
 *** Wrap-region
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package wrap-region
   :ensure t
   :config
@@ -815,7 +815,7 @@ This mode allows more fine-grained movement and editing commands
 #+END_SRC
 
 *** Multiple-cursors
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :ensure t
   :bind (("M-N" . mc/mark-next-like-this)
@@ -830,7 +830,7 @@ This mode allows more fine-grained movement and editing commands
   (add-hook  'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+END_SRC
-  
+
 *** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
@@ -850,7 +850,7 @@ This mode allows more fine-grained movement and editing commands
     (ac-config-default))
 #+END_SRC
 *** Undo-tree
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package undo-tree
   :ensure t
   :diminish undo-tree-mode
@@ -882,12 +882,12 @@ This mode allows more fine-grained movement and editing commands
 #+END_SRC
 
 *** Open terminal from emacs
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<f12>") (kbd "M-& terminator"))
 (add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
 #+END_SRC
 ** Windows
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (windmove-default-keybindings)
 
 ;; Make windmove work in org-mode:
@@ -899,7 +899,7 @@ This mode allows more fine-grained movement and editing commands
 
 *** Split windows and switch at the same time
 From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (defun vsplit-other-window ()
   "Splits the window vertically and switches to that window."
   (interactive)
@@ -916,12 +916,12 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 #+END_SRC
 
 *** Winner-mode!
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (winner-mode 1)
 #+END_SRC
 
 *** Fullframe
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package fullframe
   :ensure t
   :init
@@ -933,7 +933,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 #+END_SRC
 
 *** Resizing windows
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (defhydra hydra-resize (global-map "<f2>")
   "resizing hydra"
   ("<left>" shrink-window-horizontally "shrink horizontal")
@@ -944,7 +944,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 #+END_SRC
 
 ** TEMP
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (defun copy-line (arg)
   "Copy lines (as many as prefix argument) in the kill ring.
     Ease of use features:
