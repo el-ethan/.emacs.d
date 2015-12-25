@@ -968,7 +968,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 (bind-key "C-L" 'copy-line)
 
-
 (use-package helm-flyspell
   :ensure t
   :config
