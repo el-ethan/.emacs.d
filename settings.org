@@ -386,9 +386,9 @@ Repeated invocations toggle between the two most recently open buffers."
       "~/Dropbox/org_files/da_guai.org" "Uncategorized TODOs")
       "* TODO %?" :kill-buffer t)
 
-    ("n" "New note to notes.org" entry (file
-     "~/Dropbox/org_files/notes.org")
-     "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
+    ("n" "New note to xnotes.org" entry (file
+     "~/Dropbox/org_files/xnotes.org")
+     "* %T\n\n%i%?" :prepend t :empty-lines 1)
 
     ("w" "New work note" entry (file
       "~/Dropbox/org_files/worknotes.org")
