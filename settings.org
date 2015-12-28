@@ -247,7 +247,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ("s" transpose-sexps "sexps")
   ("p" transpose-paragraphs "paragraphs")
   ("c" transpose-chars "characters")
-  ("f" transpose-frame "frames")
+  ("w" transpose-frame "windows")
   )
 
 (defhydra hydra-settings (global-map "<f5>")
@@ -547,7 +547,7 @@ point reaches the beginning or end of the buffer, stop there."
     (setq helm-recentf-fuzzy-match t
         helm-buffers-fuzzy-matching t
         helm-completion-in-region-fuzzy-match t
-	helm-move-to-line-cycle-in-source t
+        ;helm-move-to-line-cycle-in-source t
         helm-mode-fuzzy-match t)
     (setq helm-source-recentf
     (helm-make-source "Recentf" 'helm-recentf-source
@@ -887,7 +887,7 @@ This mode allows more fine-grained movement and editing commands
   (beginning-of-line (or (and arg (1+ arg)) 2))
   (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
-(global-set-key (kbd "C-S-b") 'copy-line)
+(global-set-key (kbd "C-S-l") 'copy-line)
 
 #+END_SRC
 *** Editor-config
