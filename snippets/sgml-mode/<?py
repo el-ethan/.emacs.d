@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <?py
+# key: <?py
+# binding: direct-keybinding
+# --
+<?py $0 ?>

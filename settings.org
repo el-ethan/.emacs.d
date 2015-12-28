@@ -677,12 +677,12 @@ point reaches the beginning or end of the buffer, stop there."
   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
   (add-hook 'python-mode-hook 'visual-line-mode)
-  ;(add-hook 'python-mode-hook 'linum-mode)
   (setq python-check-command "flake8")
   :config
   (define-key elpy-mode-map (kbd "M-.") 'goto-def-or-rgrep)
-
   )
+
+(add-to-list 'auto-mode-alist '("\\.tpl\\'" . sgml-mode))
 #+END_SRC
 
 **** Pdb
@@ -972,5 +972,10 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
+(defvar my-electic-pair-modes '(python-mode org-mode))
 
+(defun my-inhibit-electric-pair-mode (char)
+  (not (member major-mode my-electic-pair-modes)))
+
+(setq electric-pair-inhibit-predicate #'my-inhibit-electric-pair-mode)
 #+END_SRC
