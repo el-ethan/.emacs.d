@@ -294,14 +294,14 @@ Repeated invocations toggle between the two most recently open buffers."
 
 *** TODOs
 #+BEGIN_SRC emacs-lisp
-  (setq org-enforce-todo-dependencies t)
-  ;; (setq org-enforce-todo-checkbox-dependencies t)
+(setq org-enforce-todo-dependencies t)
+;; (setq org-enforce-todo-checkbox-dependencies t)
 
-  ;; Set to 'invisible and blocked tasks wont show up in agenda, t and they will be dimmed
-  (setq org-agenda-dim-blocked-tasks 'invisible)
+;; Set to 'invisible and blocked tasks wont show up in agenda, t and they will be dimmed
+(setq org-agenda-dim-blocked-tasks 'invisible)
 
-  ;; Don't keep track of completed repeating tasks
-  (setq org-log-repeat nil)
+;; Don't keep track of completed repeating tasks
+(setq org-log-repeat nil)
 #+END_SRC
 
 *** Agenda
