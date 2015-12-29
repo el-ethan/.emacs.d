@@ -978,4 +978,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (not (member major-mode my-electic-pair-modes)))
 
 (setq electric-pair-inhibit-predicate #'my-inhibit-electric-pair-mode)
+
+(setq magit-push-current-set-remote-if-missing nil)
 #+END_SRC
