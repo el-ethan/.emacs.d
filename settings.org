@@ -209,11 +209,10 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (use-package key-chord
   :ensure t
-  :disabled t
   :init
   (progn
     (key-chord-mode 1)
-    ;;(key-chord-define-global "bb" 'my/switch-to-previous-buffer)
+    (key-chord-define-global ";f" 'flip-frame)
     )
   )
 #+END_SRC
