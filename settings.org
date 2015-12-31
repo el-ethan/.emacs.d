@@ -683,7 +683,6 @@ point reaches the beginning or end of the buffer, stop there."
   (define-key elpy-mode-map (kbd "M-.") 'goto-def-or-rgrep)
   )
 
-(add-to-list 'auto-mode-alist '("\\.tpl\\'" . sgml-mode))
 #+END_SRC
 
 **** Pdb
@@ -737,6 +736,16 @@ point reaches the beginning or end of the buffer, stop there."
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)))
+#+END_SRC
+
+*** Jinja
+#+BEGIN_SRC emacs-lisp
+(use-package jinja2
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.tpl\\'" . jinja2-mode))
+  )
+
 #+END_SRC
 ** Version control
 *** Magit
