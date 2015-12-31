@@ -213,6 +213,8 @@ Repeated invocations toggle between the two most recently open buffers."
   (progn
     (key-chord-mode 1)
     (key-chord-define-global ";f" 'flip-frame)
+    (key-chord-define-global "jj" 'helm-projectile-find-file)
+    (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
     )
   )
 #+END_SRC
