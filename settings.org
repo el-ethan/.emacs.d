@@ -987,4 +987,11 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   )
 
 (setq org-hide-leading-stars t)
+
+(defun tmp-register ()
+  """ put the current buffer in the temporary register """
+  (interactive)
+  (set-register ?q (cons 'file buffer-file-name)))
+
+(add-hook 'org-mode-hook 'org-indent-mode)
 #+END_SRC
