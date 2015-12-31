@@ -4,4 +4,3 @@
 (column-number-mode)
 (flyspell-mode)
 (add-hook 'text-mode-hook 'flyspell-mode)
-

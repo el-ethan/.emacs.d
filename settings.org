@@ -978,5 +978,13 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 (setq electric-pair-inhibit-predicate #'my-inhibit-electric-pair-mode)
 
-(setq magit-push-current-set-remote-if-missing nil)
+;(setq magit-push-current-set-remote-if-missing nil)
+
+(use-package mouse+
+  :ensure t
+  :init
+  (global-set-key [down-mouse-2] 'mouse-flash-position)
+  )
+
+(setq org-hide-leading-stars t)
 #+END_SRC
