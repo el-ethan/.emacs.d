@@ -740,7 +740,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 *** Jinja
 #+BEGIN_SRC emacs-lisp
-(use-package jinja2
+(use-package jinja2-mode
   :ensure t
   :init
   (add-to-list 'auto-mode-alist '("\\.tpl\\'" . jinja2-mode))
