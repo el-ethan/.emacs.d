@@ -818,7 +818,7 @@ This mode allows more fine-grained movement and editing commands
   (wrap-region-add-wrappers
    '(("(" ")" nil (python-mode org-mode lisp-mode))
      ("'" "'" nil python-mode)
-     ("`" "`" nil (org-mode sql-mode sql-interactive-mode))
+     ("`" "`" nil (org-mode sql-mode sql-interactive-mode gfm-mode))
      ("\"" "\"" nil (org-mode python-mode lisp-mode sql-mode))))
   (add-hook 'org-mode-hook 'wrap-region-mode)
   (add-hook 'python-mode-hook 'wrap-region-mode)
