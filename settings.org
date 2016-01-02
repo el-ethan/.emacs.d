@@ -213,6 +213,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (progn
     (key-chord-mode 1)
     (key-chord-define-global ";f" 'flip-frame)
+    (key-chord-define-global ";t" 'elpy-test-pytest-runner)
     (key-chord-define-global "jj" 'helm-projectile-find-file)
     (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
     )
@@ -1005,4 +1006,8 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (set-register ?q (cons 'file buffer-file-name)))
 
 (add-hook 'org-mode-hook 'org-indent-mode)
+
+
+;(require 'tenjin-mode)
+;(add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
 #+END_SRC
