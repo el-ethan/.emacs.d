@@ -1006,8 +1006,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (set-register ?q (cons 'file buffer-file-name)))
 
 (add-hook 'org-mode-hook 'org-indent-mode)
-
-
-;(require 'tenjin-mode)
-;(add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
+(require 'tenjin-mode)
+(add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
 #+END_SRC

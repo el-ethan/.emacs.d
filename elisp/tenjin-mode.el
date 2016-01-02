@@ -1,5 +1,5 @@
 ;; Define keywords
-(setq tenjin-keywords '("if" "in" "for" "while" "is" "not" "or" "and" "location"))
+(setq tenjin-keywords '("if" "in" "for" "while" "is" "not" "or" "and" "<\\?py"))
 (setq tenjin-hidden-keywords '("<?py" "?>"))
 
 ;; Generate regex for keywords
@@ -11,7 +11,7 @@
 (setq tenjin-font-lock-keywords
     `(
          (,tenjin-keyword-regexp . font-lock-keyword-face)
-         (,tenjin-hide-keywords-regexp . font-lock-function-face)
+         (,tenjin-hidden-keywords-regexp . font-lock-function-face)
          ))
 
 (define-derived-mode tenjin-mode html-mode
@@ -20,4 +20,4 @@
 
 ;; clear out the unneeded regex?
 
-(provide 'tenjin)
+(provide 'tenjin-mode)
