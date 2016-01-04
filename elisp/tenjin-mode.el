@@ -8,10 +8,12 @@
 ;; each category of keyword is given a particular face
 (setq tenjin-font-lock-keywords
     `((,tenjin-keyword-regexp . font-lock-keyword-face)
-         ("\\?>\\|<\\?py" . font-lock-comment-face)
+      ("\\?>\\|<\\?py" . font-lock-comment-face)
+      ("\\${\\|}" . font-lock-constant-face)
+      ("'.*?'" . font-lock-string-face)
          ))
 
-(define-derived-mode tenjin-mode html-mode
+(define-derived-mode tenjin-mode yaml-mode
   (setq font-lock-defaults '(tenjin-font-lock-keywords))
   (setq mode-name "tenjin"))
 
