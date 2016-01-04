@@ -11,6 +11,7 @@
       ("\\?>\\|<\\?py" . font-lock-comment-face)
       ("\\${\\|}" . font-lock-constant-face)
       ("'.*?'" . font-lock-string-face)
+      ("#endfor\\|#endif" . font-lock-type-face)
          ))
 
 (define-derived-mode tenjin-mode yaml-mode
