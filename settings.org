@@ -216,6 +216,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global ";t" 'elpy-test-pytest-runner)
     (key-chord-define-global "jj" 'helm-projectile-find-file)
     (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
+    (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
     )
   )
 #+END_SRC
@@ -496,7 +497,7 @@ phone.
 #+END_SRC
 
 ** Navigation
-*** Custom function for movement
+*** Custom functions for navigation
 #+BEGIN_SRC emacs-lisp
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
@@ -522,6 +523,12 @@ point reaches the beginning or end of the buffer, stop there."
       (move-beginning-of-line 1))))
 
 (global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
+
+(defun my/switch-to-previous-buffer ()
+  "Switch to previously open buffer.
+Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
 #+END_SRC
 
 *** Helm-swoop
@@ -983,7 +990,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-(defvar my-electic-pair-modes '(python-mode org-mode))
+(defvar my-electic-pair-modes '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode))
 
 (defun my-inhibit-electric-pair-mode (char)
   (not (member major-mode my-electic-pair-modes)))
