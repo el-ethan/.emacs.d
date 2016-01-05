@@ -665,7 +665,9 @@ Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (if (region-active-p)
       (comment-or-uncomment-region (region-beginning) (region-end))
-    (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
+    (if (save-excursion (beginning-of-line) (looking-at "[[:space:]]*$"))
+	(comment-dwim nil)
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position)))))
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
 
@@ -997,7 +999,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 (setq electric-pair-inhibit-predicate #'my-inhibit-electric-pair-mode)
 
-;(setq magit-push-current-set-remote-if-missing nil)
+(setq magit-push-current-set-remote-if-missing nil)
 
 (use-package mouse+
   :ensure t

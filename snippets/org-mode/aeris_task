@@ -6,7 +6,7 @@
 
 * AER-$1: $2
   :PROPERTIES:
-  :VISIBILITY: children
+  :VISIBILITY: showall
   :END:
 
 ** description:
@@ -20,12 +20,9 @@ $3
 ** questions
 
 
-** todo
-
-
 ** notes
 
 
-* Final checklist
+** Final checklist
 
 - [ ]
