@@ -134,6 +134,10 @@ Emacs configuration
 (use-package ample-theme
   :ensure t
   :disabled t
+  :init
+  (custom-theme-set-faces
+   'ample
+   '(org-warning ((t (:foreground "#528fd1")))))
   )
 
 (use-package aurora-theme
