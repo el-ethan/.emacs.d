@@ -867,11 +867,13 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
-    :disabled t
     :init
     (require 'auto-complete-config)
     (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-    (ac-config-default))
+    (ac-config-default)
+    (add-to-list 'ac-modes 'sql-interactive-mode)
+    (add-hook 'sql-interactive-mode-hook 'auto-complete-mode)
+)
 #+END_SRC
 *** Undo-tree
 #+BEGIN_SRC emacs-lisp
