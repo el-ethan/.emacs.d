@@ -867,6 +867,7 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
+    :disabled t
     :init
     (require 'auto-complete-config)
     (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -994,7 +995,12 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   ("<up>" enlarge-window "shrink")
   )
 #+END_SRC
-
+** Shortcut to config file
+#+BEGIN_SRC emacs-lisp
+;; Open this config file
+(global-set-key (kbd "C-c s")
+		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (defvar my-electic-pair-modes '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode))
