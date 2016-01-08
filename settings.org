@@ -544,9 +544,9 @@ Repeated invocations toggle between the two most recently open buffers."
   (setq helm-swoop-move-to-line-cycle t)
   (setq helm-swoop-use-line-number-face t)
   ;; disable pre-input, but set input to selection if there is one
-  (setq helm-swoop-pre-input-function
-	(lambda () ""))
-  :bind (("C-s" . helm-swoop))
+  ;(setq helm-swoop-pre-input-function
+	;(lambda () ""))
+  ;:bind (("C-s" . helm-swoop))
   )
 #+END_SRC
 
@@ -1028,4 +1028,16 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 (add-hook 'org-mode-hook 'org-indent-mode)
 (require 'tenjin-mode)
 (add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
+
+(defun my-ediff-no-ask (old-function &rest arguments)
+  "docsting"
+  (ediff-current-file)
+  (old-functon arguments)
+)
+
+;;(advice-add #'ask-user-about-lock :around #'my-ediff-no-ask)
+
+
+ ;;(advice-add 'ask-user-about-lock :before 'ediff-current-file)
+
 #+END_SRC
