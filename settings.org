@@ -325,7 +325,7 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; Make agenda full screen without typing 'o'
 (add-hook 'org-agenda-finalize-hook (lambda () (delete-other-windows)))
 
-(defun my-skip-unless-work ()
+(defun es/skip-unless-work ()
   "Skip trees that are not waiting"
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
     (if (re-search-forward ":work:" subtree-end t)
@@ -434,26 +434,6 @@ phone.
   (add-hook 'after-init-hook #'sync-with-corgi)
 #+END_SRC
 
-*** Org-crypt
-
-#+BEGIN_SRC emacs-lisp
-(require 'org-crypt)
-(org-crypt-use-before-save-magic)
-(setq org-tags-exclude-from-inheritance (quote ("crypt")))
-(setq org-crypt-key nil)
-
-;; GPG key to use for encryption
-;; Either the Key ID or set to nil to use symmetric encryption.
-
-;; Auto-saving does not cooperate with org-crypt.el: so you need
-;; to turn it off if you plan to use org-crypt.el quite often.
-;; Otherwise, you’ll get an (annoying) message each time you
-;; start Org.
-;; To turn it off only locally, you can insert this:
-;;
-;; # -*- buffer-auto-save-file-name: nil; -*-
-#+END_SRC
-
 *** make things look nice
 #+BEGIN_SRC emacs-lisp
   (setq org-src-fontify-natively t
@@ -545,14 +525,13 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
 (use-package helm-swoop
   :ensure t
-  :init
+  :config
   (setq helm-multi-swoop-edit-save t)
   (setq helm-swoop-move-to-line-cycle t)
   (setq helm-swoop-use-line-number-face t)
   ;; disable pre-input, but set input to selection if there is one
-  ;(setq helm-swoop-pre-input-function
-	;(lambda () ""))
-  ;:bind (("C-s" . helm-swoop))
+  (setq helm-swoop-pre-input-function (lambda () ""))
+  :bind (("C-s" . helm-swoop))
   )
 #+END_SRC
 
@@ -580,7 +559,8 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
   :ensure t
-  :init
+  :defer t
+  :config
   (setq helm-ag-insert-at-point 'symbol)
   )
 #+END_SRC
@@ -641,15 +621,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
 
-*** Speedbar
-#+BEGIN_SRC emacs-lisp
-(use-package sr-speedbar
-  :ensure t
-  :disabled t
-  :init
-  (add-hook 'speedbar-load-hook 'visual-line-mode)
-  )
-#+END_SRC
 ** Languages
 *** Python
 #+BEGIN_SRC emacs-lisp
@@ -692,16 +663,6 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
 (add-hook 'gud-mode-hook 'hl-line-mode)
 #+END_SRC
-*** Kivy-mode
-#+BEGIN_SRC emacs-lisp
-(use-package kivy-mode
-  :ensure t
-  :disabled t
-  :init
-  (add-hook 'kivy-mode-hook
-	    (lambda ()
-	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol))))
-#+END_SRC
 
 *** Yaml-mode
 #+BEGIN_SRC emacs-lisp
@@ -741,19 +702,11 @@ Repeated invocations toggle between the two most recently open buffers."
             (toggle-truncate-lines t)))
 #+END_SRC
 
-*** Jinja
-#+BEGIN_SRC emacs-lisp
-(use-package jinja2-mode
-  :ensure t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.tpl\\'" . jinja2-mode))
-  )
-
-#+END_SRC
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
   :ensure t
+  :disabled f
   :diminish yas-minor-mode
   :init (yas-global-mode 1)
   :config
@@ -814,6 +767,7 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :ensure t
+    :defer t
     :bind ("M-SPC" . er/expand-region))
 #+END_SRC
 
@@ -1010,12 +964,12 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-(defvar my-electic-pair-modes '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode))
+(defvar es/electic-pair-modes '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode))
 
-(defun my-inhibit-electric-pair-mode (char)
-  (not (member major-mode my-electic-pair-modes)))
+(defun es/inhibit-electric-pair-mode (char)
+  (not (member major-mode es/electic-pair-modes)))
 
-(setq electric-pair-inhibit-predicate #'my-inhibit-electric-pair-mode)
+(setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
 
 (setq magit-push-current-set-remote-if-missing nil)
 
@@ -1036,13 +990,13 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 (require 'tenjin-mode)
 (add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
 
-(defun my-ediff-no-ask (old-function &rest arguments)
+(defun es/ediff-no-ask (old-function &rest arguments)
   "docsting"
   (ediff-current-file)
   (old-functon arguments)
 )
 
-;;(advice-add #'ask-user-about-lock :around #'my-ediff-no-ask)
+;;(advice-add #'ask-user-about-lock :around #'es/ediff-no-ask)
 
 
  ;;(advice-add 'ask-user-about-lock :before 'ediff-current-file)
