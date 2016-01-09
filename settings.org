@@ -46,14 +46,18 @@ Emacs configuration
 (require 'use-package)
 #+END_SRC
 
+*** Server stuff
+#+BEGIN_SRC emacs-lisp
+(load "server")
+(unless (server-running-p) (server-start))
+#+END_SRC
+
 *** General defaults
 #+BEGIN_SRC emacs-lisp
 ;; Send customizations to another file and load that file
 (setq initial-scratch-message nil)  ;; No scratch buffer message
 (setq initial-major-mode 'org-mode)
 
-;; Don't suspended when I accidently hit C-z
-(global-unset-key (kbd "C-z"))
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -63,9 +67,6 @@ Emacs configuration
 
 ;; Type face size stuff
 (set-face-attribute 'default nil :height 150)
-
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C-\-") 'text-scale-decrease)
 
 ;; Save backups elsewhere
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -86,7 +87,6 @@ Emacs configuration
 ;; Highlight lines (with some themes this is distracting, disable if necessary)
 (global-hl-line-mode t)
 
-(global-set-key "\C-xp" 'pop-to-mark-command)
 (setq set-mark-command-repeat-pop t)
 
 (when (load "elec-pair" t t)
@@ -201,6 +201,12 @@ Emacs configuration
 *** Assorted key bindings
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c o") 'browse-url-of-file)
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C-\-") 'text-scale-decrease)
+(global-set-key "\C-xp" 'pop-to-mark-command)
+
+;; Don't suspended when I accidently hit C-z
+(global-unset-key (kbd "C-z"))
 #+END_SRC
 
 *** Key-chord
@@ -639,6 +645,7 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
 (use-package sr-speedbar
   :ensure t
+  :disabled t
   :init
   (add-hook 'speedbar-load-hook 'visual-line-mode)
   )
