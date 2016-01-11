@@ -595,6 +595,14 @@ Repeated invocations toggle between the two most recently open buffers."
 (setq ace-jump-mode-submode-list '(ace-jump-char-mode ace-jump-line-mode ace-jump-word-mode))
 #+END_SRC
 
+*** Smartscan
+#+BEGIN_SRC emacs-lisp
+(use-package smartscan
+  :ensure t
+  :init
+  (smartscan-mode 1)
+  )
+#+END_SRC
 *** Registers and bookmarks
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-register (global-map "<f1>")
@@ -706,7 +714,6 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
   :ensure t
-  :disabled f
   :diminish yas-minor-mode
   :init (yas-global-mode 1)
   :config
