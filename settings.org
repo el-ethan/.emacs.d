@@ -269,6 +269,14 @@ Repeated invocations toggle between the two most recently open buffers."
   ("v" visual-line-mode "visual line")
   ("s" sr-speedbar-toggle "speedbar")
   )
+
+(defhydra hydra-modes (global-map "s-M")
+  "settings hydra"
+  ("l" lisp-interaction-mode "lisp interaction")
+  ("p" python-mode "python")
+  ("o" org-mode "org")
+  )
+
 #+END_SRC
 
 ** Org
