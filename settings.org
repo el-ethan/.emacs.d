@@ -241,19 +241,22 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hydras!
 
-(defhydra hydra-vc (global-map "<f8>")
+(defhydra hydra-vc ()
   "vc hydra"
   ("n" diff-hl-next-hunk  "next hunk")
   ("p" diff-hl-previous-hunk "previous hunk")
   ("d" diff-hl-diff-goto-hunk "show diff")
   ("r" diff-hl-revert-hunk "revert hunk")
   ("b" magit-blame "blame")
+  ("t" git-timemachine "timemachine")
   )
+
+(global-set-key (kbd "<f8>") 'hydra-vc/body)
 
 (use-package transpose-frame
   :ensure t)
 
-(defhydra hydra-transpose (global-map "C-t")
+(defhydra hydra-transpose ()
   "transposing hydra"
   ("l" transpose-lines "lines")
   ("w" transpose-words "words")
@@ -262,6 +265,8 @@ Repeated invocations toggle between the two most recently open buffers."
   ("c" transpose-chars "characters")
   ("w" transpose-frame "windows")
   )
+
+(global-set-key (kbd "C-t") 'hydra-transpose/body)
 
 (defhydra hydra-settings (global-map "<f5>")
   "settings hydra"
@@ -607,7 +612,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package smartscan
   :ensure t
   :init
-  (smartscan-mode 1)
+  (global-smartscan-mode 1)
   )
 #+END_SRC
 *** Registers and bookmarks
@@ -774,6 +779,13 @@ Repeated invocations toggle between the two most recently open buffers."
   ;; 	 ("C-x v =" . diff-hl-diff-goto-hunk)
   ;; 	 ("C-?" . diff-hl-revert-hunk)
   ;; 	 )
+  )
+#+END_SRC
+
+*** Git-timemachine
+#+BEGIN_SRC emacs-lisp
+(use-package git-timemachine
+  :ensure t
   )
 #+END_SRC
 ** Editing
