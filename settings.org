@@ -39,6 +39,7 @@ Emacs configuration
 *** Use-package
 #+BEGIN_SRC emacs-lisp
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
 
 (setq use-package-verbose t)
@@ -128,7 +129,8 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
   :ensure t
-  :disabled f
+  :init
+  (load-theme 'atom-one-dark t)
   )
 
 (use-package ample-theme
@@ -155,7 +157,6 @@ Emacs configuration
   :disabled t
   )
 
-(load-theme 'atom-one-dark t)
 
 ;; THEME switching stuff from Daniel Mai
 (defun switch-theme (theme)
