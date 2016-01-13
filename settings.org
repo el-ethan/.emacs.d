@@ -228,6 +228,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "jj" 'helm-projectile-find-file)
     (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
     (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
+    (key-chord-define-global "MM" 'hydra-modes/body)
     )
   )
 #+END_SRC
@@ -276,12 +277,14 @@ Repeated invocations toggle between the two most recently open buffers."
   ("s" sr-speedbar-toggle "speedbar")
   )
 
-(defhydra hydra-modes (global-map "s-M")
+(defhydra hydra-modes ()
   "settings hydra"
   ("l" lisp-interaction-mode "lisp interaction")
   ("p" python-mode "python")
   ("o" org-mode "org")
   )
+
+(global-set-key (kbd "s-M") 'hydra-modes/body)
 #+END_SRC
 
 ** Org
