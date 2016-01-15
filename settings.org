@@ -229,6 +229,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
     (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
     (key-chord-define-global "MM" 'hydra-modes/body)
+    (key-chord-define-global "FF" 'delete-other-windows)
     )
   )
 #+END_SRC
