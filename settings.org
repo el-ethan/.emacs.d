@@ -249,7 +249,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ("d" diff-hl-diff-goto-hunk "show diff")
   ("r" diff-hl-revert-hunk "revert hunk")
   ("b" magit-blame "blame")
-  ("t" git-timemachine "timemachine")
+  ("t" git-timemachine "timemachine" :exit t)
   )
 
 (global-set-key (kbd "<f8>") 'hydra-vc/body)
@@ -264,7 +264,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ("s" transpose-sexps "sexps")
   ("p" transpose-paragraphs "paragraphs")
   ("c" transpose-chars "characters")
-  ("w" transpose-frame "windows")
+  ("W" transpose-frame "windows")
   )
 
 (global-set-key (kbd "C-t") 'hydra-transpose/body)
@@ -281,6 +281,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ("l" lisp-interaction-mode "lisp interaction")
   ("p" python-mode "python")
   ("o" org-mode "org")
+  ("s" sql-mysql "MySQL interaction" :exit t)
   )
 
 (global-set-key (kbd "s-M") 'hydra-modes/body)
