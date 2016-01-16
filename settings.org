@@ -253,10 +253,10 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (defhydra hydra-vc ()
   "vc hydra"
-  ("n" diff-hl-next-hunk  "next hunk")
-  ("p" diff-hl-previous-hunk "previous hunk")
-  ("d" diff-hl-diff-goto-hunk "show diff")
-  ("r" diff-hl-revert-hunk "revert hunk")
+  ("n" git-gutter+-next-hunk  "next hunk")
+  ("p" git-gutter+-previous-hunk "previous hunk")
+  ("d" git-gutter+-show-hunk "show diff")
+  ("r" git-gutter+-revert-hunk "revert hunk")
   ("b" magit-blame "blame")
   ("t" git-timemachine "timemachine" :exit t)
   )
@@ -768,17 +768,11 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
 (use-package git-gutter+
   :ensure t
-  :disabled t
   :init
   (global-git-gutter+-mode)
   :config
   (use-package git-gutter-fringe+
     :ensure t)
-  :bind (("<f8>" . git-gutter+-next-hunk)
-  	 ("<f7>" . git-gutter+-previous-hunk)
-  	 ("C-x v =" . git-gutter+-show-hunk)
-  	 ("C-?" . git-gutter+-revert-hunk)
-  	 )
   :diminish (git-gutter+-mode . "gg")
   )
 #+END_SRC
@@ -787,6 +781,7 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
 (use-package diff-hl
   :ensure t
+  :disabled t
   :init
   (global-diff-hl-mode t)
   ;; :bind (("<f8>" . diff-hl-next-hunk)
