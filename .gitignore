@@ -20,3 +20,4 @@ helm-doc.org
 games/
 .mc-lists.el
 .sx
+var/
