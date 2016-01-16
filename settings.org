@@ -4,6 +4,12 @@ Emacs configuration
   :VISIBILITY: children
   :END:
 
+** Shortcut to config file
+#+BEGIN_SRC emacs-lisp
+;; Open this config file
+(global-set-key (kbd "C-c s")
+		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
+#+END_SRC
 ** Basics
 *** GUI stuff
 #+BEGIN_SRC emacs-lisp
@@ -992,12 +998,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   ("<up>" enlarge-window "shrink")
   )
 #+END_SRC
-** Shortcut to config file
-#+BEGIN_SRC emacs-lisp
-;; Open this config file
-(global-set-key (kbd "C-c s")
-		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
-#+END_SRC
+
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (defvar es/electic-pair-modes '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode))
@@ -1017,22 +1018,10 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 (setq org-hide-leading-stars t)
 
-(defun tmp-register ()
-  "put the current buffer in the temporary register"
-  (interactive)
-  (set-register ?q (cons 'file buffer-file-name)))
-
 (add-hook 'org-mode-hook 'org-indent-mode)
 (require 'tenjin-mode)
 (add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
 
-(defun es/ediff-no-ask (old-function &rest arguments)
-  "docsting"
-  (ediff-current-file)
-  (old-functon arguments)
-)
-
-;;(advice-add #'ask-user-about-lock :around #'es/ediff-no-ask)
 (defmacro my/with-advice (adlist &rest body)
   "Execute BODY with temporary advice in ADLIST.
 
