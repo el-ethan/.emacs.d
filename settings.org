@@ -183,9 +183,7 @@ Emacs configuration
   (use-package fill-column-indicator
     :ensure t
     :config
-    (define-globalized-minor-mode
-      global-fci-mode fci-mode (lambda () (fci-mode 1)))
-    (global-fci-mode t)
+    (add-hook 'python-mode-hook 'fci-mode)
     (setq-default fill-column 80)
     (setq-default fci-rule-color "#546D7A"))
 #+END_SRC
