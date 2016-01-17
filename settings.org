@@ -782,6 +782,7 @@ Repeated invocations toggle between the two most recently open buffers."
     :ensure t
     :config
     (setq magit-push-always-verify nil)
+    (setq magit-push-current-set-remote-if-missing nil)
     :bind ("C-c g" . magit-status))
 #+END_SRC
 
@@ -1025,9 +1026,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-
-(setq magit-push-current-set-remote-if-missing nil)
-
 (defmacro my/with-advice (adlist &rest body)
   "Execute BODY with temporary advice in ADLIST.
 
