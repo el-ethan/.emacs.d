@@ -65,6 +65,7 @@ Emacs configuration
 (setq initial-scratch-message nil)  ;; No scratch buffer message
 (setq initial-major-mode 'org-mode)
 
+(column-number-mode)
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -96,10 +97,20 @@ Emacs configuration
 
 (setq set-mark-command-repeat-pop t)
 
+(global-auto-revert-mode)
+#+END_SRC
+
+*** Electric-pair
+#+BEGIN_SRC emacs-lisp
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
 
-(global-auto-revert-mode)
+(defvar es/electic-pair-modes '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode))
+
+(defun es/inhibit-electric-pair-mode (char)
+  (not (member major-mode es/electic-pair-modes)))
+
+(setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
 #+END_SRC
 
 *** History and auto-save
@@ -306,6 +317,8 @@ Repeated invocations toggle between the two most recently open buffers."
 *** General settings
 #+BEGIN_SRC emacs-lisp
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+(setq org-hide-leading-stars t)
+(add-hook 'org-mode-hook 'org-indent-mode)
 
 ;; Open .org and .txt files in org-mode
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
@@ -698,6 +711,8 @@ Repeated invocations toggle between the two most recently open buffers."
   (define-key elpy-mode-map (kbd "M-.") 'goto-def-or-rgrep)
   )
 
+(require 'tenjin-mode)
+(add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
 #+END_SRC
 
 **** Pdb
@@ -924,6 +939,15 @@ This mode allows more fine-grained movement and editing commands
 (load "editorconfig")
 (editorconfig-mode 1)
 #+END_SRC
+*** Mouse+
+#+BEGIN_SRC emacs-lisp
+(use-package mouse+
+  :ensure t
+  :init
+  (global-set-key [down-mouse-2] 'mouse-flash-position)
+  )
+#+END_SRC
+
 ** Work
 #+BEGIN_SRC emacs-lisp
 (when is-work
@@ -1001,26 +1025,8 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-(defvar es/electic-pair-modes '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode))
-
-(defun es/inhibit-electric-pair-mode (char)
-  (not (member major-mode es/electic-pair-modes)))
-
-(setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
 
 (setq magit-push-current-set-remote-if-missing nil)
-
-(use-package mouse+
-  :ensure t
-  :init
-  (global-set-key [down-mouse-2] 'mouse-flash-position)
-  )
-
-(setq org-hide-leading-stars t)
-
-(add-hook 'org-mode-hook 'org-indent-mode)
-(require 'tenjin-mode)
-(add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
 
 (defmacro my/with-advice (adlist &rest body)
   "Execute BODY with temporary advice in ADLIST.
@@ -1063,7 +1069,4 @@ message listing the hooks."
       (dolist (hook log)
         (message "> %s" hook)))
     log))
-
- ;;(advice-add 'ask-user-about-lock :before 'ediff-current-file)
-
 #+END_SRC
