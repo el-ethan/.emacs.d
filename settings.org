@@ -690,11 +690,21 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
 
-(defun goto-def-or-rgrep ()
-  "Go to definition of thing at point or do an rgrep in project if that fails"
-  (interactive)
-  (condition-case nil (elpy-goto-definition)
-    (error (elpy-rgrep-symbol (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol t))))))
+;; (defun goto-def-or-rgrep ()
+;;   "Go to definition of thing at point or do an rgrep in project if that fails"
+;;   (interactive)
+;;   (condition-case nil (elpy-goto-definition)
+;;     (error (elpy-rgrep-symbol (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
+
+(defun elpy-goto-definition-or-rgrep ()
+  "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'.
+
+This first tries `elpy-goto-definition' on the symbol. If it fails to find the definition
+it passes the symbol, wrapped in a regexp for class/function definitions, off to `elpy-rgrep-symbol'"
+    (interactive)
+    (condition-case nil (elpy-goto-definition)
+        (error (elpy-rgrep-symbol
+                   (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
 
 (use-package elpy
   :ensure t
@@ -709,7 +719,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (add-hook 'python-mode-hook 'visual-line-mode)
   (setq python-check-command "flake8")
   :config
-  (define-key elpy-mode-map (kbd "M-.") 'goto-def-or-rgrep)
+  (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
   )
 
 (require 'tenjin-mode)
@@ -1068,4 +1078,20 @@ message listing the hooks."
       (dolist (hook log)
         (message "> %s" hook)))
     log))
+
+(define-key org-agenda-mode-map "x" 'my/org-agenda-reschedule-hour)
+
+(defun my/org-agenda-reschedule-hour () (interactive) (org-agenda-date-later-hours 3))
+
+(defun my/skip-if-after-5-or-weekend ()
+  "Return t if it is after 5PM or is a weekend"
+  (let ((current-hour (string-to-number (substring (current-time-string) 11 13))))
+    (or (> current-hour 17) (member (substring (current-time-string) 0 3) '("Sat" "Sun")))))
+
+(defun my/after-five-or-weekend ()
+  "Return t if it is after 5PM or is a weekend"
+  (and (or (> (string-to-number (substring (current-time-string) 11 13)) 17)
+	   (member (substring (current-time-string) 0 3) '("Sat" "Sun")))
+       (org-agenda-skip-entry-if 'my/after-five-or-weekend 'regexp ":WORK:")))
+
 #+END_SRC
