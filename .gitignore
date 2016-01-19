@@ -21,3 +21,4 @@ games/
 .mc-lists.el
 .sx
 var/
+abbrev_defs
