@@ -146,6 +146,7 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
   :ensure t
+  :disabled t
   :init
   (load-theme 'atom-one-dark t)
   )
@@ -161,7 +162,8 @@ Emacs configuration
 
 (use-package aurora-theme
   :ensure t
-  :disabled t
+  :init
+  (load-theme 'aurora t)
   )
 
 (use-package darktooth-theme
