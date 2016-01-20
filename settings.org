@@ -316,6 +316,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ("p" python-mode "python")
   ("o" org-mode "org")
   ("s" sql-mysql "MySQL interaction" :exit t)
+  ("x" sx-compose-mode "Stack Exhange compose")
   )
 
 (global-set-key (kbd "s-M") 'hydra-modes/body)
