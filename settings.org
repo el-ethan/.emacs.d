@@ -789,9 +789,10 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 *** Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
+    :init
+    (setq magit-push-current-set-remote-if-missing nil)
     :config
     (setq magit-push-always-verify nil)
-    (setq magit-push-current-set-remote-if-missing nil)
     :bind ("C-c g" . magit-status))
 #+END_SRC
 
@@ -897,13 +898,12 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
-    :disabled t
     :init
     (require 'auto-complete-config)
-    (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-    (ac-config-default)
+    (add-to-list 'ac-dictionary-directories "~/.emacs.d/es-ac-dict")
+    (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
     (add-to-list 'ac-modes 'sql-interactive-mode)
-    (add-hook 'sql-interactive-mode-hook 'auto-complete-mode)
+    (add-hook 'sql-interactive-mode-hook (lambda () (auto-complete-mode 1)))
 )
 #+END_SRC
 *** Undo-tree
