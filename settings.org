@@ -21,6 +21,10 @@ Emacs configuration
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
   (add-hook 'window-setup-hook 'toggle-frame-maximized t))
+
+;; Another wy to make fullscreen
+;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 #+END_SRC
 
 *** MELPA and other repositories
@@ -48,6 +52,7 @@ Emacs configuration
   (package-refresh-contents)
   (package-install 'use-package))
 
+(setq use-package-always-ensure t)
 (setq use-package-verbose t)
 
 (require 'use-package)
@@ -67,8 +72,20 @@ Emacs configuration
 
 (column-number-mode)
 
+;; warn when opening files bigger than 100MB
+(setq large-file-warning-threshold 100000000)
+
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+;; nice scrolling
+(setq scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
+
+;; kill process buffer without confirmation
+(setq kill-buffer-query-functions
+      (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
 
 ;; Remove text in active region if inserting text
 (delete-selection-mode 1)
@@ -145,14 +162,12 @@ Emacs configuration
 *** Theme
 #+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
-  :ensure t
   :disabled t
   :init
   (load-theme 'atom-one-dark t)
   )
 
 (use-package ample-theme
-  :ensure t
   :disabled t
   :init
   (custom-theme-set-faces
@@ -161,18 +176,15 @@ Emacs configuration
   )
 
 (use-package aurora-theme
-  :ensure t
   :init
   (load-theme 'aurora t)
   )
 
 (use-package darktooth-theme
-  :ensure t
   :disabled t
   )
 
 (use-package zenburn-theme
-  :ensure t
   :disabled t
   )
 
@@ -200,7 +212,6 @@ Emacs configuration
 *** Fill-column-indicator
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
-    :ensure t
     :config
     (add-hook 'python-mode-hook 'fci-mode)
     (setq-default fill-column 80)
@@ -210,7 +221,6 @@ Emacs configuration
 *** Rainbow-delimiters
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
-  :ensure t
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
@@ -218,7 +228,6 @@ Emacs configuration
 *** Fixmee-mode
 #+BEGIN_SRC emacs-lisp
 (use-package fixmee
-  :ensure t
   :config
   (add-hook 'python-mode-hook 'fixmee-mode)
   )
@@ -231,7 +240,7 @@ Emacs configuration
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C-\-") 'text-scale-decrease)
 (global-set-key "\C-xp" 'pop-to-mark-command)
-
+(define-key dired-mode-map "b" 'dired-up-directory)
 ;; Don't suspended when I accidently hit C-z
 (global-unset-key (kbd "C-z"))
 #+END_SRC
@@ -245,7 +254,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 (use-package key-chord
-  :ensure t
   :init
   (progn
     (key-chord-mode 1)
@@ -263,7 +271,6 @@ Repeated invocations toggle between the two most recently open buffers."
 ** Hydra
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
-  :ensure t
   :defer t
   )
 
@@ -282,8 +289,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (global-set-key (kbd "<f8>") 'hydra-vc/body)
 
-(use-package transpose-frame
-  :ensure t)
+(use-package transpose-frame)
 
 (defhydra hydra-transpose ()
   "transposing hydra"
@@ -500,7 +506,6 @@ phone.
 ** Deft
 #+BEGIN_SRC emacs-lisp
   (use-package deft
-    :ensure t
     :defer t
     :config
     (setq deft-directory "~/Dropbox/org_files")
@@ -515,7 +520,6 @@ phone.
 ** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-  :ensure t
   :defer t
   :diminish projectile-mode
   :config
@@ -527,7 +531,6 @@ phone.
     (projectile-global-mode)))
 
 (use-package helm-projectile
-  :ensure t
   :defer t
   :init
   (helm-projectile-on))
@@ -571,7 +574,6 @@ Repeated invocations toggle between the two most recently open buffers."
 *** Helm-swoop
 #+BEGIN_SRC emacs-lisp
 (use-package helm-swoop
-  :ensure t
   :config
   (setq helm-multi-swoop-edit-save t)
   (setq helm-swoop-move-to-line-cycle t)
@@ -585,7 +587,6 @@ Repeated invocations toggle between the two most recently open buffers."
 *** Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
-    :ensure t
     :init
     ;;(require 'helm-config)
     (helm-mode 1)
@@ -607,7 +608,6 @@ Repeated invocations toggle between the two most recently open buffers."
 *** Helm-ag
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
-  :ensure t
   :defer t
   :config
   (setq helm-ag-insert-at-point 'symbol)
@@ -647,7 +647,6 @@ Repeated invocations toggle between the two most recently open buffers."
 *** Smartscan
 #+BEGIN_SRC emacs-lisp
 (use-package smartscan
-  :ensure t
   :init
   (global-smartscan-mode 1)
   )
@@ -709,12 +708,12 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
                    (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
 
 (use-package elpy
-  :ensure t
   :init
   (elpy-enable)
+  (setq elpy-rpc-timeout nil)
   (setq elpy-rpc-backend "jedi")  ; "rope" is another possibility
   (elpy-use-ipython)
-  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst")
+  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.tpl")
   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
@@ -736,7 +735,6 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 *** Yaml-mode
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
-  :ensure t
   :config
   (add-hook 'yaml-mode-hook
 	    (lambda ()
@@ -754,7 +752,6 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 **** Eldoc
 #+BEGIN_SRC emacs-lisp
 (use-package "eldoc"
-  :ensure t
   :diminish eldoc-mode
   :commands turn-on-eldoc-mode
   :defer t
@@ -774,7 +771,6 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
-  :ensure t
   :diminish yas-minor-mode
   :init (yas-global-mode 1)
   :config
@@ -792,7 +788,6 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 *** Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-    :ensure t
     :config
     (setq magit-push-always-verify nil)
     (setq magit-push-current-set-remote-if-missing nil)
@@ -802,12 +797,10 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 *** Git Gutter
 #+BEGIN_SRC emacs-lisp
 (use-package git-gutter+
-  :ensure t
   :init
   (global-git-gutter+-mode)
   :config
-  (use-package git-gutter-fringe+
-    :ensure t)
+  (use-package git-gutter-fringe+)
   :diminish (git-gutter+-mode . "gg")
   )
 #+END_SRC
@@ -815,7 +808,6 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 *** Diff-hl
 #+BEGIN_SRC emacs-lisp
 (use-package diff-hl
-  :ensure t
   :disabled t
   :init
   (global-diff-hl-mode t)
@@ -891,8 +883,12 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t
-  :init
-  (global-company-mode t)
+  :config
+  (global-company-mode 1)
+  (setq company-idle-delay 0)
+  (setq company-tooltip-limit 5)
+  (setq company-minimum-prefix-length 1)
+  (setq company-tooltip-flip-when-above t)
   )
 #+END_SRC
 *** Auto-complete
@@ -1017,7 +1013,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 *** Fullframe
 #+BEGIN_SRC emacs-lisp
 (use-package fullframe
-  :ensure t
   :init
   (fullframe magit-status magit-mode-quit-window)
   (fullframe projectile-vc magit-mode-quit-window)
@@ -1095,5 +1090,12 @@ message listing the hooks."
   (and (or (> (string-to-number (substring (current-time-string) 11 13)) 17)
 	   (member (substring (current-time-string) 0 3) '("Sat" "Sun")))
        (org-agenda-skip-entry-if 'my/after-five-or-weekend 'regexp ":WORK:")))
+
+
+(use-package sx
+  :config
+  (require 'sx-load))
+
+(use-package markdown-mode)
 
 #+END_SRC
