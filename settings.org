@@ -888,9 +888,10 @@ This mode allows more fine-grained movement and editing commands
   (global-company-mode 1)
   (setq company-idle-delay 0)
   (setq company-tooltip-limit 5)
-  (setq company-minimum-prefix-length 1)
+  (setq company-minimum-prefix-length 3)
   (setq company-tooltip-flip-when-above t)
   )
+
 #+END_SRC
 *** Auto-complete
 #+BEGIN_SRC emacs-lisp
