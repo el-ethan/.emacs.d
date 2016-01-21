@@ -595,14 +595,16 @@ Repeated invocations toggle between the two most recently open buffers."
         helm-buffers-fuzzy-matching t
         helm-completion-in-region-fuzzy-match t
         ;helm-move-to-line-cycle-in-source t
-        helm-mode-fuzzy-match t)
+        helm-mode-fuzzy-match t
+	helm-recentf-fuzzy-match t
+	helm-M-x-fuzzy-match t)
+    (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols))
     (setq helm-source-recentf
-    (helm-make-source "Recentf" 'helm-recentf-source
-      :fuzzy-match t))
+	  (helm-make-source "Recentf" 'helm-recentf-source
+	    :fuzzy-match t))
     :bind (("C-x b" . helm-mini)
            ("C-x f" . helm-recentf)
-	   ("C-x C-f" . helm-find-files)
-	   ("M-x" . helm-M-x)
+	   ("M-x" .  helm-M-x)
            ("M-y" . helm-show-kill-ring)))
 #+END_SRC
 
