@@ -148,14 +148,12 @@ Emacs configuration
 
 *** Scratch files
 #+BEGIN_SRC emacs-lisp
-(defun make-scratch-buffer ()
+(defun es/make-scratch-buffer ()
   "makes a new scratch buffer, uniquely named"
   (interactive)
   (switch-to-buffer "_scratch")
   (rename-uniquely)
   (funcall (and initial-major-mode)))
-
-(global-set-key (kbd "<f9>") 'make-scratch-buffer)
 #+END_SRC
 
 ** Visuals
@@ -516,6 +514,20 @@ phone.
     (setq deft-use-filter-string-for-filename t)
     :bind (("C-c d" . deft)))
   ;;(setq deft-auto-save-interval 0)
+
+(defun es/make-scratches-in-deft ()
+  "save a new file to deft with a unique name based on current time
+
+The file will be uniquely named with xscratch + yeardatehourminutesecond"
+  (interactive)
+  (let ((today-string (concat (substring (current-time-string) 20)
+			      (substring (current-time-string) 8 10)
+			      (substring (current-time-string) 11 13)
+			      (substring (current-time-string) 14 16)
+			      (substring (current-time-string) 17 19))))
+    (deft-new-file-named (concat "xscratch" today-string))))
+
+(global-set-key (kbd "<f9>") 'es/make-scratches-in-deft)
 #+END_SRC
 
 ** Projectile
