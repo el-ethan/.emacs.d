@@ -1101,5 +1101,12 @@ message listing the hooks."
   (require 'sx-load))
 
 (use-package markdown-mode)
+;; allow comment region in the code edit buffer (according to language)
+(defun my-org-comment-dwim (&optional arg)
+  (interactive "P")
+  (or (org-babel-do-key-sequence-in-edit-buffer (kbd "M-;"))
+      (comment-dwim arg)))
 
+(define-key org-mode-map
+  (kbd "M-;") 'my-org-comment-dwim)
 #+END_SRC
