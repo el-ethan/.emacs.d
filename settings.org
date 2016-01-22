@@ -721,6 +721,7 @@ Repeated invocations toggle between the two most recently open buffers."
 This first tries `elpy-goto-definition' on the symbol. If it fails to find the definition
 it passes the symbol, wrapped in a regexp for class/function definitions, off to `elpy-rgrep-symbol'"
     (interactive)
+    (ring-insert find-tag-marker-ring (point-marker))
     (condition-case nil (elpy-goto-definition)
         (error (elpy-rgrep-symbol
                    (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
