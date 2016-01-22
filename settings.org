@@ -315,6 +315,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ("o" org-mode "org")
   ("s" sql-mysql "MySQL interaction" :exit t)
   ("x" sx-compose-mode "Stack Exhange compose")
+  ("m" gfm-mode "Markdown")
   )
 
 (global-set-key (kbd "s-M") 'hydra-modes/body)
@@ -522,6 +523,7 @@ phone.
 The file will be uniquely named with xscratch + yeardatehourminutesecond"
   (interactive)
   (let ((today-string (concat (substring (current-time-string) 20)
+                  (substring (current-time-string) 4 7)
 			      (substring (current-time-string) 8 10)
 			      (substring (current-time-string) 11 13)
 			      (substring (current-time-string) 14 16)
