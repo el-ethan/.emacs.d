@@ -282,6 +282,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "MM" 'hydra-modes/body)
     (key-chord-define-global "FF" 'delete-other-windows)
     (key-chord-define-global "GG" 'magit-status)
+    (key-chord-define-global "SS" 'helm-swoop-back-to-last-point)
     )
   )
 #+END_SRC
@@ -617,7 +618,6 @@ Repeated invocations toggle between the two most recently open buffers."
   ;; disable pre-input, but set input to selection if there is one
   (setq helm-swoop-pre-input-function (lambda () ""))
   :bind (("C-s" . helm-swoop)
-         ("C-x p" . helm-swoop-back-to-last-point)
 	 )
   )
 #+END_SRC
