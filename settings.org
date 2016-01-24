@@ -281,7 +281,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
     (key-chord-define-global "MM" 'hydra-modes/body)
     (key-chord-define-global "FF" 'delete-other-windows)
-
+    (key-chord-define-global "GG" 'magit-status)
     )
   )
 #+END_SRC
@@ -612,11 +612,13 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package helm-swoop
   :config
   (setq helm-multi-swoop-edit-save t)
-  (setq helm-swoop-move-to-line-cycle t)
+  (setq helm-swoop-move-to-line-cycle nil)
   (setq helm-swoop-use-line-number-face t)
   ;; disable pre-input, but set input to selection if there is one
   (setq helm-swoop-pre-input-function (lambda () ""))
-  :bind (("C-s" . helm-swoop))
+  :bind (("C-s" . helm-swoop)
+         ("C-x p" . helm-swoop-back-to-last-point)
+	 )
   )
 #+END_SRC
 
@@ -627,12 +629,11 @@ Repeated invocations toggle between the two most recently open buffers."
     ;;(require 'helm-config)
     (helm-mode 1)
     (setq helm-recentf-fuzzy-match t
-        helm-buffers-fuzzy-matching t
-        helm-completion-in-region-fuzzy-match t
-        ;helm-move-to-line-cycle-in-source t
-        helm-mode-fuzzy-match t
-	helm-recentf-fuzzy-match t
-	helm-M-x-fuzzy-match t)
+	  helm-buffers-fuzzy-matching t
+	  helm-completion-in-region-fuzzy-match t
+	  helm-mode-fuzzy-match t
+	  helm-recentf-fuzzy-match t
+	  helm-M-x-fuzzy-match t)
     (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols))
     (setq helm-source-recentf
 	  (helm-make-source "Recentf" 'helm-recentf-source
@@ -919,6 +920,13 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+END_SRC
 
+*** Flycheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :init
+  (global-flycheck-mode)
+  )
+#+END_SRC
 *** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
@@ -1145,4 +1153,5 @@ message listing the hooks."
 
 (define-key org-mode-map
   (kbd "M-;") 'my-org-comment-dwim)
+
 #+END_SRC
