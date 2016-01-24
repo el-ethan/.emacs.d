@@ -156,6 +156,15 @@ Emacs configuration
   (funcall (and initial-major-mode)))
 #+END_SRC
 
+*** utf-8
+#+BEGIN_SRC emacs-lisp
+;; UTF-8 please
+(setq locale-coding-system 'utf-8) ; pretty
+(set-terminal-coding-system 'utf-8) ; pretty
+(set-keyboard-coding-system 'utf-8) ; pretty
+(set-selection-coding-system 'utf-8) ; please
+(prefer-coding-system 'utf-8) ; with sugar on top
+#+END_SRC
 ** Visuals
 *** Theme
 #+BEGIN_SRC emacs-lisp
@@ -231,6 +240,16 @@ Emacs configuration
   )
 #+END_SRC
 
+*** Org-bullets
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+:init
+(setq org-bullets-bullet-list
+'("◉" "◎" "⚫" "○" "►" "◇"))
+:config
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+)
+#+END_SRC
 ** Keybindings
 *** Assorted key bindings
 #+BEGIN_SRC emacs-lisp
@@ -262,6 +281,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
     (key-chord-define-global "MM" 'hydra-modes/body)
     (key-chord-define-global "FF" 'delete-other-windows)
+
     )
   )
 #+END_SRC
@@ -408,8 +428,8 @@ Repeated invocations toggle between the two most recently open buffers."
 	 ((org-agenda-prefix-format "- ")
 	  (org-show-context-detail 'minimal)
 	  (org-agenda-todo-keyword-format "")))
-	(";" "Someday"
-	 ((tags-todo "+someday"))
+	(";" "Someday and projects"
+	 ((tags-todo "+someday+projects"))
 	 ((org-agenda-prefix-format "- ")
 	  (org-show-context-detail 'minimal)
 	  (org-agenda-remove-tags t)
