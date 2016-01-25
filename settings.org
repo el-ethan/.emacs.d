@@ -949,7 +949,7 @@ This mode allows more fine-grained movement and editing commands
     (add-to-list 'ac-dictionary-directories "~/.emacs.d/es-ac-dict")
     (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
     (add-to-list 'ac-modes 'sql-interactive-mode)
-    (add-hook 'sql-interactive-mode-hook (lambda () (auto-complete-mode 1)))
+    (add-hook 'sql-interactive-mode-hook (lambda () (auto-complete-mode 1) (company-mode)))
 )
 #+END_SRC
 *** Undo-tree
