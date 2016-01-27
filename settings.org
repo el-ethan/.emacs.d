@@ -941,8 +941,8 @@ This mode allows more fine-grained movement and editing commands
   (setq company-tooltip-limit 5)
   (setq company-minimum-prefix-length 3)
   (setq company-tooltip-flip-when-above t)
+  (setq company-dabbrev-ignore-case t)
   )
-
 #+END_SRC
 *** Auto-complete
 #+BEGIN_SRC emacs-lisp
@@ -1158,4 +1158,6 @@ message listing the hooks."
 (define-key org-mode-map
   (kbd "M-;") 'my-org-comment-dwim)
 
+(define-key helm-map
+  (kbd "<down-mouse-2>") 'mouse-yank-primary)
 #+END_SRC
