@@ -1161,4 +1161,7 @@ message listing the hooks."
 
 (define-key helm-map
   (kbd "<down-mouse-2>") 'mouse-yank-primary)
+
+(define-key helm-map
+  (kbd "<drag-mouse-2>") 'ignore)
 #+END_SRC
