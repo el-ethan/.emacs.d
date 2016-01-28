@@ -260,6 +260,7 @@ Emacs configuration
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C-\-") 'text-scale-decrease)
 (global-set-key "\C-xp" 'pop-to-mark-command)
+(global-set-key (kbd "s-n") 'new-frame)
 (define-key dired-mode-map "b" 'dired-up-directory)
 ;; Don't suspended when I accidently hit C-z
 (global-unset-key (kbd "C-z"))
@@ -941,7 +942,7 @@ This mode allows more fine-grained movement and editing commands
   (setq company-idle-delay 0)
   (setq company-tooltip-limit 5)
   (setq company-minimum-prefix-length 3)
-  (setq company-tooltip-flip-when-above t)
+  ;; (setq company-tooltip-flip-when-above t)
   (setq company-dabbrev-ignore-case t)
   )
 #+END_SRC
