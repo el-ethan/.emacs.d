@@ -720,6 +720,22 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-S-b") 'my/quick-save-bookmark)
 (bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
+** Yasnippet
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :init (yas-global-mode 1)
+  :config
+  (progn
+    (yas-global-mode)
+    (add-hook 'term-mode-hook (lambda()
+				(setq yas-dont-activate t)))
+    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    (define-key yas-minor-mode-map (kbd "<tab>") nil)
+    (define-key yas-minor-mode-map (kbd "TAB") nil)
+    (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
+    (yas-global-mode 1)))
+#+END_SRC
 
 ** Languages
 *** Python
@@ -811,23 +827,6 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)))
-#+END_SRC
-
-** Yasnippet
-#+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :init (yas-global-mode 1)
-  :config
-  (progn
-    (yas-global-mode)
-    (add-hook 'term-mode-hook (lambda()
-				(setq yas-dont-activate t)))
-    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-    (define-key yas-minor-mode-map (kbd "<tab>") nil)
-    (define-key yas-minor-mode-map (kbd "TAB") nil)
-    (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
-    (yas-global-mode 1)))
 #+END_SRC
 ** Version control
 *** Magit
