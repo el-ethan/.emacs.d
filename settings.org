@@ -772,7 +772,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
   :init
   (elpy-enable)
   (setq elpy-rpc-timeout nil)
-  (setq elpy-rpc-backend "jedi")  ; "rope" is another possibility
+  (setq elpy-rpc-backend "rope")  ; "rope" is another possibility
   (elpy-use-ipython)
   (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.tpl")
   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
