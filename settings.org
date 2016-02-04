@@ -257,45 +257,6 @@ Emacs configuration
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 )
 #+END_SRC
-** Keybindings
-*** Assorted key bindings
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-c o") 'browse-url-of-file)
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C-\-") 'text-scale-decrease)
-(global-set-key "\C-xp" 'pop-to-mark-command)
-(global-set-key (kbd "s-n") 'new-frame)
-(define-key dired-mode-map "b" 'dired-up-directory)
-;; Don't suspended when I accidently hit C-z
-(global-unset-key (kbd "C-z"))
-#+END_SRC
-
-*** Key-chord
-#+BEGIN_SRC emacs-lisp
-(defun my/switch-to-previous-buffer ()
-  "Switch to previously open buffer.
-Repeated invocations toggle between the two most recently open buffers."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
-
-(use-package key-chord
-  :init
-  (progn
-    (key-chord-mode 1)
-    (key-chord-define-global ";f" 'flip-frame)
-    (key-chord-define-global ";t" 'elpy-test-pytest-runner)
-    (key-chord-define-global "jj" 'helm-projectile-find-file)
-    (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
-    (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
-    (key-chord-define-global "\\\\" 'helm-mini)
-    (key-chord-define-global "MM" 'hydra-modes/body)
-    (key-chord-define-global "FF" 'delete-other-windows)
-    (key-chord-define-global "GG" 'magit-status)
-    (key-chord-define-global "SS" 'helm-swoop-back-to-last-point)
-    )
-  )
-#+END_SRC
-
 ** Hydra
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
@@ -578,6 +539,7 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
 
 (use-package helm-projectile
   :defer t
+  :commands helm-projectile-find-file
   :init
   (helm-projectile-on))
 #+END_SRC
@@ -651,6 +613,13 @@ Repeated invocations toggle between the two most recently open buffers."
            ("C-x f" . helm-recentf)
 	   ("M-x" .  helm-M-x)
            ("M-y" . helm-show-kill-ring)))
+
+(defun es/helm-mini-or-projectile-find-file ()
+  (interactive)
+  (if (not (helm-alive-p))
+      (helm-mini)
+    (progn (helm-keyboard-quit)
+	   (helm-projectile-find-file))))
 #+END_SRC
 
 *** Helm-ag
@@ -724,6 +693,44 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-S-b") 'my/quick-save-bookmark)
 (bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
+** Keybindings
+*** Assorted key bindings
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c o") 'browse-url-of-file)
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C-\-") 'text-scale-decrease)
+(global-set-key "\C-xp" 'pop-to-mark-command)
+(global-set-key (kbd "s-n") 'new-frame)
+(define-key dired-mode-map "b" 'dired-up-directory)
+;; Don't suspended when I accidently hit C-z
+(global-unset-key (kbd "C-z"))
+#+END_SRC
+
+*** Key-chord
+#+BEGIN_SRC emacs-lisp
+(defun my/switch-to-previous-buffer ()
+  "Switch to previously open buffer.
+Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(use-package key-chord
+  :init
+  (progn
+    (key-chord-mode 1)
+    (key-chord-define-global ";f" 'flip-frame)
+    (key-chord-define-global ";t" 'elpy-test-pytest-runner)
+    (key-chord-define-global "jj" 'helm-projectile-find-file)
+    (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
+    (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
+    (key-chord-define-global "\\\\" 'es/helm-mini-or-projectile-find-file)
+    (key-chord-define-global "MM" 'hydra-modes/body)
+    (key-chord-define-global "FF" 'delete-other-windows)
+    (key-chord-define-global "GG" 'magit-status)
+    (key-chord-define-global "SS" 'helm-swoop-back-to-last-point)
+    )
+  )
+#+END_SRC
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
@@ -754,12 +761,6 @@ Repeated invocations toggle between the two most recently open buffers."
       (comment-or-uncomment-region (line-beginning-position) (line-end-position)))))
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
-
-;; (defun goto-def-or-rgrep ()
-;;   "Go to definition of thing at point or do an rgrep in project if that fails"
-;;   (interactive)
-;;   (condition-case nil (elpy-goto-definition)
-;;     (error (elpy-rgrep-symbol (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
 
 (defun elpy-goto-definition-or-rgrep ()
   "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'.
