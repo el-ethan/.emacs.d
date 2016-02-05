@@ -616,10 +616,9 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (defun es/helm-mini-or-projectile-find-file ()
   (interactive)
-  (if (not (helm-alive-p))
-      (helm-mini)
-    (progn (helm-keyboard-quit)
-	   (helm-projectile-find-file))))
+  (if (helm-alive-p)
+      (helm-run-after-exit #'helm-projectile-find-file)
+    (helm-mini)))
 #+END_SRC
 
 *** Helm-ag
