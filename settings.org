@@ -347,6 +347,15 @@ Emacs configuration
   (lambda () (interactive) (org-capture nil "i")))
 (define-key global-map "\C-cnn" ;new note
   (lambda () (interactive) (org-capture nil "n")))
+
+;; allow comment region in the code edit buffer (according to language)
+(defun my-org-comment-dwim (&optional arg)
+  (interactive "P")
+  (or (org-babel-do-key-sequence-in-edit-buffer (kbd "M-;"))
+      (comment-dwim arg)))
+
+(define-key org-mode-map
+  (kbd "M-;") 'my-org-comment-dwim)
 #+END_SRC
 
 *** TODOs
@@ -613,6 +622,12 @@ Repeated invocations toggle between the two most recently open buffers."
            ("C-x f" . helm-recentf)
 	   ("M-x" .  helm-M-x)
            ("M-y" . helm-show-kill-ring)))
+
+(define-key helm-map
+  (kbd "<down-mouse-2>") 'mouse-yank-primary)
+
+(define-key helm-map
+  (kbd "<drag-mouse-2>") 'ignore)
 
 (defun es/helm-mini-or-projectile-find-file ()
   (interactive)
@@ -1089,6 +1104,17 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   )
 #+END_SRC
 
+** SX-mode
+#+BEGIN_SRC emacs-lisp
+(use-package sx
+  :config
+  (require 'sx-load))
+#+END_SRC
+
+** Markdown-mode
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode)
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (defmacro my/with-advice (adlist &rest body)
@@ -1132,40 +1158,4 @@ message listing the hooks."
       (dolist (hook log)
         (message "> %s" hook)))
     log))
-
-(define-key org-agenda-mode-map "x" 'my/org-agenda-reschedule-hour)
-
-(defun my/org-agenda-reschedule-hour () (interactive) (org-agenda-date-later-hours 3))
-
-(defun my/skip-if-after-5-or-weekend ()
-  "Return t if it is after 5PM or is a weekend"
-  (let ((current-hour (string-to-number (substring (current-time-string) 11 13))))
-    (or (> current-hour 17) (member (substring (current-time-string) 0 3) '("Sat" "Sun")))))
-
-(defun my/after-five-or-weekend ()
-  "Return t if it is after 5PM or is a weekend"
-  (and (or (> (string-to-number (substring (current-time-string) 11 13)) 17)
-	   (member (substring (current-time-string) 0 3) '("Sat" "Sun")))
-       (org-agenda-skip-entry-if 'my/after-five-or-weekend 'regexp ":WORK:")))
-
-
-(use-package sx
-  :config
-  (require 'sx-load))
-
-(use-package markdown-mode)
-;; allow comment region in the code edit buffer (according to language)
-(defun my-org-comment-dwim (&optional arg)
-  (interactive "P")
-  (or (org-babel-do-key-sequence-in-edit-buffer (kbd "M-;"))
-      (comment-dwim arg)))
-
-(define-key org-mode-map
-  (kbd "M-;") 'my-org-comment-dwim)
-
-(define-key helm-map
-  (kbd "<down-mouse-2>") 'mouse-yank-primary)
-
-(define-key helm-map
-  (kbd "<drag-mouse-2>") 'ignore)
 #+END_SRC
