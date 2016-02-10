@@ -301,12 +301,12 @@ Emacs configuration
 
 (defhydra hydra-modes ()
   "settings hydra"
-  ("l" lisp-interaction-mode "lisp interaction")
-  ("p" python-mode "python")
-  ("o" org-mode "org")
+  ("l" lisp-interaction-mode "lisp interaction" :exit t)
+  ("p" python-mode "python" :exit t)
+  ("o" org-mode "org" :exit t)
   ("s" sql-mysql "MySQL interaction" :exit t)
-  ("x" sx-compose-mode "Stack Exhange compose")
-  ("m" gfm-mode "Markdown")
+  ("x" sx-compose-mode "Stack Exhange compose" :exit t)
+  ("m" gfm-mode "Markdown" :exit t)
   )
 
 (global-set-key (kbd "s-M") 'hydra-modes/body)
@@ -1114,6 +1114,12 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 ** Markdown-mode
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode)
+#+END_SRC
+
+** ws-butler
+#+BEGIN_SRC emacs-lisp
+(use-package ws-butler
+  :init (ws-butler-global-mode 1))
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
