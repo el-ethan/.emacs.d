@@ -176,7 +176,6 @@ Emacs configuration
 *** Theme
 #+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
-  :disabled t
   :init
   (load-theme 'atom-one-dark t)
   )
@@ -190,6 +189,7 @@ Emacs configuration
   )
 
 (use-package aurora-theme
+  :disabled t
   :init
   (load-theme 'aurora t)
   )
@@ -1120,6 +1120,12 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 #+BEGIN_SRC emacs-lisp
 (use-package ws-butler
   :init (ws-butler-global-mode 1))
+#+END_SRC
+
+** smart-mode-line
+#+BEGIN_SRC emacs-lisp
+(use-package smart-mode-line
+  :init (sml/setup))
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
