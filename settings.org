@@ -1125,7 +1125,9 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 ** smart-mode-line
 #+BEGIN_SRC emacs-lisp
 (use-package smart-mode-line
-  :init (sml/setup))
+  :init
+  (setq sml/theme 'respectful)
+  (sml/setup))
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
