@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: test-print
+# key: xprint
+# --
+def test(self):
+    self.show_receipt_report(self.cart.order)

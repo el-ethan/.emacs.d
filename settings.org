@@ -176,6 +176,7 @@ Emacs configuration
 *** Theme
 #+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
+  :disabled t
   :init
   (load-theme 'atom-one-dark t)
   )
@@ -202,6 +203,10 @@ Emacs configuration
   :disabled t
   )
 
+(use-package base16-theme
+  :init
+  (load-theme 'base16-oceanicnext-dark t)
+  )
 
 ;; THEME switching stuff from Daniel Mai
 (defun switch-theme (theme)
