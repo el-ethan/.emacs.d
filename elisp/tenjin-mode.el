@@ -9,12 +9,12 @@
 (setq tenjin-font-lock-keywords
     `((,tenjin-keyword-regexp . font-lock-keyword-face)
       ("\\?>\\|<\\?py" . font-lock-comment-face)
-      ("\\${\\|}" . font-lock-constant-face)
+      ("\\${\\|}\\|#{" . font-lock-constant-face)
       ("'.*?'" . font-lock-string-face)
       ("#endfor\\|#endif" . font-lock-type-face)
          ))
 
-(define-derived-mode tenjin-mode yaml-mode
+(define-derived-mode tenjin-mode html-mode
   (setq font-lock-defaults '(tenjin-font-lock-keywords))
   (setq mode-name "tenjin"))
 
