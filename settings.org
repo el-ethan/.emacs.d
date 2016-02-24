@@ -852,6 +852,11 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
           (lambda ()
             (toggle-truncate-lines t)))
 #+END_SRC
+
+*** JavaScript
+#+BEGIN_SRC emacs-lisp
+(use-package js2-mode)
+#+END_SRC
 ** Version control
 *** Magit
 #+BEGIN_SRC emacs-lisp

@@ -14,7 +14,7 @@
       ("#endfor\\|#endif" . font-lock-type-face)
          ))
 
-(define-derived-mode tenjin-mode html-mode
+(define-derived-mode tenjin-mode fundamental-mode
   (setq font-lock-defaults '(tenjin-font-lock-keywords))
   (setq mode-name "tenjin"))
 
