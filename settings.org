@@ -190,7 +190,6 @@ Emacs configuration
   )
 
 (use-package aurora-theme
-  :disabled t
   :init
   (load-theme 'aurora t)
   )
@@ -204,6 +203,7 @@ Emacs configuration
   )
 
 (use-package base16-theme
+  :disabled t
   :init
   (load-theme 'base16-oceanicnext-dark t)
   )
