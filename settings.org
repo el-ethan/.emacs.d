@@ -181,26 +181,10 @@ Emacs configuration
   (load-theme 'atom-one-dark t)
   )
 
-(use-package ample-theme
-  :disabled t
-  :init
-  (custom-theme-set-faces
-   'ample
-   '(org-warning ((t (:foreground "#528fd1")))))
-  )
-
 (use-package aurora-theme
   :disabled t
   :init
   (load-theme 'aurora t)
-  )
-
-(use-package darktooth-theme
-  :disabled t
-  )
-
-(use-package zenburn-theme
-  :disabled t
   )
 
 (use-package base16-theme
@@ -208,7 +192,6 @@ Emacs configuration
   :init
   (load-theme 'base16-oceanicnext-dark t)
   )
-
 
 (defun es/enable-misterioso ()
   "Load misterioso theme, but fix annoying highlighting"
