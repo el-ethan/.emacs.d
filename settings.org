@@ -190,6 +190,7 @@ Emacs configuration
   )
 
 (use-package aurora-theme
+  :disabled t
   :init
   (load-theme 'aurora t)
   )
@@ -207,6 +208,16 @@ Emacs configuration
   :init
   (load-theme 'base16-oceanicnext-dark t)
   )
+
+
+(defun es/enable-misterioso ()
+  "Load misterioso theme, but fix annoying highlighting"
+  (load-theme 'misterioso t)
+  (set-face-attribute 'hl-line nil
+              :inherit nil
+              :background "gray13"))
+
+(es/enable-misterioso)
 
 ;; THEME switching stuff from Daniel Mai
 (defun switch-theme (theme)
