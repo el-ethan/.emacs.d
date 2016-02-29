@@ -596,7 +596,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (setq helm-swoop-use-line-number-face t)
   ;; disable pre-input, but set input to selection if there is one
   (setq helm-swoop-pre-input-function (lambda () ""))
-  ;; :bind (("C-s" . helm-swoop))
+  :bind (("C-S-s" . helm-swoop))
   )
 #+END_SRC
 
