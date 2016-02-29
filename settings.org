@@ -1150,7 +1150,8 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (setq sml/theme 'respectful)
   (sml/setup))
 #+END_SRC
-** TEMP
+
+** Assorted custom functions
 #+BEGIN_SRC emacs-lisp
 (defmacro my/with-advice (adlist &rest body)
   "Execute BODY with temporary advice in ADLIST.
@@ -1193,4 +1194,8 @@ message listing the hooks."
       (dolist (hook log)
         (message "> %s" hook)))
     log))
+#+END_SRC
+** TEMP
+#+BEGIN_SRC emacs-lisp
+
 #+END_SRC
