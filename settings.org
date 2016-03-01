@@ -1183,4 +1183,9 @@ message listing the hooks."
 (add-hook 'org-agenda-finalize-hook
       (lambda () (remove-text-properties
          (point-min) (point-max) '(mouse-face t))))
+
+;;narrow dired to match filter
+(use-package dired-narrow
+  :bind (:map dired-mode-map
+              ("/" . dired-narrow)))
 #+END_SRC
