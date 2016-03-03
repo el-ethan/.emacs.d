@@ -272,6 +272,7 @@ Emacs configuration
   ("d" git-gutter+-show-hunk "show diff")
   ("r" git-gutter+-revert-hunk "revert hunk")
   ("b" magit-blame "blame")
+  ("a" vc-annotate "annotate")
   ("t" git-timemachine "timemachine" :exit t)
   )
 
