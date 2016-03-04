@@ -83,7 +83,7 @@ Emacs configuration
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; nice scrolling
-(setq scroll-margin 0
+(setq scroll-margin 3
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
 
@@ -963,7 +963,7 @@ This mode allows more fine-grained movement and editing commands
   :config
   (global-company-mode 1)
   (setq company-idle-delay 0)
-  (setq company-tooltip-limit 5)
+  (setq company-tooltip-limit 15)
   (setq company-minimum-prefix-length 3)
   ;; (setq company-tooltip-flip-when-above t)
   (setq company-dabbrev-ignore-case t)
