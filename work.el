@@ -14,4 +14,11 @@
 ;; (add-hook 'gud-mode-hook (lambda () (cd "/home/ethan/git/aeris2")))
 ;;
 ;; Set PYTHONPATH for aeris project
-;;(setenv "PYTHONPATH" "/home/ethan/git/aeris2:/home/ethan/git/kivy:/home/ethan/git/gryphus:/home/ethan/git/ee-sentinel:/home/ethan/git/ee-updater")
+
+(defun es/setup-debugger ()
+    (setenv "PYTHONPATH" "/home/ethan/git/aeris2:/home/ethan/git/kivy:/home/ethan/git/gryphus:/home/ethan/git/ee-sentinel:/home/ethan/git/ee-updater")
+    (cd "/home/ethan/git/aeris2"))
+
+(add-hook 'pdb-mode-hook 'es/setup-debugger)
+
+;; (setenv "PYTHONPATH" "/home/ethan/git/aeris2:/home/ethan/git/kivy:/home/ethan/git/gryphus:/home/ethan/git/ee-sentinel:/home/ethan/git/ee-updater")
