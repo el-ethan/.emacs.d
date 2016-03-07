@@ -1179,6 +1179,21 @@ message listing the hooks."
         (message "> %s" hook)))
     log))
 #+END_SRC
+
+** web-mode
+#+BEGIN_SRC emacs-lisp
+(use-package web-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  )
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-agenda-finalize-hook
