@@ -19,6 +19,11 @@
     (setenv "PYTHONPATH" "/home/ethan/git/aeris2:/home/ethan/git/kivy:/home/ethan/git/gryphus:/home/ethan/git/ee-sentinel:/home/ethan/git/ee-updater")
     (cd "/home/ethan/git/aeris2"))
 
-(add-hook 'pdb-mode-hook 'es/setup-debugger)
+(defun es/pdb ()
+    (interactive)
+    (es/setup-debugger)
+    (pdb "pdb ~/git/aeris2/aeris2/__main__.py"))
+
+;; (advice-add 'gud-mode :before #'es/setup-debugger)
 
 ;; (setenv "PYTHONPATH" "/home/ethan/git/aeris2:/home/ethan/git/kivy:/home/ethan/git/gryphus:/home/ethan/git/ee-sentinel:/home/ethan/git/ee-updater")
