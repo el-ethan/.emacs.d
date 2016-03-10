@@ -1194,6 +1194,45 @@ message listing the hooks."
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   )
 #+END_SRC
+
+** polymode
+#+BEGIN_SRC emacs-lisp
+(use-package polymode)
+(require 'polymode)
+
+(defcustom pm-host/python
+  (pm-bchunkmode "python"
+                 :mode 'python-mode
+                 :font-lock-narrow nil)
+  "Python host chunkmode"
+  :group 'hostmodes
+  :type 'object)
+
+(defcustom pm-inner/python
+  (pm-hbtchunkmode "python"
+                   :mode 'python-mode
+                   :head-reg  "\"\"\""
+                   :tail-reg  "\"\"\"")
+  "Python typical chunk."
+  :group 'innermodes
+  :type 'object)
+
+(defcustom pm-poly/python
+  (pm-polymode-one "noweb"
+                   :hostmode 'pm-host/python
+                   :innermode 'pm-inner/python)
+  "Python typical polymode."
+  :group 'polymodes
+  :type 'object)
+
+(define-polymode poly-python-mode pm-poly/python)
+#+END_SRC
+
+** edit-server
+#+BEGIN_SRC emacs-lisp
+(use-package edit-server
+  :init (edit-server-start))
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-agenda-finalize-hook
