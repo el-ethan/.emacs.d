@@ -24,6 +24,11 @@
     (es/setup-debugger)
     (pdb "pdb ~/git/aeris2/aeris2/__main__.py"))
 
+(defun es/quit-pdb ()
+    (interactive)
+    (setenv "PYTHONPATH" "/home/ethan/git/aeris2:/home/ethan/git/kivy:/home/ethan/git/gryphus:/home/ethan/git/ee-sentinel:/home/ethan/git/ee-updater")
+    )
+
 ;; (advice-add 'gud-mode :before #'es/setup-debugger)
 
 ;; (setenv "PYTHONPATH" "/home/ethan/git/aeris2:/home/ethan/git/kivy:/home/ethan/git/gryphus:/home/ethan/git/ee-sentinel:/home/ethan/git/ee-updater")
