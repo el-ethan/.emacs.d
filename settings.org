@@ -966,7 +966,7 @@ This mode allows more fine-grained movement and editing commands
   (setq company-tooltip-limit 15)
   (setq company-minimum-prefix-length 3)
   ;; (setq company-tooltip-flip-when-above t)
-  (setq company-dabbrev-ignore-case t)
+  (setq company-dabbrev-ignore-case "keep-prefix")
   )
 #+END_SRC
 *** Auto-complete

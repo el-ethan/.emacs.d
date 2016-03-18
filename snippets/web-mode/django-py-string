@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: django-py-string
+# key: {{
+# --
+{{ $0 }}
