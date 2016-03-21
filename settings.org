@@ -326,6 +326,10 @@ Emacs configuration
 ;; This makes it so I can have check boxes auto-uncheck when
 ;; repeating task is completed
 (require 'org-checklist)
+
+(add-hook 'org-agenda-finalize-hook
+      (lambda () (remove-text-properties
+         (point-min) (point-max) '(mouse-face t))))
 #+END_SRC
 
 *** Keybindings
@@ -1233,12 +1237,9 @@ message listing the hooks."
 (use-package edit-server
   :init (edit-server-start))
 #+END_SRC
-** TEMP
-#+BEGIN_SRC emacs-lisp
-(add-hook 'org-agenda-finalize-hook
-      (lambda () (remove-text-properties
-         (point-min) (point-max) '(mouse-face t))))
 
+** dired
+#+BEGIN_SRC emacs-lisp
 ;;narrow dired to match filter
 (use-package dired-narrow
   :bind (:map dired-mode-map
@@ -1251,4 +1252,8 @@ message listing the hooks."
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
   :bind (:map dired-mode-map
               ("P" . peep-dired)))
+#+END_SRC
+** TEMP
+#+BEGIN_SRC emacs-lisp
+
 #+END_SRC
