@@ -386,52 +386,53 @@ Emacs configuration
   "Skip trees that are not waiting"
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
     (if (re-search-forward ":work:" subtree-end t)
-	nil ; tag found, do not skip
+    nil ; tag found, do not skip
       subtree-end))) ; tag not found, continue after end of subtree
 
 ;; Block agenda view for agenda and unscheduled tasks
 (setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
-	 ((tags-todo
-	   "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects-work")
-	  (agenda ""))
-	 ((org-agenda-start-on-weekday nil)
-	  (org-deadline-warning-days 0)))
-	("w" "Work tasks"
-	 ((tags-todo
-	   "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects")
-	  (agenda ""))
-	 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp ":home:"))
-	  (org-agenda-start-on-weekday nil)
-	  (org-agenda-ndays 1)
-	  (org-deadline-warning-days 0)))
-	("f" "Talking points"
+     ((tags-todo
+       "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects-work")
+      (agenda ""))
+     ((org-agenda-start-on-weekday nil)
+      (org-agenda-ndays 1)
+      (org-deadline-warning-days 0)))
+    ("w" "Work tasks"
+     ((tags-todo
+       "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects")
+      (agenda ""))
+     ((org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp ":home:"))
+      (org-agenda-start-on-weekday nil)
+      (org-agenda-ndays 1)
+      (org-deadline-warning-days 0)))
+    ("f" "Talking points"
          ((tags-todo "+beilei")
           (tags-todo "+mom")
           (tags-todo "+dad"))
-	 ((org-agenda-prefix-format "- ")
-	  (org-show-context-detail 'minimal)
-	  (org-agenda-todo-keyword-format "")))
-	(";" "Someday and projects"
-	 ((tags-todo "+someday+projects"))
-	 ((org-agenda-prefix-format "- ")
-	  (org-show-context-detail 'minimal)
-	  (org-agenda-remove-tags t)
-	  (org-agenda-todo-keyword-format "")))
-	("l" "Emacs"
-	 ((tags-todo "+emacs"))
-	 ((org-agenda-prefix-format "- ")
-	  (org-show-context-detail 'minimal)
-	  (org-agenda-remove-tags t)
-	  (org-agenda-todo-keyword-format "")))
-	("2" "Mobile tasks"
-	 ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
-	  (agenda ""))
-	 ((org-agenda-prefix-format "- ")
-	  (org-agenda-todo-keyword-format "")
-	  (org-agenda-start-on-weekday nil)
-	  (org-agenda-ndays 3)
-	  (org-deadline-warning-days 0))
+     ((org-agenda-prefix-format "- ")
+      (org-show-context-detail 'minimal)
+      (org-agenda-todo-keyword-format "")))
+    (";" "Someday and projects"
+     ((tags-todo "+someday+projects"))
+     ((org-agenda-prefix-format "- ")
+      (org-show-context-detail 'minimal)
+      (org-agenda-remove-tags t)
+      (org-agenda-todo-keyword-format "")))
+    ("l" "Emacs"
+     ((tags-todo "+emacs"))
+     ((org-agenda-prefix-format "- ")
+      (org-show-context-detail 'minimal)
+      (org-agenda-remove-tags t)
+      (org-agenda-todo-keyword-format "")))
+    ("2" "Mobile tasks"
+     ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
+      (agenda ""))
+     ((org-agenda-prefix-format "- ")
+      (org-agenda-todo-keyword-format "")
+      (org-agenda-start-on-weekday nil)
+      (org-agenda-ndays 3)
+      (org-deadline-warning-days 0))
          ("~/Dropbox/org_files/taskpaper_files/da_guai.taskpaper"))))
 
   (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
