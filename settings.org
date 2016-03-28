@@ -750,22 +750,6 @@ Repeated invocations toggle between the two most recently open buffers."
     )
   )
 #+END_SRC
-** Yasnippet
-#+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :init (yas-global-mode 1)
-  :config
-  (progn
-    (yas-global-mode)
-    (add-hook 'term-mode-hook (lambda()
-				(setq yas-dont-activate t)))
-    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-    (define-key yas-minor-mode-map (kbd "<tab>") nil)
-    (define-key yas-minor-mode-map (kbd "TAB") nil)
-    (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
-    (yas-global-mode 1)))
-#+END_SRC
 
 ** Languages
 *** Python
@@ -776,7 +760,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (if (region-active-p)
       (comment-or-uncomment-region (region-beginning) (region-end))
     (if (save-excursion (beginning-of-line) (looking-at "[[:space:]]*$"))
-	(comment-dwim nil)
+    (comment-dwim nil)
       (comment-or-uncomment-region (line-beginning-position) (line-end-position)))))
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
@@ -804,6 +788,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
   (add-hook 'python-mode-hook 'visual-line-mode)
   (setq python-check-command "flake8")
+  (setq elpy-modules (remq 'elpy-module-yasnippet elpy-modules))
   :config
   (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
   )
@@ -822,8 +807,8 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 (use-package yaml-mode
   :config
   (add-hook 'yaml-mode-hook
-	    (lambda ()
-	      (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol)))
+        (lambda ()
+          (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol)))
   (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
   )
 #+END_SRC
@@ -856,6 +841,22 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 *** JavaScript
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode)
+#+END_SRC
+** Yasnippet
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :init (yas-global-mode 1)
+  :config
+  (progn
+    (yas-global-mode)
+    (add-hook 'term-mode-hook (lambda()
+				(setq yas-dont-activate t)))
+    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    (define-key yas-minor-mode-map (kbd "<tab>") nil)
+    (define-key yas-minor-mode-map (kbd "TAB") nil)
+    (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
+    (yas-global-mode 1)))
 #+END_SRC
 ** Version control
 *** Magit
@@ -1256,5 +1257,12 @@ message listing the hooks."
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
+(setq dired-omit-files
+      (rx (or (seq bol (? ".") "#")         ;; emacs autosave files
+              (seq "~" eol)                 ;; backup-files
+              (seq ".pyc" eol)
+              )))
+
+(add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
 
 #+END_SRC
