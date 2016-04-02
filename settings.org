@@ -1256,6 +1256,11 @@ message listing the hooks."
   :bind (:map dired-mode-map
               ("P" . peep-dired)))
 #+END_SRC
+
+** nginx-mode
+#+BEGIN_SRC emacs-lisp
+(use-package nginx-mode)
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (setq dired-omit-files
