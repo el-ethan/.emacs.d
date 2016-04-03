@@ -253,6 +253,7 @@ Emacs configuration
 (setq org-bullets-bullet-list
 '("◉" "◎" "⚫" "○" "►" "◇"))
 :config
+(setcdr org-bullets-bullet-map nil)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 )
 #+END_SRC
