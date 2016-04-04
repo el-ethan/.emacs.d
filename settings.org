@@ -436,7 +436,7 @@ phone.
        "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects-work")
       (agenda ""))
      ((org-agenda-start-on-weekday nil)
-      (org-agenda-ndays 1)
+      (org-agenda-ndays 2)
       (org-deadline-warning-days 0)))
     ("w" "Work tasks"
      ((tags-todo
@@ -454,7 +454,7 @@ phone.
       (org-show-context-detail 'minimal)
       (org-agenda-todo-keyword-format "")))
     (";" "Someday and projects"
-     ((tags-todo "+someday+projects"))
+     ((tags-todo "+someday"))
      ((org-agenda-prefix-format "- ")
       (org-show-context-detail 'minimal)
       (org-agenda-remove-tags t)
