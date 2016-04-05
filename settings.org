@@ -366,7 +366,6 @@ phone.
   (org-agenda)
 )
 
-
 ;; (add-hook 'org-finalize-agenda-hook #'es/sync-corgi-tasks)
 
 (add-hook 'after-init-hook #'sync-with-corgi)
@@ -989,7 +988,7 @@ This mode allows more fine-grained movement and editing commands
   (global-company-mode 1)
   (setq company-idle-delay 0)
   (setq company-tooltip-limit 15)
-  (setq company-minimum-prefix-length 3)
+  (setq company-minimum-prefix-length 2)
   ;; (setq company-tooltip-flip-when-above t)
   ;; (setq company-dabbrev-ignore-case 'keep-prefix)
   )
