@@ -782,36 +782,6 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
 
-(defun elpy-goto-definition-or-rgrep ()
-  "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'.
-
-This first tries `elpy-goto-definition' on the symbol. If it fails to find the definition
-it passes the symbol, wrapped in a regexp for class/function definitions, off to `elpy-rgrep-symbol'"
-    (interactive)
-    (ring-insert find-tag-marker-ring (point-marker))
-    (condition-case nil (elpy-goto-definition)
-        (error (elpy-rgrep-symbol
-                   (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
-
-(use-package elpy
-  :init
-  (elpy-enable)
-  (setq elpy-rpc-timeout nil)
-  (setq elpy-rpc-backend "rope")  ; "rope" is another possibility
-  (elpy-use-ipython)
-  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.tpl")
-  (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
-  (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
-  (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
-  (add-hook 'python-mode-hook 'visual-line-mode)
-  (setq python-check-command "flake8")
-  (setq elpy-modules (remq 'elpy-module-yasnippet elpy-modules))
-  :config
-  (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
-  )
-
-(require 'tenjin-mode)
-(add-to-list 'auto-mode-alist '("\\.tpl\\'" . tenjin-mode))
 #+END_SRC
 
 **** Pdb
@@ -859,6 +829,38 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode)
 #+END_SRC
+
+** Elpy
+#+BEGIN_SRC emacs-lisp
+(defun elpy-goto-definition-or-rgrep ()
+  "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'.
+
+This first tries `elpy-goto-definition' on the symbol. If it fails to find the definition
+it passes the symbol, wrapped in a regexp for class/function definitions, off to `elpy-rgrep-symbol'"
+    (interactive)
+    (ring-insert find-tag-marker-ring (point-marker))
+    (condition-case nil (elpy-goto-definition)
+        (error (elpy-rgrep-symbol
+                   (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
+
+(use-package elpy
+  :init
+  (elpy-enable)
+  (setq elpy-rpc-timeout nil)
+  (setq elpy-rpc-backend "rope")  ; "rope" is another possibility
+  (elpy-use-ipython)
+  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.tpl")
+  (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
+  (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
+  (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
+  (add-hook 'python-mode-hook 'visual-line-mode)
+  (setq python-check-command "flake8")
+  (setq elpy-modules (remq 'elpy-module-yasnippet elpy-modules))
+  :config
+  (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
+  )
+#+END_SRC
+
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
