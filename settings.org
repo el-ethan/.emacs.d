@@ -103,12 +103,11 @@ Emacs configuration
 ;; Save backups elsewhere
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
-(setq is-work (equal system-name "ethan-work"))
+(setq is-work nil)
 
 ;; Show battery percentage and remaining time
-(unless is-work
-  (setq battery-mode-line-format "[%b%p%% %t]")
-  (display-battery-mode 1))
+(setq battery-mode-line-format "[%b%p%% %t]")
+(display-battery-mode 1)
 
 ;; Enable show-paren-mode
 (show-paren-mode 1)
