@@ -171,8 +171,8 @@ Emacs configuration
 (set-selection-coding-system 'utf-8) ; please
 (prefer-coding-system 'utf-8) ; with sugar on top
 #+END_SRC
-** Visuals
-*** Theme
+
+** Theme
 #+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
   :init
@@ -220,7 +220,7 @@ Emacs configuration
 
 (bind-key "C-`" 'switch-theme)
 #+END_SRC
-*** Fill-column-indicator
+** Fill-column-indicator
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
     :config
@@ -229,14 +229,14 @@ Emacs configuration
     (setq-default fci-rule-color "#546D7A"))
 #+END_SRC
 
-*** Rainbow-delimiters
+** Rainbow-delimiters
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
 
-*** Fixmee-mode
+** Fixmee-mode
 #+BEGIN_SRC emacs-lisp
 (use-package fixmee
   :config
@@ -244,7 +244,7 @@ Emacs configuration
   )
 #+END_SRC
 
-*** Org-bullets
+** Org-bullets
 #+BEGIN_SRC emacs-lisp
 (use-package org-bullets
 :init
