@@ -1258,12 +1258,6 @@ message listing the hooks."
 (define-polymode poly-python-mode pm-poly/python)
 #+END_SRC
 
-** edit-server
-#+BEGIN_SRC emacs-lisp
-(use-package edit-server
-  :init (edit-server-start))
-#+END_SRC
-
 ** dired
 #+BEGIN_SRC emacs-lisp
 ;;narrow dired to match filter
