@@ -10,8 +10,8 @@ Emacs configuration
 (global-set-key (kbd "C-c s")
 		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 #+END_SRC
-** Basics
-*** GUI stuff
+
+** GUI stuff
 #+BEGIN_SRC emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -27,7 +27,7 @@ Emacs configuration
 
 #+END_SRC
 
-*** MELPA and other repositories
+** MELPA and other repositories
 #+BEGIN_SRC emacs-lisp
 ;; Emacs lisp files
 (add-to-list 'load-path "~/.emacs.d/elisp/")
@@ -46,7 +46,7 @@ Emacs configuration
 (load custom-file)
 #+END_SRC
 
-*** Use-package
+** Use-package
 #+BEGIN_SRC emacs-lisp
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -58,13 +58,13 @@ Emacs configuration
 (require 'use-package)
 #+END_SRC
 
-*** Server stuff
+** Server stuff
 #+BEGIN_SRC emacs-lisp
 (load "server")
 (unless (server-running-p) (server-start))
 #+END_SRC
 
-*** General defaults
+** General defaults
 #+BEGIN_SRC emacs-lisp
 ;; Send customizations to another file and load that file
 (setq initial-scratch-message nil)  ;; No scratch buffer message
@@ -123,7 +123,7 @@ Emacs configuration
 (global-auto-revert-mode)
 #+END_SRC
 
-*** Electric-pair
+** Electric-pair
 #+BEGIN_SRC emacs-lisp
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
@@ -136,7 +136,7 @@ Emacs configuration
 (setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
 #+END_SRC
 
-*** History and auto-save
+** History and auto-save
 #+BEGIN_SRC emacs-lisp
 (setq savehist-file "/home/ethan/.emacs.d/savehist")
 (savehist-mode 1)
@@ -152,7 +152,7 @@ Emacs configuration
 (setq auto-save-file-name-transforms '((".*" "/home/ethan/.emacs.d/auto-save-list/" t)))
 #+END_SRC
 
-*** Scratch files
+** Scratch files
 #+BEGIN_SRC emacs-lisp
 (defun es/make-scratch-buffer ()
   "makes a new scratch buffer, uniquely named"
@@ -162,7 +162,7 @@ Emacs configuration
   (funcall (and initial-major-mode)))
 #+END_SRC
 
-*** utf-8
+** utf-8
 #+BEGIN_SRC emacs-lisp
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
