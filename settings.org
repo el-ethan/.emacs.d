@@ -482,11 +482,6 @@ phone.
   (setq org-deadline-warning-days 3)
 #+END_SRC
 
-*** Habits
-#+BEGIN_SRC emacs-lisp
-(require 'org-habit)
-#+END_SRC
-
 *** Capture templates
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
@@ -523,6 +518,7 @@ phone.
  '((python . t)
    (sh . t)))
 #+END_SRC
+
 ** Deft
 #+BEGIN_SRC emacs-lisp
   (use-package deft
@@ -575,7 +571,7 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
 #+END_SRC
 
 ** Navigation
-*** Custom functions for navigation
+** Custom functions for navigation
 #+BEGIN_SRC emacs-lisp
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
@@ -609,7 +605,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 #+END_SRC
 
-*** Helm-swoop
+** Helm-swoop
 #+BEGIN_SRC emacs-lisp
 (use-package helm-swoop
   :config
@@ -622,7 +618,7 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-*** Helm
+** Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :init
@@ -657,7 +653,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (helm-mini)))
 #+END_SRC
 
-*** Helm-ag
+** Helm-ag
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
   :defer t
@@ -666,7 +662,7 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-*** Ace-jump-mode
+** Ace-jump-mode
 #+BEGIN_SRC emacs-lisp
 ;;
 ;; ace jump mode major function
@@ -696,14 +692,14 @@ Repeated invocations toggle between the two most recently open buffers."
 (setq ace-jump-mode-submode-list '(ace-jump-char-mode ace-jump-line-mode ace-jump-word-mode))
 #+END_SRC
 
-*** Smartscan
+** Smartscan
 #+BEGIN_SRC emacs-lisp
 (use-package smartscan
   :init
   (global-smartscan-mode 1)
   )
 #+END_SRC
-*** Registers and bookmarks
+** Registers and bookmarks
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-register (global-map "<f1>")
   "register hydra"
@@ -728,8 +724,8 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-S-b") 'my/quick-save-bookmark)
 (bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
-** Keybindings
-*** Assorted key bindings
+
+** Assorted key bindings
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c o") 'browse-url-of-file)
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -741,7 +737,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-unset-key (kbd "C-z"))
 #+END_SRC
 
-*** Key-chord
+** Key-chord
 #+BEGIN_SRC emacs-lisp
 (defun my/switch-to-previous-buffer ()
   "Switch to previously open buffer.
@@ -767,8 +763,7 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-** Languages
-*** Python
+** Python
 #+BEGIN_SRC emacs-lisp
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
@@ -788,7 +783,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'gud-mode-hook 'hl-line-mode)
 #+END_SRC
 
-*** Yaml-mode
+** Yaml-mode
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
   :config
@@ -799,13 +794,13 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-*** Lisp
-**** Slime
+** Lisp
+*** Slime
 #+BEGIN_SRC emacs-lisp
 (setq inferior-lisp-program "/usr/bin/sbcl")
 #+END_SRC
 
-**** Eldoc
+*** Eldoc
 #+BEGIN_SRC emacs-lisp
 (use-package "eldoc"
   :diminish eldoc-mode
@@ -817,14 +812,14 @@ Repeated invocations toggle between the two most recently open buffers."
   (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)))
 #+END_SRC
 
-*** SQL
+** SQL
 #+BEGIN_SRC emacs-lisp
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)))
 #+END_SRC
 
-*** JavaScript
+** JavaScript
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode)
 #+END_SRC
@@ -877,8 +872,8 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
     (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
     (yas-global-mode 1)))
 #+END_SRC
-** Version control
-*** Magit
+
+** Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :init
@@ -888,7 +883,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
     :bind ("C-c g" . magit-status))
 #+END_SRC
 
-*** Git Gutter
+** Git Gutter
 #+BEGIN_SRC emacs-lisp
 (use-package git-gutter+
   :init
@@ -899,7 +894,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
   )
 #+END_SRC
 
-*** Diff-hl
+** Diff-hl
 #+BEGIN_SRC emacs-lisp
 (use-package diff-hl
   :disabled t
@@ -913,14 +908,14 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
   )
 #+END_SRC
 
-*** Git-timemachine
+** Git-timemachine
 #+BEGIN_SRC emacs-lisp
 (use-package git-timemachine
   :ensure t
   )
 #+END_SRC
-** Editing
-*** Expand region
+
+** Expand region
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :ensure t
@@ -928,7 +923,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
     :bind ("M-SPC" . er/expand-region))
 #+END_SRC
 
-*** Syntax-subword
+** Syntax-subword
 
 This mode allows more fine-grained movement and editing commands
 
@@ -941,7 +936,7 @@ This mode allows more fine-grained movement and editing commands
   (global-syntax-subword-mode))
 #+END_SRC
 
-*** Wrap-region
+** Wrap-region
 #+BEGIN_SRC emacs-lisp
 (use-package wrap-region
   :ensure t
@@ -956,7 +951,7 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'lisp-mode-hook 'wrap-region-mode))
 #+END_SRC
 
-*** Multiple-cursors
+** Multiple-cursors
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :ensure t
@@ -965,7 +960,7 @@ This mode allows more fine-grained movement and editing commands
 	 ("C-S-<mouse-1> " . mc/add-cursor-on-click)))
 #+END_SRC
 
-*** Fly spell
+** Fly spell
 #+BEGIN_SRC emacs-lisp
   ;; Enable flyspell-mode
   (add-hook 'org-mode-hook 'flyspell-mode)
@@ -973,7 +968,7 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+END_SRC
 
-*** Flycheck
+** Flycheck
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :init
@@ -981,7 +976,8 @@ This mode allows more fine-grained movement and editing commands
   (global-flycheck-mode)
   )
 #+END_SRC
-*** Company
+
+** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t
@@ -994,7 +990,8 @@ This mode allows more fine-grained movement and editing commands
   ;; (setq company-dabbrev-ignore-case 'keep-prefix)
   )
 #+END_SRC
-*** Auto-complete
+
+** Auto-complete
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
@@ -1006,7 +1003,8 @@ This mode allows more fine-grained movement and editing commands
     (add-hook 'sql-interactive-mode-hook (lambda () (auto-complete-mode 1) (company-mode)))
 )
 #+END_SRC
-*** Undo-tree
+
+** Undo-tree
 #+BEGIN_SRC emacs-lisp
 (use-package undo-tree
   :ensure t
@@ -1020,7 +1018,7 @@ This mode allows more fine-grained movement and editing commands
   )
 #+END_SRC
 
-*** Copy line
+** Copy line
 #+BEGIN_SRC emacs-lisp
  (defun copy-line (arg)
   "Copy lines (as many as prefix argument) in the kill ring.
@@ -1046,7 +1044,8 @@ This mode allows more fine-grained movement and editing commands
 (global-set-key (kbd "C-S-l") 'copy-line)
 
 #+END_SRC
-*** Editor-config
+
+** Editor-config
 #+BEGIN_SRC emacs-lisp
 (load "editorconfig")
 (editorconfig-mode 1)
@@ -1060,7 +1059,7 @@ This mode allows more fine-grained movement and editing commands
   )
 #+END_SRC
 
-** Work
+** Work specific
 #+BEGIN_SRC emacs-lisp
 (when is-work
   (load "~/.emacs.d/work.el"))
@@ -1078,6 +1077,7 @@ This mode allows more fine-grained movement and editing commands
 (global-set-key (kbd "<f12>") (kbd "M-& terminator"))
 (add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
 #+END_SRC
+
 ** Windows
 #+BEGIN_SRC emacs-lisp
 (windmove-default-keybindings)
@@ -1107,22 +1107,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 (bind-key "C-x 3" 'hsplit-other-window)
 #+END_SRC
 
-*** Winner-mode!
-#+BEGIN_SRC emacs-lisp
-(winner-mode 1)
-#+END_SRC
-
-*** Fullframe
-#+BEGIN_SRC emacs-lisp
-(use-package fullframe
-  :init
-  (fullframe magit-status magit-mode-quit-window)
-  (fullframe projectile-vc magit-mode-quit-window)
-  (fullframe magit-diff magit-quit-window)
-  (fullframe magit-diff-unstaged magit-quit-window)
-  (fullframe magit-diff magit-mode-quit-window))
-#+END_SRC
-
 *** Resizing windows
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-resize (global-map "<f2>")
@@ -1132,6 +1116,22 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   ("<down>" shrink-window "shrink")
   ("<up>" enlarge-window "shrink")
   )
+#+END_SRC
+
+** Winner-mode!
+#+BEGIN_SRC emacs-lisp
+(winner-mode 1)
+#+END_SRC
+
+** Fullframe
+#+BEGIN_SRC emacs-lisp
+(use-package fullframe
+  :init
+  (fullframe magit-status magit-mode-quit-window)
+  (fullframe projectile-vc magit-mode-quit-window)
+  (fullframe magit-diff magit-quit-window)
+  (fullframe magit-diff-unstaged magit-quit-window)
+  (fullframe magit-diff magit-mode-quit-window))
 #+END_SRC
 
 ** SX-mode
@@ -1278,14 +1278,7 @@ message listing the hooks."
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
   :bind (:map dired-mode-map
               ("P" . peep-dired)))
-#+END_SRC
 
-** nginx-mode
-#+BEGIN_SRC emacs-lisp
-(use-package nginx-mode)
-#+END_SRC
-** TEMP
-#+BEGIN_SRC emacs-lisp
 (setq dired-omit-files
       (rx (or (seq bol (? ".") "#")         ;; emacs autosave files
               (seq "~" eol)                 ;; backup-files
@@ -1293,5 +1286,13 @@ message listing the hooks."
               )))
 
 (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
+#+END_SRC
 
+** nginx-mode
+#+BEGIN_SRC emacs-lisp
+(use-package nginx-mode)
+#+END_SRC
+
+** TEMP
+#+BEGIN_SRC emacs-lisp
 #+END_SRC
