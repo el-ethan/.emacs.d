@@ -12,7 +12,7 @@ Emacs configuration
 		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 #+END_SRC
 
-** REVIEW GUI stuff
+** GUI stuff
 #+BEGIN_SRC emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -22,18 +22,15 @@ Emacs configuration
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
   (add-hook 'window-setup-hook 'toggle-frame-maximized t))
-
-;; Another wy to make fullscreen
-;(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 #+END_SRC
 
-** REVIEW MELPA and other repositories
+** MELPA and other repositories
 #+BEGIN_SRC emacs-lisp
 ;; Emacs lisp files
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 
 (require 'package)
+
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/") t)
 
@@ -47,7 +44,7 @@ Emacs configuration
 (load custom-file)
 #+END_SRC
 
-** REVIEW Use-package
+** Use-package
 #+BEGIN_SRC emacs-lisp
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -59,7 +56,7 @@ Emacs configuration
 (require 'use-package)
 #+END_SRC
 
-** REVIEW Server stuff
+** Server stuff
 #+BEGIN_SRC emacs-lisp
 (load "server")
 (unless (server-running-p) (server-start))
@@ -124,12 +121,13 @@ Emacs configuration
 (global-auto-revert-mode)
 #+END_SRC
 
-** REVIEW Electric-pair
+** Electric-pair
 #+BEGIN_SRC emacs-lisp
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
 
-(defvar es/electic-pair-modes '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode))
+(defvar es/electic-pair-modes
+  '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode, yaml-mode))
 
 (defun es/inhibit-electric-pair-mode (char)
   (not (member major-mode es/electic-pair-modes)))
@@ -153,27 +151,16 @@ Emacs configuration
 (setq auto-save-file-name-transforms '((".*" "/home/ethan/.emacs.d/auto-save-list/" t)))
 #+END_SRC
 
-** REVIEW Scratch files
+** utf-8
 #+BEGIN_SRC emacs-lisp
-(defun es/make-scratch-buffer ()
-  "makes a new scratch buffer, uniquely named"
-  (interactive)
-  (switch-to-buffer "_scratch")
-  (rename-uniquely)
-  (funcall (and initial-major-mode)))
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
 #+END_SRC
 
-** REVIEW utf-8
-#+BEGIN_SRC emacs-lisp
-;; UTF-8 please
-(setq locale-coding-system 'utf-8) ; pretty
-(set-terminal-coding-system 'utf-8) ; pretty
-(set-keyboard-coding-system 'utf-8) ; pretty
-(set-selection-coding-system 'utf-8) ; please
-(prefer-coding-system 'utf-8) ; with sugar on top
-#+END_SRC
-
-** REVIEW Theme
+** Theme
 #+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
   :init
