@@ -127,7 +127,7 @@ Emacs configuration
   (electric-pair-mode 1))
 
 (defvar es/electic-pair-modes
-  '(python-mode org-mode lisp-interaction-mode emacs-lisp-mode tenjin-mode, yaml-mode))
+  '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode tenjin-mode yaml-mode))
 
 (defun es/inhibit-electric-pair-mode (char)
   (not (member major-mode es/electic-pair-modes)))
@@ -208,7 +208,7 @@ Emacs configuration
 
 (bind-key "C-`" 'switch-theme)
 #+END_SRC
-** REVIEW Fill-column-indicator
+** Fill-column-indicator
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
     :config
@@ -217,14 +217,14 @@ Emacs configuration
     (setq-default fci-rule-color "#546D7A"))
 #+END_SRC
 
-** REVIEW Rainbow-delimiters
+** Rainbow-delimiters
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
 
-** REVIEW Fixmee-mode
+** Fixmee-mode
 #+BEGIN_SRC emacs-lisp
 (use-package fixmee
   :config
@@ -232,7 +232,7 @@ Emacs configuration
   )
 #+END_SRC
 
-** REVIEW Org-bullets
+** Org-bullets
 #+BEGIN_SRC emacs-lisp
 (use-package org-bullets
 :init
@@ -680,7 +680,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (setq ace-jump-mode-submode-list '(ace-jump-char-mode ace-jump-line-mode ace-jump-word-mode))
 #+END_SRC
 
-** REVIEW Smartscan
+** Smartscan
 #+BEGIN_SRC emacs-lisp
 (use-package smartscan
   :init
@@ -1134,20 +1134,10 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 (use-package markdown-mode)
 #+END_SRC
 
-** REVIEW ws-butler
+** ws-butler
 #+BEGIN_SRC emacs-lisp
 (use-package ws-butler
   :init (ws-butler-global-mode 1))
-#+END_SRC
-
-** REVIEW smart-mode-line
-#+BEGIN_SRC emacs-lisp
-(use-package smart-mode-line
-  :disabled t
-  :init
-  (setq sml/theme 'respectful)
-  (sml/setup)  ; Currently this function messes up pep8 warnings for some reason
-)
 #+END_SRC
 
 ** REVIEW Assorted custom functions
@@ -1270,11 +1260,11 @@ message listing the hooks."
 (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
 #+END_SRC
 
-** REVIEW nginx-mode
+** nginx-mode
 #+BEGIN_SRC emacs-lisp
 (use-package nginx-mode)
 #+END_SRC
 
-** REVIEW TEMP
+** TEMP
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
