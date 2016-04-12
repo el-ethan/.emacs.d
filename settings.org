@@ -85,13 +85,6 @@ Emacs configuration
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
 
-(add-hook 'comint-exec-hook
-      (lambda () (set-process-query-on-exit-flag (get-buffer-process (current-buffer)) nil)))
-
-;; kill process buffer without confirmation
-(setq kill-buffer-query-functions
-      (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
-
 ;; Remove text in active region if inserting text
 (delete-selection-mode 1)
 
