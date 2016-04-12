@@ -62,7 +62,7 @@ Emacs configuration
 (unless (server-running-p) (server-start))
 #+END_SRC
 
-** REVIEW General defaults
+** General defaults
 #+BEGIN_SRC emacs-lisp
 ;; Send customizations to another file and load that file
 (setq initial-scratch-message nil)  ;; No scratch buffer message
@@ -95,10 +95,6 @@ Emacs configuration
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
 (setq is-work nil)
-
-;; Show battery percentage and remaining time
-(setq battery-mode-line-format "[%b%p%% %t]")
-(display-battery-mode 1)
 
 ;; Enable show-paren-mode
 (show-paren-mode 1)
