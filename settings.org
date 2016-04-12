@@ -124,7 +124,7 @@ Emacs configuration
 (setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
 #+END_SRC
 
-** REVIEW History and auto-save
+** History and auto-save
 #+BEGIN_SRC emacs-lisp
 (setq savehist-file "/home/ethan/.emacs.d/savehist")
 (savehist-mode 1)
@@ -238,9 +238,6 @@ Emacs configuration
   :defer t
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Hydras!
-
 (defhydra hydra-vc ()
   "vc hydra"
   ("n" git-gutter+-next-hunk  "next hunk")
@@ -268,13 +265,6 @@ Emacs configuration
 
 (global-set-key (kbd "C-t") 'hydra-transpose/body)
 
-(defhydra hydra-settings (global-map "<f5>")
-  "settings hydra"
-  ("n" linum-mode "line numbers")
-  ("v" visual-line-mode "visual line")
-  ("s" sr-speedbar-toggle "speedbar")
-  )
-
 (defhydra hydra-modes ()
   "settings hydra"
   ("l" lisp-interaction-mode "lisp interaction" :exit t)
@@ -283,6 +273,7 @@ Emacs configuration
   ("s" sql-mysql "MySQL interaction" :exit t)
   ("x" sx-compose-mode "Stack Exhange compose" :exit t)
   ("m" gfm-mode "Markdown" :exit t)
+  ("j" js2-mode "JavaScript" :exit t)
   )
 
 (global-set-key (kbd "s-M") 'hydra-modes/body)
