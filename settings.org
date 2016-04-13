@@ -232,7 +232,7 @@ Emacs configuration
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 )
 #+END_SRC
-** REVIEW Hydra
+** Hydra
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :defer t
@@ -278,8 +278,13 @@ Emacs configuration
 
 (global-set-key (kbd "s-M") 'hydra-modes/body)
 #+END_SRC
-
+** Corgi
+#+BEGIN_SRC emacs-lisp
+(load "/home/ethan/Dropbox/development/corgi/corgi.el")
+#+END_SRC
 ** REVIEW Org
+
+**
 *** General settings
 #+BEGIN_SRC emacs-lisp
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
@@ -299,49 +304,11 @@ Emacs configuration
          (point-min) (point-max) '(mouse-face t))))
 #+END_SRC
 
-*** Sync
-
-The code below runs a python script that parses the tasks in my org files
-and saves them in .taskpaper format to a file that can be accessed on my
-phone.
-
-#+BEGIN_SRC emacs-lisp
-(defun sync-to-taskpaper ()
-  "Sync org file to taskpaper file for mobile access"
-  (when (file-equal-p buffer-file-name "/home/ethan/Dropbox/org_files/da_guai.org")
-    (shell-command "~/corgi.sh taskpapersync")))
-
-(add-hook 'after-save-hook #'sync-to-taskpaper)
-
-(defun sync-with-corgi ()
-  "Sync org file with to_sync.txt from corgi capture and mobile capture"
-  (when (window-system nil)
-    (message (shell-command-to-string "~/corgi.sh orgsync"))))
-
-(defun es/sync-corgi-tasks ()
-  "Close org file if open and write new tasks to it"
-  (let ((taskfile (get-buffer "da_guai.org")))
-    (if taskfile
-    (save-some-buffers)
-    (kill-buffer taskfile))
-    (message (shell-command-to-string "~/corgi.sh orgsync"))))
-
-(defun es/org-agenda ()
-  (interactive)
-  (es/sync-corgi-tasks)
-  (org-agenda)
-)
-
-;; (add-hook 'org-finalize-agenda-hook #'es/sync-corgi-tasks)
-
-(add-hook 'after-init-hook #'sync-with-corgi)
-#+END_SRC
-
 *** Keybindings
 #+BEGIN_SRC emacs-lisp
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'es/org-agenda)
+(global-set-key "\C-ca" 'corgi-org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
 (define-key org-agenda-mode-map "d" 'org-agenda-deadline)
@@ -813,7 +780,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
   (setq elpy-rpc-timeout nil)
   (setq elpy-rpc-backend "rope")  ; "rope" is another possibility
   (elpy-use-ipython)
-  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.tpl")
+  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.html *.css")
   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
