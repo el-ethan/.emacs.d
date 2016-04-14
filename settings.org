@@ -829,20 +829,6 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
   )
 #+END_SRC
 
-** REVIEW Diff-hl
-#+BEGIN_SRC emacs-lisp
-(use-package diff-hl
-  :disabled t
-  :init
-  (global-diff-hl-mode t)
-  ;; :bind (("<f8>" . diff-hl-next-hunk)
-  ;; 	 ("<f7>" . diff-hl-previous-hunk)
-  ;; 	 ("C-x v =" . diff-hl-diff-goto-hunk)
-  ;; 	 ("C-?" . diff-hl-revert-hunk)
-  ;; 	 )
-  )
-#+END_SRC
-
 ** REVIEW Git-timemachine
 #+BEGIN_SRC emacs-lisp
 (use-package git-timemachine
