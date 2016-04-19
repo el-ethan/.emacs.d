@@ -152,6 +152,7 @@ Emacs configuration
 ** Theme
 #+BEGIN_SRC emacs-lisp
 (use-package atom-one-dark-theme
+  :disabled t
   :init
   (load-theme 'atom-one-dark t)
   )
@@ -163,7 +164,6 @@ Emacs configuration
   )
 
 (use-package base16-theme
-  :disabled t
   :init
   (load-theme 'base16-oceanicnext-dark t)
   )
@@ -1200,4 +1200,5 @@ message listing the hooks."
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
+(setq org-use-speed-commands t)
 #+END_SRC
