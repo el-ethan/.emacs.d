@@ -283,8 +283,6 @@ Emacs configuration
 (load "/home/ethan/Dropbox/development/corgi/corgi.el")
 #+END_SRC
 ** REVIEW Org
-
-**
 *** General settings
 #+BEGIN_SRC emacs-lisp
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
@@ -1198,7 +1196,16 @@ message listing the hooks."
 (use-package nginx-mode)
 #+END_SRC
 
+** define-word
+#+BEGIN_SRC emacs-lisp
+(use-package define-word
+  :bind
+  ("C-x d" . define-word-at-point)
+  )
+#+END_SRC
+
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
+(setq org-agenda-dim-blocked-tasks 'invisible)
 #+END_SRC
