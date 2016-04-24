@@ -282,7 +282,7 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 (load "/home/ethan/Dropbox/development/corgi/corgi.el")
 #+END_SRC
-** REVIEW Org
+** Org
 *** General settings
 #+BEGIN_SRC emacs-lisp
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
@@ -293,10 +293,6 @@ Emacs configuration
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
 
-;; This makes it so I can have check boxes auto-uncheck when
-;; repeating task is completed
-(require 'org-checklist)
-
 (add-hook 'org-agenda-finalize-hook
       (lambda () (remove-text-properties
          (point-min) (point-max) '(mouse-face t))))
@@ -304,10 +300,8 @@ Emacs configuration
 
 *** Keybindings
 #+BEGIN_SRC emacs-lisp
-(global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'corgi-org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
 
 (define-key org-agenda-mode-map "d" 'org-agenda-deadline)
 (define-key org-agenda-mode-map "s" 'org-agenda-schedule)
@@ -335,7 +329,6 @@ Emacs configuration
 *** TODOs
 #+BEGIN_SRC emacs-lisp
 (setq org-enforce-todo-dependencies t)
-;; (setq org-enforce-todo-checkbox-dependencies t)
 
 ;; Set to 'invisible and blocked tasks wont show up in agenda, t and they will be dimmed
 (setq org-agenda-dim-blocked-tasks 'invisible)
@@ -405,8 +398,7 @@ Emacs configuration
       (org-deadline-warning-days 0))
          ("~/Dropbox/org_files/taskpaper_files/da_guai.taskpaper"))))
 
-  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"
-                           "~/Dropbox/org_files/talkingpoints.org"))
+  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"))
 
   ;; Only ask for confirmation of kills within agenda
   ;; only if TODO spans more than 2 lines
@@ -452,7 +444,7 @@ Emacs configuration
    (sh . t)))
 #+END_SRC
 
-** REVIEW Deft
+** Deft
 #+BEGIN_SRC emacs-lisp
   (use-package deft
     :defer t
@@ -469,7 +461,6 @@ Emacs configuration
 
 (defun es/make-scratches-in-deft ()
   "save a new file to deft with a unique name based on current time
-
 The file will be uniquely named with xscratch + yeardatehourminutesecond"
   (interactive)
   (let ((today-string (concat (substring (current-time-string) 20)
@@ -887,7 +878,7 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+END_SRC
 
-** REVIEW Flycheck
+** Flycheck
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :init
@@ -964,7 +955,7 @@ This mode allows more fine-grained movement and editing commands
 
 #+END_SRC
 
-** REVIEW Editor-config
+** Editor-config
 #+BEGIN_SRC emacs-lisp
 (load "editorconfig")
 (editorconfig-mode 1)
@@ -1037,7 +1028,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   )
 #+END_SRC
 
-** REVIEW Winner-mode!
+** Winner-mode!
 #+BEGIN_SRC emacs-lisp
 (winner-mode 1)
 #+END_SRC
@@ -1053,14 +1044,14 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (fullframe magit-diff magit-mode-quit-window))
 #+END_SRC
 
-** REVIEW SX-mode
+** SX-mode
 #+BEGIN_SRC emacs-lisp
 (use-package sx
   :config
   (require 'sx-load))
 #+END_SRC
 
-** REVIEW Markdown-mode
+** Markdown-mode
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode)
 #+END_SRC
@@ -1207,5 +1198,4 @@ message listing the hooks."
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
-(setq org-agenda-dim-blocked-tasks 'invisible)
 #+END_SRC
