@@ -661,9 +661,9 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-unset-key (kbd "C-z"))
 #+END_SRC
 
-** REVIEW Key-chord
+** Key-chord
 #+BEGIN_SRC emacs-lisp
-(defun my/switch-to-previous-buffer ()
+(defun es/switch-to-previous-buffer ()
   "Switch to previously open buffer.
 Repeated invocations toggle between the two most recently open buffers."
   (interactive)
@@ -797,7 +797,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
     (yas-global-mode 1)))
 #+END_SRC
 
-** REVIEW Magit
+** Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :init
@@ -807,7 +807,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
     :bind ("C-c g" . magit-status))
 #+END_SRC
 
-** REVIEW Git Gutter
+** Git Gutter
 #+BEGIN_SRC emacs-lisp
 (use-package git-gutter+
   :init
