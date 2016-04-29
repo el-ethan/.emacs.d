@@ -274,6 +274,7 @@ Emacs configuration
   ("x" sx-compose-mode "Stack Exhange compose" :exit t)
   ("m" gfm-mode "Markdown" :exit t)
   ("j" js2-mode "JavaScript" :exit t)
+  ("w" web-mode "Web" :exit t)
   )
 
 (global-set-key (kbd "s-M") 'hydra-modes/body)
@@ -529,19 +530,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 #+END_SRC
 
-** REVIEW Helm-swoop
-#+BEGIN_SRC emacs-lisp
-(use-package helm-swoop
-  :config
-  (setq helm-multi-swoop-edit-save t)
-  (setq helm-swoop-move-to-line-cycle nil)
-  (setq helm-swoop-use-line-number-face t)
-  ;; disable pre-input, but set input to selection if there is one
-  (setq helm-swoop-pre-input-function (lambda () ""))
-  :bind (("C-S-s" . helm-swoop))
-  )
-#+END_SRC
-
 ** REVIEW Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
@@ -745,7 +733,8 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ** REVIEW JavaScript
 #+BEGIN_SRC emacs-lisp
-(use-package js2-mode)
+(use-package js2-mode
+  :defer t)
 #+END_SRC
 
 ** REVIEW Elpy
@@ -821,7 +810,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 ** REVIEW Git-timemachine
 #+BEGIN_SRC emacs-lisp
 (use-package git-timemachine
-  :ensure t
+  :defer t
   )
 #+END_SRC
 
@@ -1047,13 +1036,16 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 ** SX-mode
 #+BEGIN_SRC emacs-lisp
 (use-package sx
+  :defer t
   :config
   (require 'sx-load))
 #+END_SRC
 
 ** Markdown-mode
 #+BEGIN_SRC emacs-lisp
-(use-package markdown-mode)
+(use-package markdown-mode
+  :defer t
+)
 #+END_SRC
 
 ** ws-butler
@@ -1110,6 +1102,7 @@ message listing the hooks."
 ** REVIEW web-mode
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
+  :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -1184,7 +1177,9 @@ message listing the hooks."
 
 ** nginx-mode
 #+BEGIN_SRC emacs-lisp
-(use-package nginx-mode)
+(use-package nginx-mode
+  :defer t
+  )
 #+END_SRC
 
 ** define-word
