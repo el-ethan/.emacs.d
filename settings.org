@@ -734,7 +734,10 @@ Repeated invocations toggle between the two most recently open buffers."
 ** REVIEW JavaScript
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode
-  :defer t)
+  :defer t
+  :config
+  (setq js2-indent-switch-body t)
+  )
 #+END_SRC
 
 ** REVIEW Elpy
