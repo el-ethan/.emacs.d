@@ -115,13 +115,15 @@ Emacs configuration
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
 
-(defvar es/electic-pair-modes
-  '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode tenjin-mode yaml-mode))
+;; (defvar es/electic-pair-modes
+;;   '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode tenjin-mode yaml-mode))
 
-(defun es/inhibit-electric-pair-mode (char)
-  (not (member major-mode es/electic-pair-modes)))
+;; (defun es/inhibit-electric-pair-mode (char)
+;;   (not (member major-mode es/electic-pair-modes)))
 
-(setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
+;; (setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
+
+(setq-default electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
 #+END_SRC
 
 ** History and auto-save
@@ -737,6 +739,7 @@ Repeated invocations toggle between the two most recently open buffers."
   :defer t
   :config
   (setq js2-indent-switch-body t)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   )
 #+END_SRC
 
