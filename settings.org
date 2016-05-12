@@ -115,15 +115,15 @@ Emacs configuration
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
 
-;; (defvar es/electic-pair-modes
-;;   '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode tenjin-mode yaml-mode))
+(defvar es/electic-pair-modes
+  '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode tenjin-mode yaml-mode))
 
-;; (defun es/inhibit-electric-pair-mode (char)
-;;   (not (member major-mode es/electic-pair-modes)))
+(defun es/inhibit-electric-pair-mode (char)
+  (not (member major-mode es/electic-pair-modes)))
 
-;; (setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
+(setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
 
-(setq-default electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+;; (setq-default electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
 #+END_SRC
 
 ** History and auto-save
@@ -477,7 +477,7 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
 (global-set-key (kbd "<f9>") 'es/make-scratches-in-deft)
 #+END_SRC
 
-** REVIEW Projectile
+** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :defer t
@@ -497,8 +497,7 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
   (helm-projectile-on))
 #+END_SRC
 
-** REVIEW Navigation
-** REVIEW Custom functions for navigation
+** Custom functions for navigation
 #+BEGIN_SRC emacs-lisp
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
@@ -532,7 +531,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 #+END_SRC
 
-** REVIEW Helm
+** Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :init
@@ -567,7 +566,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (helm-mini)))
 #+END_SRC
 
-** REVIEW Helm-ag
+** Helm-ag
 #+BEGIN_SRC emacs-lisp
 (use-package helm-ag
   :defer t
@@ -576,7 +575,7 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-** REVIEW Ace-jump-mode
+** Ace-jump-mode
 #+BEGIN_SRC emacs-lisp
 ;;
 ;; ace jump mode major function
@@ -589,7 +588,6 @@ Repeated invocations toggle between the two most recently open buffers."
   t)
 
 ;; you can select the key you prefer to
-;;(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 (global-set-key (kbd "M-s") 'ace-jump-mode)
 
 ;;
@@ -613,7 +611,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (global-smartscan-mode 1)
   )
 #+END_SRC
-** REVIEW Registers and bookmarks
+** Registers and bookmarks
 #+BEGIN_SRC emacs-lisp
 (defhydra hydra-register (global-map "<f1>")
   "register hydra"
@@ -639,7 +637,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
 
-** REVIEW Assorted key bindings
+** Assorted key bindings
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c o") 'browse-url-of-file)
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -677,7 +675,7 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-** REVIEW Python
+** Python
 #+BEGIN_SRC emacs-lisp
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
@@ -692,12 +690,12 @@ Repeated invocations toggle between the two most recently open buffers."
 
 #+END_SRC
 
-**** Pdb
+** Pdb
 #+BEGIN_SRC emacs-lisp
 (add-hook 'gud-mode-hook 'hl-line-mode)
 #+END_SRC
 
-** REVIEW Yaml-mode
+** Yaml-mode
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
   :config
@@ -708,7 +706,7 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-** REVIEW Lisp
+** Lisp
 *** Slime
 #+BEGIN_SRC emacs-lisp
 (setq inferior-lisp-program "/usr/bin/sbcl")
@@ -726,24 +724,32 @@ Repeated invocations toggle between the two most recently open buffers."
   (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)))
 #+END_SRC
 
-** REVIEW SQL
+** SQL
 #+BEGIN_SRC emacs-lisp
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)))
 #+END_SRC
 
-** REVIEW JavaScript
+** JavaScript
 #+BEGIN_SRC emacs-lisp
+(defun replace-alist-mode (alist oldmode newmode)
+  (dolist (aitem alist)
+    (if (eq (cdr aitem) oldmode)
+    (setcdr aitem newmode))))
+
+;; not sure what mode you want here. You could default to 'fundamental-mode
+(replace-alist-mode auto-mode-alist 'javascript-mode 'js2-mode)
+
 (use-package js2-mode
   :defer t
   :config
   (setq js2-indent-switch-body t)
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   )
 #+END_SRC
 
-** REVIEW Elpy
+** Elpy
 #+BEGIN_SRC emacs-lisp
 (defun elpy-goto-definition-or-rgrep ()
   "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'.
@@ -775,7 +781,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
   )
 #+END_SRC
 
-** REVIEW Yasnippet
+** Yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
   :diminish yas-minor-mode
@@ -813,14 +819,14 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
   )
 #+END_SRC
 
-** REVIEW Git-timemachine
+** Git-timemachine
 #+BEGIN_SRC emacs-lisp
 (use-package git-timemachine
   :defer t
   )
 #+END_SRC
 
-** REVIEW Expand region
+** Expand region
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :ensure t
@@ -828,7 +834,7 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
     :bind ("M-SPC" . er/expand-region))
 #+END_SRC
 
-** REVIEW Syntax-subword
+** Syntax-subword
 
 This mode allows more fine-grained movement and editing commands
 
@@ -841,7 +847,7 @@ This mode allows more fine-grained movement and editing commands
   (global-syntax-subword-mode))
 #+END_SRC
 
-** REVIEW Wrap-region
+** Wrap-region
 #+BEGIN_SRC emacs-lisp
 (use-package wrap-region
   :ensure t
@@ -856,7 +862,7 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'lisp-mode-hook 'wrap-region-mode))
 #+END_SRC
 
-** REVIEW Multiple-cursors
+** Multiple-cursors
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :ensure t
@@ -865,7 +871,7 @@ This mode allows more fine-grained movement and editing commands
 	 ("C-S-<mouse-1> " . mc/add-cursor-on-click)))
 #+END_SRC
 
-** REVIEW Fly spell
+** Fly spell
 #+BEGIN_SRC emacs-lisp
   ;; Enable flyspell-mode
   (add-hook 'org-mode-hook 'flyspell-mode)
@@ -882,7 +888,7 @@ This mode allows more fine-grained movement and editing commands
   )
 #+END_SRC
 
-** REVIEW Company
+** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t
@@ -896,7 +902,7 @@ This mode allows more fine-grained movement and editing commands
   )
 #+END_SRC
 
-** REVIEW Auto-complete
+** Auto-complete
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
     :ensure t
@@ -909,7 +915,7 @@ This mode allows more fine-grained movement and editing commands
 )
 #+END_SRC
 
-** REVIEW Undo-tree
+** Undo-tree
 #+BEGIN_SRC emacs-lisp
 (use-package undo-tree
   :ensure t
@@ -923,7 +929,7 @@ This mode allows more fine-grained movement and editing commands
   )
 #+END_SRC
 
-** REVIEW Copy line
+** Copy line
 #+BEGIN_SRC emacs-lisp
  (defun copy-line (arg)
   "Copy lines (as many as prefix argument) in the kill ring.
@@ -964,13 +970,13 @@ This mode allows more fine-grained movement and editing commands
   )
 #+END_SRC
 
-** REVIEW Work specific
+** Work specific
 #+BEGIN_SRC emacs-lisp
 (when is-work
   (load "~/.emacs.d/work.el"))
 #+END_SRC
 
-** REVIEW Terminal
+** Terminal
 #+BEGIN_SRC emacs-lisp
 (use-package sane-term
   :ensure t
@@ -983,7 +989,7 @@ This mode allows more fine-grained movement and editing commands
 (add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
 #+END_SRC
 
-** REVIEW Windows
+** Windows
 #+BEGIN_SRC emacs-lisp
 (windmove-default-keybindings)
 
@@ -1028,7 +1034,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 (winner-mode 1)
 #+END_SRC
 
-** REVIEW Fullframe
+** Fullframe
 #+BEGIN_SRC emacs-lisp
 (use-package fullframe
   :init
@@ -1060,7 +1066,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   :init (ws-butler-global-mode 1))
 #+END_SRC
 
-** REVIEW Assorted custom functions
+** Assorted custom functions
 #+BEGIN_SRC emacs-lisp
 (defmacro my/with-advice (adlist &rest body)
   "Execute BODY with temporary advice in ADLIST.
@@ -1105,7 +1111,7 @@ message listing the hooks."
     log))
 #+END_SRC
 
-** REVIEW web-mode
+** web-mode
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
   :defer t
@@ -1124,7 +1130,7 @@ message listing the hooks."
   )
 #+END_SRC
 
-** REVIEW dired
+** dired
 #+BEGIN_SRC emacs-lisp
 ;;narrow dired to match filter
 (use-package dired-narrow
@@ -1166,4 +1172,8 @@ message listing the hooks."
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
+;; volatile highlights - temporarily highlight changes from pasting etc
+(use-package volatile-highlights
+  :config
+  (volatile-highlights-mode t))
 #+END_SRC
