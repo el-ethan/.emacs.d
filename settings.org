@@ -751,34 +751,34 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ** Elpy
 #+BEGIN_SRC emacs-lisp
-(defun elpy-goto-definition-or-rgrep ()
-  "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'.
+;; (defun elpy-goto-definition-or-rgrep ()
+;;   "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'.
 
-This first tries `elpy-goto-definition' on the symbol. If it fails to find the definition
-it passes the symbol, wrapped in a regexp for class/function definitions, off to `elpy-rgrep-symbol'"
-    (interactive)
-    (ring-insert find-tag-marker-ring (point-marker))
-    (condition-case nil (elpy-goto-definition)
-        (error (elpy-rgrep-symbol
-                   (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
+;; This first tries `elpy-goto-definition' on the symbol. If it fails to find the definition
+;; it passes the symbol, wrapped in a regexp for class/function definitions, off to `elpy-rgrep-symbol'"
+;;     (interactive)
+;;     (ring-insert find-tag-marker-ring (point-marker))
+;;     (condition-case nil (elpy-goto-definition)
+;;         (error (elpy-rgrep-symbol
+;;                    (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
 
-(use-package elpy
-  :init
-  (load "elpy")
-  (setq elpy-modules (remq 'elpy-module-yasnippet elpy-modules))
-  (elpy-enable)
-  (setq elpy-rpc-timeout nil)
-  (setq elpy-rpc-backend "rope")  ; "rope" is another possibility
-  (elpy-use-ipython)
-  (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.html *.css")
-  (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
-  (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
-  (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
-  (add-hook 'python-mode-hook 'visual-line-mode)
-  (setq python-check-command "flake8")
-  :config
-  (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
-  )
+;; (use-package elpy
+;;   :init
+;;   (load "elpy")
+;;   (setq elpy-modules (remq 'elpy-module-yasnippet elpy-modules))
+;;   (elpy-enable)
+;;   (setq elpy-rpc-timeout nil)
+;;   (setq elpy-rpc-backend "rope")  ; "rope" is another possibility
+;;   (elpy-use-ipython)
+;;   (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.html *.css")
+;;   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
+;;   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
+;;   (add-hook 'python-mode-hook 'visual-line-mode)
+;;   (setq python-check-command "flake8")
+;;   :config
+;;   (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
+;;   )
 #+END_SRC
 
 ** Yasnippet
@@ -829,7 +829,6 @@ it passes the symbol, wrapped in a regexp for class/function definitions, off to
 ** Expand region
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
-    :ensure t
     :defer t
     :bind ("M-SPC" . er/expand-region))
 #+END_SRC
@@ -840,7 +839,6 @@ This mode allows more fine-grained movement and editing commands
 
 #+BEGIN_SRC emacs-lisp
 (use-package syntax-subword
-  :ensure t
   :init
   (setq syntax-subword-skip-spaces t)
   :config
@@ -850,7 +848,6 @@ This mode allows more fine-grained movement and editing commands
 ** Wrap-region
 #+BEGIN_SRC emacs-lisp
 (use-package wrap-region
-  :ensure t
   :config
   (wrap-region-add-wrappers
    '(("(" ")" nil (python-mode org-mode lisp-mode))
@@ -865,7 +862,6 @@ This mode allows more fine-grained movement and editing commands
 ** Multiple-cursors
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
-  :ensure t
   :bind (("M-N" . mc/mark-next-like-this)
 	 ("M-P". mc/mark-previous-like-this)
 	 ("C-S-<mouse-1> " . mc/add-cursor-on-click)))
@@ -1167,6 +1163,15 @@ message listing the hooks."
   :bind
   ("C-x d" . define-word-at-point)
   )
+#+END_SRC
+
+** Anaconda-mode
+#+BEGIN_SRC emacs-lisp
+(use-package anaconda-mode
+  :init
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+)
 #+END_SRC
 
 ** TEMP
