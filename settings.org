@@ -116,7 +116,7 @@ Emacs configuration
   (electric-pair-mode 1))
 
 (defvar es/electic-pair-modes
-  '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode tenjin-mode yaml-mode))
+  '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode yaml-mode))
 
 (defun es/inhibit-electric-pair-mode (char)
   (not (member major-mode es/electic-pair-modes)))
@@ -165,8 +165,14 @@ Emacs configuration
   (load-theme 'aurora t)
   )
 
+(use-package monokai-theme
+  :init
+  (load-theme 'monokai t)
+  )
+
 (use-package base16-theme
   :init
+  :disabled t
   (load-theme 'base16-oceanicnext-dark t)
   )
 
@@ -671,6 +677,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "FF" 'delete-other-windows)
     (key-chord-define-global "GG" 'magit-status)
     (key-chord-define-global "SS" 'helm-swoop-back-to-last-point)
+    (key-chord-define-global "DD" 'dired-jump)
     )
   )
 #+END_SRC
@@ -1172,8 +1179,20 @@ message listing the hooks."
   (add-hook 'python-mode-hook 'anaconda-mode)
   (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 )
+(use-package company-anaconda
+  :init
+  (eval-after-load "company"
+    '(add-to-list 'company-backends 'company-anaconda))
+)
 #+END_SRC
 
+** flycheck-mode
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-mode
+  :init
+  (global-flycheck-mode)
+  )
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
