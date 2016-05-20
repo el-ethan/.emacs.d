@@ -153,6 +153,7 @@ Emacs configuration
 
 ** Theme
 #+BEGIN_SRC emacs-lisp
+
 (use-package atom-one-dark-theme
   :disabled t
   :init
@@ -168,6 +169,12 @@ Emacs configuration
 (use-package monokai-theme
   :init
   (load-theme 'monokai t)
+  )
+
+(use-package dracula-theme
+  :init
+  :disabled t
+  (load-theme 'dracula t)
   )
 
 (use-package base16-theme
@@ -700,6 +707,7 @@ Repeated invocations toggle between the two most recently open buffers."
 ** Pdb
 #+BEGIN_SRC emacs-lisp
 (add-hook 'gud-mode-hook 'hl-line-mode)
+(add-hook 'pdb-mode-hook 'compilation-shell-minor-mode)
 #+END_SRC
 
 ** Yaml-mode
@@ -886,7 +894,6 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :init
-  :disabled t
   (global-flycheck-mode)
   )
 #+END_SRC
@@ -1119,6 +1126,9 @@ message listing the hooks."
 (use-package web-mode
   :defer t
   :init
+  (add-hook 'web-mode-hook
+        (lambda ()
+          (local-set-key (kbd "M-SPC") 'web-mode-mark-and-expand)))
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -1127,6 +1137,7 @@ message listing the hooks."
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
   (setq web-mode-engines-alist
     '(("django"    . "\\.html\\'"))
     )
@@ -1186,18 +1197,25 @@ message listing the hooks."
 )
 #+END_SRC
 
-** flycheck-mode
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck-mode
-  :init
-  (global-flycheck-mode)
-  )
-#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
-;; volatile highlights - temporarily highlight changes from pasting etc
-(use-package volatile-highlights
-  :config
-  (volatile-highlights-mode t))
+
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max)))
+
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+(defun cleanup-buffer ()
+  "Perform a bunch of operations on the whitespace content of a buffer.
+Including indent-buffer, which should not be called automatically on save."
+  (interactive)
+  (untabify-buffer)
+  (delete-trailing-whitespace)
+  (indent-buffer))
+(defadvice sgml-delete-tag (after reindent-buffer activate)
+  (cleanup-buffer))
 #+END_SRC
