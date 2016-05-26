@@ -65,6 +65,11 @@ Emacs configuration
 ** General defaults
 #+BEGIN_SRC emacs-lisp
 ;; Send customizations to another file and load that file
+
+;; Indentation
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
 (setq initial-scratch-message nil)  ;; No scratch buffer message
 (setq initial-major-mode 'org-mode)
 
@@ -161,12 +166,12 @@ Emacs configuration
   )
 
 (use-package aurora-theme
-  :disabled t
   :init
   (load-theme 'aurora t)
   )
 
 (use-package monokai-theme
+  :disabled t
   :init
   (load-theme 'monokai t)
   )
@@ -216,6 +221,7 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
     :config
+    :disabled t
     (add-hook 'python-mode-hook 'fci-mode)
     (setq-default fill-column 80)
     (setq-default fci-rule-color "#546D7A"))
@@ -392,8 +398,14 @@ Emacs configuration
      ((org-agenda-prefix-format "- ")
       (org-show-context-detail 'minimal)
       (org-agenda-todo-keyword-format "")))
-    (";" "Someday and projects"
+    (";" "Someday"
      ((tags-todo "+someday"))
+     ((org-agenda-prefix-format "- ")
+      (org-show-context-detail 'minimal)
+      (org-agenda-remove-tags t)
+      (org-agenda-todo-keyword-format "")))
+    ("p" "Projects"
+     ((tags-todo "+projects"))
      ((org-agenda-prefix-format "- ")
       (org-show-context-detail 'minimal)
       (org-agenda-remove-tags t)
@@ -1201,21 +1213,6 @@ message listing the hooks."
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
 
-(defun untabify-buffer ()
-  (interactive)
-  (untabify (point-min) (point-max)))
-
-(defun indent-buffer ()
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-(defun cleanup-buffer ()
-  "Perform a bunch of operations on the whitespace content of a buffer.
-Including indent-buffer, which should not be called automatically on save."
-  (interactive)
-  (untabify-buffer)
-  (delete-trailing-whitespace)
-  (indent-buffer))
 (defadvice sgml-delete-tag (after reindent-buffer activate)
-  (cleanup-buffer))
+  (web-mode-buffer-indent))
 #+END_SRC
