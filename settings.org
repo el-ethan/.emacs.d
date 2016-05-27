@@ -32,7 +32,6 @@ Emacs configuration
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/") t)
 
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
@@ -159,6 +158,11 @@ Emacs configuration
 ** Theme
 #+BEGIN_SRC emacs-lisp
 
+(use-package afternoon-theme
+  :init
+  (load-theme 'afternoon t)
+  )
+
 (use-package atom-one-dark-theme
   :disabled t
   :init
@@ -166,6 +170,7 @@ Emacs configuration
   )
 
 (use-package aurora-theme
+  :disabled t
   :init
   (load-theme 'aurora t)
   )
