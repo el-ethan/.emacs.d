@@ -781,38 +781,6 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-** Elpy
-#+BEGIN_SRC emacs-lisp
-;; (defun elpy-goto-definition-or-rgrep ()
-;;   "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'.
-
-;; This first tries `elpy-goto-definition' on the symbol. If it fails to find the definition
-;; it passes the symbol, wrapped in a regexp for class/function definitions, off to `elpy-rgrep-symbol'"
-;;     (interactive)
-;;     (ring-insert find-tag-marker-ring (point-marker))
-;;     (condition-case nil (elpy-goto-definition)
-;;         (error (elpy-rgrep-symbol
-;;                    (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
-
-;; (use-package elpy
-;;   :init
-;;   (load "elpy")
-;;   (setq elpy-modules (remq 'elpy-module-yasnippet elpy-modules))
-;;   (elpy-enable)
-;;   (setq elpy-rpc-timeout nil)
-;;   (setq elpy-rpc-backend "rope")  ; "rope" is another possibility
-;;   (elpy-use-ipython)
-;;   (setq elpy-rgrep-file-pattern "*.py *.pyx *.kv *.rst *.html *.css")
-;;   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . python-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.pdbrc\\'" . python-mode))
-;;   (setenv "PYTHONPATH" "/home/ethan/Dropbox/development/kivy_fork/kivy")
-;;   (add-hook 'python-mode-hook 'visual-line-mode)
-;;   (setq python-check-command "flake8")
-;;   :config
-;;   (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
-;;   )
-#+END_SRC
-
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
@@ -912,6 +880,9 @@ This mode allows more fine-grained movement and editing commands
 (use-package flycheck
   :init
   (global-flycheck-mode)
+  (setq flycheck-flake8-maximum-line-length 79)
+  (add-hook 'python-mode-hook (lambda ()
+                                (setq flycheck-checker 'python-flake8)))
   )
 #+END_SRC
 
@@ -1072,14 +1043,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (fullframe magit-diff magit-mode-quit-window))
 #+END_SRC
 
-** SX-mode
-#+BEGIN_SRC emacs-lisp
-(use-package sx
-  :defer t
-  :config
-  (require 'sx-load))
-#+END_SRC
-
 ** Markdown-mode
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
@@ -1203,6 +1166,7 @@ message listing the hooks."
 ** Anaconda-mode
 #+BEGIN_SRC emacs-lisp
 (use-package anaconda-mode
+  :defer t
   :init
   (add-hook 'python-mode-hook 'anaconda-mode)
   (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
