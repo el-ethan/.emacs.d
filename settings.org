@@ -879,6 +879,7 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :init
+  :disabled t
   (global-flycheck-mode)
   (setq flycheck-flake8-maximum-line-length 79)
   (add-hook 'python-mode-hook (lambda ()
@@ -886,6 +887,15 @@ This mode allows more fine-grained movement and editing commands
   )
 #+END_SRC
 
+** Flymake
+#+BEGIN_SRC emacs-lisp
+(use-package flymake-python-pyflakes
+  :init
+  (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
+  (setq flymake-python-pyflakes-executable "flake8")
+  (setq flymake-python-pyflakes-extra-arguments '("--max-line-length=79"))
+)
+#+END_SRC
 ** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
@@ -1166,7 +1176,6 @@ message listing the hooks."
 ** Anaconda-mode
 #+BEGIN_SRC emacs-lisp
 (use-package anaconda-mode
-  :defer t
   :init
   (add-hook 'python-mode-hook 'anaconda-mode)
   (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
