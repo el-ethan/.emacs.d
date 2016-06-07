@@ -67,7 +67,6 @@ Emacs configuration
 
 ;; Indentation
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
 
 (setq initial-scratch-message nil)  ;; No scratch buffer message
 (setq initial-major-mode 'org-mode)
@@ -383,7 +382,7 @@ Emacs configuration
 (setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
      ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects-work")
+       "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-notes-someday-emacs-projects-work")
       (agenda ""))
      ((org-agenda-start-on-weekday nil)
       (org-agenda-ndays 2)
@@ -400,6 +399,11 @@ Emacs configuration
          ((tags-todo "+beilei")
           (tags-todo "+mom")
           (tags-todo "+dad"))
+     ((org-agenda-prefix-format "- ")
+      (org-show-context-detail 'minimal)
+      (org-agenda-todo-keyword-format "")))
+    ("n" "notes"
+         ((tags-todo "+notes"))
      ((org-agenda-prefix-format "- ")
       (org-show-context-detail 'minimal)
       (org-agenda-todo-keyword-format "")))
@@ -702,6 +706,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "GG" 'magit-status)
     (key-chord-define-global "SS" 'helm-swoop-back-to-last-point)
     (key-chord-define-global "DD" 'dired-jump)
+    (key-chord-define-global "PP" 'es/toggle-virtualenv)
     )
   )
 #+END_SRC
@@ -719,6 +724,19 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
 
+(defun es/toggle-virtualenv ()
+  (interactive)
+  (if (boundp 'pyvenv-virtual-env)
+      (if (eq pyvenv-virtual-env nil)
+          (progn
+            (pyvenv-workon "/flywithme/")
+            (message "virtualenv activated"))
+        (progn
+          (pyvenv-deactivate)
+          (message "virtualenv deactivated")))
+    (progn
+      (pyvenv-workon "/flywithme/")
+      (message "virtualenv activated"))))
 #+END_SRC
 
 ** Pdb
@@ -879,11 +897,9 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :init
-  :disabled t
   (global-flycheck-mode)
-  (setq flycheck-flake8-maximum-line-length 79)
-  (add-hook 'python-mode-hook (lambda ()
-                                (setq flycheck-checker 'python-flake8)))
+  ;; (add-hook 'python-mode-hook (lambda ()
+  ;;                               (setq flycheck-checker 'python-flake8)))
   )
 #+END_SRC
 
@@ -891,6 +907,7 @@ This mode allows more fine-grained movement and editing commands
 #+BEGIN_SRC emacs-lisp
 (use-package flymake-python-pyflakes
   :init
+  :disabled t
   (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
   (setq flymake-python-pyflakes-executable "flake8")
   (setq flymake-python-pyflakes-extra-arguments '("--max-line-length=79"))
@@ -1116,9 +1133,9 @@ message listing the hooks."
 (use-package web-mode
   :defer t
   :init
-  (add-hook 'web-mode-hook
-        (lambda ()
-          (local-set-key (kbd "M-SPC") 'web-mode-mark-and-expand)))
+  ;; (add-hook 'web-mode-hook
+  ;;       (lambda ()
+  ;;         (local-set-key (kbd "M-SPC") 'web-mode-mark-and-expand)))
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
