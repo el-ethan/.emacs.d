@@ -156,9 +156,9 @@ Emacs configuration
 
 ** Theme
 #+BEGIN_SRC emacs-lisp
-
 (use-package afternoon-theme
   :init
+  :disabled t
   (load-theme 'afternoon t)
   )
 
@@ -182,14 +182,19 @@ Emacs configuration
 
 (use-package dracula-theme
   :init
-  :disabled t
   (load-theme 'dracula t)
   )
 
 (use-package base16-theme
   :init
   :disabled t
-  (load-theme 'base16-oceanicnext-dark t)
+  (load-theme 'base16-monokai-dark t)
+  )
+
+(use-package color-theme-sanityinc-tomorrow
+  :init
+  :disabled t
+  (load-theme 'sanityinc-tomorrow-eighties)
   )
 
 (defun es/enable-misterioso ()
@@ -311,6 +316,7 @@ Emacs configuration
 ** Org
 *** General settings
 #+BEGIN_SRC emacs-lisp
+(setq org-use-speed-commands t)
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 (setq org-hide-leading-stars t)
 (add-hook 'org-mode-hook 'org-indent-mode)
@@ -500,13 +506,7 @@ Emacs configuration
   "save a new file to deft with a unique name based on current time
 The file will be uniquely named with xscratch + yeardatehourminutesecond"
   (interactive)
-  (let ((today-string (concat (substring (current-time-string) 20)
-                  (substring (current-time-string) 4 7)
-                  (substring (current-time-string) 8 10)
-                  (substring (current-time-string) 11 13)
-                  (substring (current-time-string) 14 16)
-                  (substring (current-time-string) 17 19))))
-    (deft-new-file-named (concat "xscratch" today-string))))
+    (deft-new-file-named (concat "xscratch" (format-time-string "%Y%b%d%H%M%S"))))
 
 (global-set-key (kbd "<f9>") 'es/make-scratches-in-deft)
 #+END_SRC
@@ -1206,8 +1206,10 @@ message listing the hooks."
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-(setq org-use-speed-commands t)
-
-(defadvice sgml-delete-tag (after reindent-buffer activate)
-  (web-mode-buffer-indent))
+;;advise deft-new-file-named to replace spaces in file names with _
+(defun bjm-deft-strip-spaces (args)
+  "Replace spaces with - in the string contained in the first element of the list args. Used to advise deft's file naming function."
+  (list (replace-regexp-in-string " " "_" (car args)))
+  )
+(advice-add 'deft-new-file-named :filter-args #'bjm-deft-strip-spaces)
 #+END_SRC
