@@ -713,6 +713,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ** Python
 #+BEGIN_SRC emacs-lisp
+(use-package pyenv)
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
   (interactive)
