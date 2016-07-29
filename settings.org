@@ -388,10 +388,15 @@ Emacs configuration
 (setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
      ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-notes-someday-emacs-projects-work")
-      (agenda ""))
+       "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-notes-someday-emacs-work")
+      ;; (agenda "") ;;Uncomment if you start using this as an agenda with deadlines again
+      )
      ((org-agenda-start-on-weekday nil)
       (org-agenda-ndays 2)
+      (org-agenda-prefix-format "○ ")
+      (org-show-context-detail 'minimal)
+      (org-agenda-remove-tags t)
+      (org-agenda-todo-keyword-format "")
       (org-deadline-warning-days 0)))
     ("w" "Work tasks"
      ((tags-todo
@@ -453,8 +458,8 @@ Emacs configuration
 *** Capture templates
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-    '(("i" "New TODO to Uncategorized TODOs" entry (file+headline
-      "~/Dropbox/org_files/da_guai.org" "Uncategorized TODOs")
+    '(("i" "New TODO to Inbox" entry (file+headline
+      "~/Dropbox/org_files/da_guai.org" "Inbox")
       "* TODO %?" :kill-buffer t)
 
     ("n" "New note to xnotes.org" entry (file
@@ -713,7 +718,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ** Python
 #+BEGIN_SRC emacs-lisp
-(use-package pyenv)
+(use-package pyenv-mode)
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
   (interactive)
@@ -793,7 +798,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (replace-alist-mode auto-mode-alist 'javascript-mode 'js2-mode)
 
 (use-package js2-mode
-  :defer t
   :config
   (setq js2-indent-switch-body t)
   ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -925,6 +929,7 @@ This mode allows more fine-grained movement and editing commands
   (setq company-minimum-prefix-length 2)
   ;; (setq company-tooltip-flip-when-above t)
   ;; (setq company-dabbrev-ignore-case 'keep-prefix)
+  (setq company-dabbrev-downcase nil)
   )
 #+END_SRC
 
