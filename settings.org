@@ -682,7 +682,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C-\-") 'text-scale-decrease)
 (global-set-key "\C-xp" 'pop-to-mark-command)
-(global-set-key (kbd "s-n") 'new-frame)
+(global-set-key (kbd "s-n") 'make-frame)
 (define-key dired-mode-map "b" 'dired-up-directory)
 ;; Don't suspended when I accidently hit C-z
 (global-unset-key (kbd "C-z"))
