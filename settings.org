@@ -401,7 +401,7 @@ Emacs configuration
     ("w" "Work tasks"
      ((tags-todo
        "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects")
-      (agenda ""))
+      (agenda "" nil))
      ((org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp ":home:"))
       (org-agenda-start-on-weekday nil)
       (org-agenda-ndays 1)
@@ -506,6 +506,13 @@ Emacs configuration
     (setq deft-use-filter-string-for-filename t)
     :bind (("C-c d" . deft)))
   ;;(setq deft-auto-save-interval 0)
+
+;;advise deft-new-file-named to replace spaces in file names with _
+(defun bjm-deft-strip-spaces (args)
+  "Replace spaces with - in the string contained in the first element of the list args. Used to advise deft's file naming function."
+  (list (replace-regexp-in-string " " "_" (car args)))
+  )
+(advice-add 'deft-new-file-named :filter-args #'bjm-deft-strip-spaces)
 
 (defun es/make-scratches-in-deft ()
   "save a new file to deft with a unique name based on current time
@@ -1212,10 +1219,4 @@ message listing the hooks."
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-;;advise deft-new-file-named to replace spaces in file names with _
-(defun bjm-deft-strip-spaces (args)
-  "Replace spaces with - in the string contained in the first element of the list args. Used to advise deft's file naming function."
-  (list (replace-regexp-in-string " " "_" (car args)))
-  )
-(advice-add 'deft-new-file-named :filter-args #'bjm-deft-strip-spaces)
 #+END_SRC
