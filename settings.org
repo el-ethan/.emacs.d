@@ -752,12 +752,10 @@ Repeated invocations toggle between the two most recently open buffers."
       (message "virtualenv activated"))))
 #+END_SRC
 
-** Pdb
+** RealGUD
 #+BEGIN_SRC emacs-lisp
-(add-hook 'gud-mode-hook 'hl-line-mode)
-(add-hook 'pdb-mode-hook 'compilation-shell-minor-mode)
+(use-package realgud)
 #+END_SRC
-
 ** Yaml-mode
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
