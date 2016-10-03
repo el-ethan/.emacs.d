@@ -169,7 +169,6 @@ Emacs configuration
   )
 
 (use-package aurora-theme
-  :disabled t
   :init
   (load-theme 'aurora t)
   )
@@ -181,6 +180,7 @@ Emacs configuration
   )
 
 (use-package dracula-theme
+  :disabled t
   :init
   (load-theme 'dracula t)
   )
@@ -1218,4 +1218,10 @@ message listing the hooks."
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
+(dir-locals-set-class-variables
+ 'xpython
+ '((nil . ((buffer-read-only . t)
+           ))))
+
+(dir-locals-set-directory-class "/home/ethan/.virtualenvs/" 'xpython)
 #+END_SRC
