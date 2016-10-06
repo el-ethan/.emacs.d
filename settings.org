@@ -753,6 +753,13 @@ Repeated invocations toggle between the two most recently open buffers."
       (message "virtualenv activated"))))
 #+END_SRC
 
+** Golang
+#+BEGIN_SRC emacs-lisp
+(use-package go-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+)
+#+END_SRC
 ** RealGUD
 #+BEGIN_SRC emacs-lisp
 (use-package realgud)
@@ -893,7 +900,7 @@ This mode allows more fine-grained movement and editing commands
 (use-package multiple-cursors
   :bind (("M-N" . mc/mark-next-like-this)
 	 ("M-P". mc/mark-previous-like-this)
-	 ("C-S-<mouse-1> " . mc/add-cursor-on-click)))
+     ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 #+END_SRC
 
 ** Fly spell
@@ -1223,5 +1230,6 @@ message listing the hooks."
  '((nil . ((buffer-read-only . t)
            ))))
 
+;; Any directory set in this way will have files open in read-only mode by default
 (dir-locals-set-directory-class "/home/ethan/.virtualenvs/" 'xpython)
 #+END_SRC
