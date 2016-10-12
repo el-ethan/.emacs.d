@@ -65,6 +65,8 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 ;; Send customizations to another file and load that file
 
+(setq-default show-trailing-whitespace t)
+
 ;; Indentation
 (setq-default indent-tabs-mode nil)
 
@@ -1099,6 +1101,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 ** ws-butler
 #+BEGIN_SRC emacs-lisp
 (use-package ws-butler
+  :disabled t
   :init (ws-butler-global-mode 1))
 #+END_SRC
 
