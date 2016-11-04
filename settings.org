@@ -164,6 +164,10 @@ Emacs configuration
   (load-theme 'afternoon t)
   )
 
+(use-package avk-emacs-themes
+  :init
+  (load-theme 'avk-darkblue-white t)
+  )
 (use-package atom-one-dark-theme
   :disabled t
   :init
@@ -172,6 +176,7 @@ Emacs configuration
 
 (use-package aurora-theme
   :init
+  :disabled t
   (load-theme 'aurora t)
   )
 
@@ -390,12 +395,12 @@ Emacs configuration
 (setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
      ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work")
+       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects")
       (agenda "")
       )
      ((org-agenda-start-on-weekday nil)
       (org-agenda-ndays 2)
-      (org-agenda-prefix-format "○ ")
+      (org-agenda-prefix-format "○  %t")
       (org-show-context-detail 'minimal)
       (org-agenda-remove-tags t)
       (org-agenda-todo-keyword-format "")
@@ -936,7 +941,6 @@ This mode allows more fine-grained movement and editing commands
 ** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
-  :ensure t
   :config
   (global-company-mode 1)
   (setq company-idle-delay 0)
@@ -964,7 +968,6 @@ This mode allows more fine-grained movement and editing commands
 ** Undo-tree
 #+BEGIN_SRC emacs-lisp
 (use-package undo-tree
-  :ensure t
   :diminish undo-tree-mode
   :config
   (progn
