@@ -543,7 +543,7 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
     (setq projectile-switch-project-action 'helm-projectile)
     (projectile-global-mode)))
 
-(require 'dash) ;This seems to be necessary after recent package updates...
+;; (require 'dash) ;This seems to be necessary after recent package updates...
 (use-package helm-projectile
   :defer t
   :commands helm-projectile-find-file
