@@ -33,6 +33,9 @@ Emacs configuration
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 
+;; (add-to-list 'package-archives
+;;              '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -395,7 +398,7 @@ Emacs configuration
 (setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
      ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects")
+       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects-beilei")
       (agenda "")
       )
      ((org-agenda-start-on-weekday nil)
@@ -923,8 +926,6 @@ This mode allows more fine-grained movement and editing commands
 (use-package flycheck
   :init
   (global-flycheck-mode)
-  ;; (add-hook 'python-mode-hook (lambda ()
-  ;;                               (setq flycheck-checker 'python-flake8)))
   )
 #+END_SRC
 
@@ -934,7 +935,7 @@ This mode allows more fine-grained movement and editing commands
   :init
   :disabled t
   (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
-  (setq flymake-python-pyflakes-executable "flake8")
+  (setq flymake-python-pyflakes-executable "pylint")
   (setq flymake-python-pyflakes-extra-arguments '("--max-line-length=79"))
 )
 #+END_SRC
@@ -1226,6 +1227,15 @@ message listing the hooks."
   :init
   (eval-after-load "company"
     '(add-to-list 'company-backends 'company-anaconda))
+)
+#+END_SRC
+
+** Elpy
+#+BEGIN_SRC emacs-lisp
+(use-package elpy
+  :init
+  :disabled t
+  (elpy-enable)
 )
 #+END_SRC
 
