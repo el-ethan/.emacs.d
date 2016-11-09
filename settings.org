@@ -1241,8 +1241,10 @@ message listing the hooks."
 
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-(define-key org-agenda-mode-map [remap org-agenda-next-line] 'org-agenda-next-item)
-(define-key org-agenda-mode-map [remap org-agenda-previous-line] 'org-agenda-previous-item)
+(define-key org-agenda-mode-map
+  [remap org-agenda-next-line] 'org-agenda-next-item)
+(define-key org-agenda-mode-map
+  [remap org-agenda-previous-line] 'org-agenda-previous-item)
 
 (dir-locals-set-class-variables
  'xpython
