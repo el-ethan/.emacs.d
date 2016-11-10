@@ -97,7 +97,7 @@ Emacs configuration
 (delete-selection-mode 1)
 
 ;; Type face size stuff
-(set-face-attribute 'default nil :height 150)
+(set-face-attribute 'default nil :height 160)
 
 ;; Save backups elsewhere
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
