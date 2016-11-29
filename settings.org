@@ -161,6 +161,10 @@ Emacs configuration
 
 ** Theme
 #+BEGIN_SRC emacs-lisp
+(use-package apropospriate-theme
+  :init
+  (load-theme 'apropospriate-dark t)
+)
 (use-package afternoon-theme
   :init
   :disabled t
@@ -169,6 +173,7 @@ Emacs configuration
 
 (use-package avk-emacs-themes
   :init
+  :disabled t
   (load-theme 'avk-darkblue-white t)
   )
 (use-package atom-one-dark-theme
@@ -398,7 +403,7 @@ Emacs configuration
 (setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
      ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects-beilei")
+       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects")
       (agenda "")
       )
      ((org-agenda-start-on-weekday nil)
@@ -1239,6 +1244,15 @@ message listing the hooks."
 )
 #+END_SRC
 
+** Skewer
+#+BEGIN_SRC emacs-lisp
+(use-package skewer-mode
+  :init
+  (add-hook 'js2-mode-hook 'skewer-mode)
+  (add-hook 'css-mode-hook 'skewer-css-mode)
+  (add-hook 'html-mode-hook 'skewer-html-mode)
+)
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (define-key org-agenda-mode-map
