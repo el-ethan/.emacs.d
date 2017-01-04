@@ -163,6 +163,7 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 (use-package apropospriate-theme
   :init
+  :disabled t
   (load-theme 'apropospriate-dark t)
 )
 (use-package afternoon-theme
@@ -189,7 +190,6 @@ Emacs configuration
   )
 
 (use-package monokai-theme
-  :disabled t
   :init
   (load-theme 'monokai t)
   )
@@ -328,7 +328,7 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 (load "/home/ethan/Dropbox/development/corgi/corgi.el")
 #+END_SRC
-** Org
+** Org-mode
 *** General settings
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
@@ -403,7 +403,7 @@ Emacs configuration
 (setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
      ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects")
+       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects-learn")
       (agenda "")
       )
      ((org-agenda-start-on-weekday nil)
@@ -516,6 +516,7 @@ Emacs configuration
     (setq deft-directory "~/Dropbox/org_files")
     (setq deft-default-extension "org")
     (setq deft-text-mode 'org-mode)
+    (setq deft-extensions '("txt" "org" "taskpaper"))
     (setq deft-use-filename-as-title t)
     (setq deft-recursive t)
     (setq deft-use-filter-string-for-filename t)
@@ -1253,8 +1254,39 @@ message listing the hooks."
   (add-hook 'html-mode-hook 'skewer-html-mode)
 )
 #+END_SRC
+
+** gitignore-mode
+#+BEGIN_SRC emacs-lisp
+(use-package gitignore-mode)
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
+
+(defun my-org-deadline (arg &optional time repeat)
+(interactive "P")
+  (let ((org-time-stamp-formats
+          (if repeat
+            `(,(concat "<%Y-%m-%d %a " repeat ">") .
+              ,(concat "<%Y-%m-%d %a %H:%M " repeat ">"))
+             org-time-stamp-formats)))
+    (org-deadline arg time)))
+
+(defun org-agenda-repeating-p ()
+  (let ((pos (get-text-property 0 'org-marker (thing-at-point 'line))))
+    (save-window-excursion
+      (org-goto-marker-or-bmk pos)
+      (org-get-repeat))
+    ))
+
+
+(defun query-if-repeating (&rest args)
+  (if (not (org-agenda-repeating-p))
+      t
+    (y-or-n-p "Entry repeats.  Kill?"))
+  )
+
+(advice-add 'org-agenda-kill :before-while 'query-if-repeating)
+
 (define-key org-agenda-mode-map
   [remap org-agenda-next-line] 'org-agenda-next-item)
 (define-key org-agenda-mode-map

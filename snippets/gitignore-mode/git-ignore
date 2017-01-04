@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: git-ignore
+# key: xgig
+# --
+*.pyc
+__pycache__/
