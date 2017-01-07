@@ -191,6 +191,7 @@ Emacs configuration
 
 (use-package monokai-theme
   :init
+  :disabled t
   (load-theme 'monokai t)
   )
 
@@ -208,7 +209,6 @@ Emacs configuration
 
 (use-package color-theme-sanityinc-tomorrow
   :init
-  :disabled t
   (load-theme 'sanityinc-tomorrow-eighties)
   )
 
@@ -403,7 +403,7 @@ Emacs configuration
 (setq org-agenda-custom-commands
       '(("j" "Agenda and unscheduled tasks"
      ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects-learn")
+       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects-learn-questions")
       (agenda "")
       )
      ((org-agenda-start-on-weekday nil)

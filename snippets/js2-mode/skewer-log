@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: skewer-log
+# key: xsk
+# --
+skewer.log($0);

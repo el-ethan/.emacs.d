@@ -10,7 +10,7 @@
          ["#263238" "#74CBC4" "#546D7A" "#C792EA" "#82B1FF" "#FFCB6B" "#FF516D" "#CDD3D3"])
     '(custom-safe-themes
          (quote
-             ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "4904daa168519536b08ca4655d798ca0fb50d3545e6244cefcf7d0c7b338af7e" "3e72e20b462954ec339684cb4d0d2d71293f4b8b1564dde1fc94c818dc427ed3" "4f5bb895d88b6fe6a983e63429f154b8d939b4a8c581956493783b2515e22d6d" default)))
+             ("628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "4904daa168519536b08ca4655d798ca0fb50d3545e6244cefcf7d0c7b338af7e" "3e72e20b462954ec339684cb4d0d2d71293f4b8b1564dde1fc94c818dc427ed3" "4f5bb895d88b6fe6a983e63429f154b8d939b4a8c581956493783b2515e22d6d" default)))
  '(fci-rule-color "#232A2F")
  '(git-gutter+-hide-gutter nil)
  '(gud-chdir-before-run nil)
@@ -26,7 +26,7 @@
  '(org-modules (quote (org-docview org-habit org-info org-mhe org-w3m)))
     '(package-selected-packages
          (quote
-             (gitignore-mode skewer-mode skewer apropospriate-theme company-anaconda anaconda-mode define-word nginx-mode peep-dired dired-narrow web-mode markdown-mode fullframe sane-term mouse+ undo-tree auto-complete company flycheck multiple-cursors wrap-region syntax-subword expand-region git-timemachine git-gutter-fringe+ git-gutter+ magit yasnippet js2-mode yaml-mode projectile deft transpose-frame hydra org-bullets fixmee rainbow-delimiters avk-emacs-themes use-package)))
+             (cider aurora aurora-theme gitignore-mode skewer-mode skewer apropospriate-theme company-anaconda anaconda-mode define-word nginx-mode peep-dired dired-narrow web-mode markdown-mode fullframe sane-term mouse+ undo-tree auto-complete company flycheck multiple-cursors wrap-region syntax-subword expand-region git-timemachine git-gutter-fringe+ git-gutter+ magit yasnippet js2-mode yaml-mode projectile deft transpose-frame hydra org-bullets fixmee rainbow-delimiters avk-emacs-themes use-package)))
  '(projectile-globally-ignored-file-suffixes (quote ("png" "pyc" "elc")))
  '(python-check-command "/usr/local/bin/pyflakes")
  '(safe-local-variable-values (quote ((encoding . utf-8) (buffer-auto-save-file-name))))
