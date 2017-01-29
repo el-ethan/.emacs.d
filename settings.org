@@ -11,7 +11,6 @@ Emacs configuration
 (global-set-key (kbd "C-c s")
 		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 #+END_SRC
-
 ** GUI stuff
 #+BEGIN_SRC emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -57,11 +56,18 @@ Emacs configuration
 
 (require 'use-package)
 #+END_SRC
+** Mac
+#+BEGIN_SRC emacs-lisp 
+(use-package exec-path-from-shell)
+;key bindings for mac
+(when (eq system-type 'darwin) ;; mac specific settings
+  (setq mac-option-modifier 'control)
+  (setq mac-command-modifier 'meta)
+  (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+  )
 
-** Server stuff
-#+BEGIN_SRC emacs-lisp
-(load "server")
-(unless (server-running-p) (server-start))
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 #+END_SRC
 
 ** General defaults
@@ -102,8 +108,6 @@ Emacs configuration
 ;; Save backups elsewhere
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
-(setq is-work nil)
-
 ;; Enable show-paren-mode
 (show-paren-mode 1)
 
@@ -136,7 +140,7 @@ Emacs configuration
 
 ** History and auto-save
 #+BEGIN_SRC emacs-lisp
-(setq savehist-file "/home/ethan/.emacs.d/savehist")
+(setq savehist-file "/Users/alight/.emacs.d/savehist")
 (savehist-mode 1)
 ;; t means no truncation
 (setq history-length t)
@@ -147,7 +151,7 @@ Emacs configuration
         search-ring
         regexp-search-ring))
 
-(setq auto-save-file-name-transforms '((".*" "/home/ethan/.emacs.d/auto-save-list/" t)))
+(setq auto-save-file-name-transforms '((".*" "/Users/alight/.emacs.d/auto-save-list/" t)))
 #+END_SRC
 
 ** utf-8
@@ -324,10 +328,6 @@ Emacs configuration
 
 (global-set-key (kbd "s-M") 'hydra-modes/body)
 #+END_SRC
-** Corgi
-#+BEGIN_SRC emacs-lisp
-(load "/home/ethan/Dropbox/development/corgi/corgi.el")
-#+END_SRC
 ** Org-mode
 *** General settings
 #+BEGIN_SRC emacs-lisp
@@ -472,22 +472,22 @@ Emacs configuration
 
 *** Capture templates
 #+BEGIN_SRC emacs-lisp
-  (setq org-capture-templates
-    '(("i" "New TODO to Inbox" entry (file+headline
-      "~/Dropbox/org_files/da_guai.org" "Inbox")
-      "* TODO %?" :kill-buffer t)
+  ;; (setq org-capture-templates
+  ;;   '(("i" "New TODO to Inbox" entry (file+headline
+  ;;     "~/Dropbox/org_files/da_guai.org" "Inbox")
+  ;;     "* TODO %?" :kill-buffer t)
 
-    ("n" "New note to xnotes.org" entry (file
-     "~/Dropbox/org_files/xnotes.org")
-     "* %T\n\n%i%?" :prepend t :empty-lines 1)
+  ;;   ("n" "New note to xnotes.org" entry (file
+  ;;    "~/Dropbox/org_files/xnotes.org")
+  ;;    "* %T\n\n%i%?" :prepend t :empty-lines 1)
 
-    ("w" "New work note" entry (file
-      "~/Dropbox/org_files/worknotes.org")
-      "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
+  ;;   ("w" "New work note" entry (file
+  ;;     "~/Dropbox/org_files/worknotes.org")
+  ;;     "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
 
-    ("d" "New daydayup entry" entry (file
-      "~/Dropbox/org_files/daydayup.org")
-      "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
+  ;;   ("d" "New daydayup entry" entry (file
+  ;;     "~/Dropbox/org_files/daydayup.org")
+  ;;     "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
 #+END_SRC
 
 *** make things look nice
@@ -513,10 +513,10 @@ Emacs configuration
     :defer t
     :commands deft-new-file-named
     :config
-    (setq deft-directory "~/Dropbox/org_files")
-    (setq deft-default-extension "org")
+    (setq deft-directory "~/org_files")
+    (setq deft-default-extension "md")
     (setq deft-text-mode 'org-mode)
-    (setq deft-extensions '("txt" "org" "taskpaper"))
+    (setq deft-extensions '("txt" "org" "taskpaper" "md"))
     (setq deft-use-filename-as-title t)
     (setq deft-recursive t)
     (setq deft-use-filter-string-for-filename t)
@@ -643,7 +643,7 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;
 ;; ace jump mode major function
 ;;
-(add-to-list 'load-path "/home/ethan/.emacs.d/elisp/ace-jump-mode/")
+(add-to-list 'load-path "~/.emacs.d/elisp/ace-jump-mode/")
 (autoload
   'ace-jump-mode
   "ace-jump-mode"
@@ -697,7 +697,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (message "Bookmarked saved at current position"))
 
 (global-set-key (kbd "C-S-b") 'my/quick-save-bookmark)
-(bind-key "<menu>" 'helm-bookmarks)
+;(bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
 
 ** Assorted key bindings
@@ -736,6 +736,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "SS" 'helm-swoop-back-to-last-point)
     (key-chord-define-global "DD" 'dired-jump)
     (key-chord-define-global "PP" 'es/toggle-virtualenv)
+    (key-chord-define-global "``" 'helm-bookmarks)
     )
   )
 #+END_SRC
@@ -852,7 +853,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
     (define-key yas-minor-mode-map (kbd "<tab>") nil)
     (define-key yas-minor-mode-map (kbd "TAB") nil)
-    (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
+    ;; (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
     (yas-global-mode 1)))
 #+END_SRC
 
@@ -947,7 +948,7 @@ This mode allows more fine-grained movement and editing commands
   :init
   :disabled t
   (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
-  (setq flymake-python-pyflakes-executable "pylint")
+  (setq flymake-python-pyflakes-executable "/usr/local/bin/pylint")
   (setq flymake-python-pyflakes-extra-arguments '("--max-line-length=79"))
 )
 #+END_SRC
@@ -1031,13 +1032,6 @@ This mode allows more fine-grained movement and editing commands
   (global-set-key [down-mouse-2] 'mouse-flash-position)
   )
 #+END_SRC
-
-** Work specific
-#+BEGIN_SRC emacs-lisp
-(when is-work
-  (load "~/.emacs.d/work.el"))
-#+END_SRC
-
 ** Terminal
 #+BEGIN_SRC emacs-lisp
 (use-package sane-term
@@ -1047,7 +1041,6 @@ This mode allows more fine-grained movement and editing commands
 
 *** Open terminal from emacs
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<f12>") (kbd "M-& terminator"))
 (add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
 #+END_SRC
 
@@ -1112,13 +1105,6 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 (use-package markdown-mode
   :defer t
 )
-#+END_SRC
-
-** ws-butler
-#+BEGIN_SRC emacs-lisp
-(use-package ws-butler
-  :disabled t
-  :init (ws-butler-global-mode 1))
 #+END_SRC
 
 ** Assorted custom functions
@@ -1242,15 +1228,6 @@ message listing the hooks."
 )
 #+END_SRC
 
-** Elpy
-#+BEGIN_SRC emacs-lisp
-(use-package elpy
-  :init
-  :disabled t
-  (elpy-enable)
-)
-#+END_SRC
-
 ** Skewer
 #+BEGIN_SRC emacs-lisp
 (use-package skewer-mode
@@ -1304,5 +1281,5 @@ message listing the hooks."
            ))))
 
 ;; Any directory set in this way will have files open in read-only mode by default
-(dir-locals-set-directory-class "/home/ethan/.virtualenvs/" 'xpython)
+(dir-locals-set-directory-class "/Users/alight/.virtualenvs/" 'xpython)
 #+END_SRC
