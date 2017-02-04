@@ -57,7 +57,7 @@ Emacs configuration
 (require 'use-package)
 #+END_SRC
 ** Mac
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell)
 ;key bindings for mac
 (when (eq system-type 'darwin) ;; mac specific settings
@@ -80,7 +80,7 @@ Emacs configuration
 (setq-default indent-tabs-mode nil)
 
 (setq initial-scratch-message nil)  ;; No scratch buffer message
-(setq initial-major-mode 'org-mode)
+(setq initial-major-mode 'gfm-mode)
 
 (column-number-mode)
 
@@ -851,8 +851,8 @@ Repeated invocations toggle between the two most recently open buffers."
     (add-hook 'term-mode-hook (lambda()
 				(setq yas-dont-activate t)))
     (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-    (define-key yas-minor-mode-map (kbd "<tab>") nil)
-    (define-key yas-minor-mode-map (kbd "TAB") nil)
+    ;; (define-key yas-minor-mode-map (kbd "<tab>") nil)
+    ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
     ;; (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
     (yas-global-mode 1)))
 #+END_SRC
@@ -915,6 +915,7 @@ This mode allows more fine-grained movement and editing commands
      ("\"" "\"" nil (org-mode python-mode lisp-mode sql-mode))))
   (add-hook 'org-mode-hook 'wrap-region-mode)
   (add-hook 'python-mode-hook 'wrap-region-mode)
+(add-hook 'gfm-mode-hook 'wrap-region-mode)
   (add-hook 'lisp-mode-hook 'wrap-region-mode))
 #+END_SRC
 
@@ -1242,8 +1243,34 @@ message listing the hooks."
 #+BEGIN_SRC emacs-lisp
 (use-package gitignore-mode)
 #+END_SRC
+
+** Dockerfile-mode
+#+BEGIN_SRC emacs-lisp
+(use-package dockerfile-mode)
+#+END_SRC
+
+** Sphinx-doc
+#+BEGIN_SRC emacs-lisp
+(use-package sphinx-doc
+  :init
+  (add-hook 'python-mode-hook (lambda ()
+                                (require 'sphinx-doc)
+                                (sphinx-doc-mode t)))
+
+)
+
+#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
+(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
 
 (defun my-org-deadline (arg &optional time repeat)
 (interactive "P")
