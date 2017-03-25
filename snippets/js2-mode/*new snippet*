@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: js-debugger
+# key: ttt
+# --
+debugger;

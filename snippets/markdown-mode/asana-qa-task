@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: asana-qa-task
+# key: ;qa
+# --
+This task is ready for QA: $1
+
+The relevant pull request can be found here: $2
+
+The QA instance can be accessed here (if you cannot access it, let me know; the instance may be stopped to save money): $3
+

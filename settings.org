@@ -170,6 +170,7 @@ Emacs configuration
   :disabled t
   (load-theme 'apropospriate-dark t)
 )
+
 (use-package afternoon-theme
   :init
   :disabled t
@@ -181,6 +182,7 @@ Emacs configuration
   :disabled t
   (load-theme 'avk-darkblue-white t)
   )
+
 (use-package atom-one-dark-theme
   :disabled t
   :init
@@ -213,6 +215,7 @@ Emacs configuration
 
 (use-package color-theme-sanityinc-tomorrow
   :init
+  :disabled t
   (load-theme 'sanityinc-tomorrow-eighties)
   )
 
@@ -223,7 +226,7 @@ Emacs configuration
               :inherit nil
               :background "gray13"))
 
-;; (es/enable-misterioso)
+(es/enable-misterioso)
 
 ;; THEME switching stuff from Daniel Mai
 (defun switch-theme (theme)
@@ -547,6 +550,8 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
   :config
   (progn
     (setq projectile-enable-caching t)
+    (add-to-list 'projectile-globally-ignored-directories "javascript/builds")
+    (add-to-list 'projectile-globally-ignored-directories "alightorm/alembic/versions")
     (setq projectile-indexing-method 'alien)
     (setq projectile-completion-system 'default)
     (setq projectile-switch-project-action 'helm-projectile)
@@ -710,6 +715,8 @@ Repeated invocations toggle between the two most recently open buffers."
 (define-key dired-mode-map "b" 'dired-up-directory)
 ;; Don't suspended when I accidently hit C-z
 (global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "M-c"))
+(global-unset-key (kbd "M-l"))
 #+END_SRC
 
 ** Key-chord
@@ -735,8 +742,9 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "GG" 'magit-status)
     (key-chord-define-global "SS" 'helm-swoop-back-to-last-point)
     (key-chord-define-global "DD" 'dired-jump)
-    (key-chord-define-global "PP" 'es/toggle-virtualenv)
     (key-chord-define-global "``" 'helm-bookmarks)
+    (key-chord-define-global "HH" 'highlight-symbol)
+
     )
   )
 #+END_SRC
@@ -755,19 +763,6 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
 
-(defun es/toggle-virtualenv ()
-  (interactive)
-  (if (boundp 'pyvenv-virtual-env)
-      (if (eq pyvenv-virtual-env nil)
-          (progn
-            (pyvenv-workon "/flywithme/")
-            (message "virtualenv activated"))
-        (progn
-          (pyvenv-deactivate)
-          (message "virtualenv deactivated")))
-    (progn
-      (pyvenv-workon "/flywithme/")
-      (message "virtualenv activated"))))
 #+END_SRC
 
 ** Clojure
@@ -889,7 +884,10 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :defer t
+    :config
+    (setq shift-select-mode nil)
     :bind ("M-SPC" . er/expand-region))
+
 #+END_SRC
 
 ** Syntax-subword
@@ -1249,15 +1247,19 @@ message listing the hooks."
 (use-package dockerfile-mode)
 #+END_SRC
 
-** Sphinx-doc
+** Json-mode
 #+BEGIN_SRC emacs-lisp
-(use-package sphinx-doc
-  :init
-  (add-hook 'python-mode-hook (lambda ()
-                                (require 'sphinx-doc)
-                                (sphinx-doc-mode t)))
+(use-package json-mode
+:init
+(add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode))
+ )
+#+END_SRC
 
-)
+** highlight-symbol
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-symbol
+  :ensure t
+  )
 
 #+END_SRC
 ** TEMP

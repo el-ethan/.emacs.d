@@ -26,7 +26,7 @@
  '(org-modules (quote (org-docview org-habit org-info org-mhe org-w3m)))
     '(package-selected-packages
          (quote
-             (sphinx-doc dockerfile-mode pyvenv cider aurora aurora-theme gitignore-mode skewer-mode skewer apropospriate-theme company-anaconda anaconda-mode define-word nginx-mode peep-dired dired-narrow web-mode markdown-mode fullframe sane-term mouse+ undo-tree auto-complete company flycheck multiple-cursors wrap-region syntax-subword expand-region git-timemachine git-gutter-fringe+ git-gutter+ magit yasnippet js2-mode yaml-mode projectile deft transpose-frame hydra org-bullets fixmee rainbow-delimiters avk-emacs-themes use-package)))
+             (highlight-symbol json-mode atom-one-dark-theme monokai-theme paganini-theme sphinx-doc dockerfile-mode pyvenv cider aurora aurora-theme gitignore-mode skewer-mode skewer apropospriate-theme company-anaconda anaconda-mode define-word nginx-mode peep-dired dired-narrow web-mode markdown-mode fullframe sane-term mouse+ undo-tree auto-complete company flycheck multiple-cursors wrap-region syntax-subword expand-region git-timemachine git-gutter-fringe+ git-gutter+ magit yasnippet js2-mode yaml-mode projectile deft transpose-frame hydra org-bullets fixmee rainbow-delimiters avk-emacs-themes use-package)))
  '(projectile-globally-ignored-file-suffixes (quote ("png" "pyc" "elc")))
  '(python-check-command "/usr/local/bin/pyflakes")
  '(safe-local-variable-values (quote ((encoding . utf-8) (buffer-auto-save-file-name))))

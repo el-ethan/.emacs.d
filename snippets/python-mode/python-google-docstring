@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: python-google-docstring
+# key: xpd
+# --
+"""$0
+
+    ${1:Attrubutes:}
+        $2
+"""
