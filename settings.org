@@ -270,6 +270,7 @@ Emacs configuration
 (use-package fixmee
   :config
   (add-hook 'python-mode-hook 'fixmee-mode)
+  (add-hook 'js2-mode-hook 'fixmee-mode)
   )
 #+END_SRC
 
@@ -765,18 +766,20 @@ Repeated invocations toggle between the two most recently open buffers."
 
 #+END_SRC
 
-** Clojure
+** Which-function-mode
+#+BEGIN_SRC emacs-lisp
 
-*** Cider
-#+BEGIN_SRC emacs-lisp
-(use-package cider)
-#+END_SRC
-** Golang
-#+BEGIN_SRC emacs-lisp
-(use-package go-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-)
+(which-function-mode)
+(add-to-list 'which-func-modes 'python-mode)
+
+;; Show the current function name in the header line
+(setq-default header-line-format
+              '((which-func-mode ("" which-func-format " "))))
+(setq mode-line-misc-info
+            ;; We remove Which Function Mode from the mode line, because it's mostly
+            ;; invisible here anyway.
+            (assq-delete-all 'which-func-mode mode-line-misc-info))
+
 #+END_SRC
 ** RealGUD
 #+BEGIN_SRC emacs-lisp
@@ -792,13 +795,8 @@ Repeated invocations toggle between the two most recently open buffers."
   (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
   )
 #+END_SRC
-
+*
 ** Lisp
-*** Slime
-#+BEGIN_SRC emacs-lisp
-(setq inferior-lisp-program "/usr/bin/sbcl")
-#+END_SRC
-
 *** Eldoc
 #+BEGIN_SRC emacs-lisp
 (use-package "eldoc"
@@ -828,11 +826,23 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; not sure what mode you want here. You could default to 'fundamental-mode
 (replace-alist-mode auto-mode-alist 'javascript-mode 'js2-mode)
 
-(use-package js2-mode
-  :config
-  (setq js2-indent-switch-body t)
-  ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-  )
+
+(use-package js2-mode :ensure t :defer t
+  :mode (("\\.js\\'" . js2-mode)
+         ("\\.json\\'" . javascript-mode))
+  :commands js2-mode
+  :init (progn
+          (setq-default js2-basic-offset 4
+                        js2-indent-switch-body t
+                        js2-auto-indent-p t
+                        js2-global-externs '("angular")
+                        js2-indent-on-enter-key t
+                        flycheck-disabled-checkers '(javascript-jshint)
+                        flycheck-checkers '(javascript-eslint)
+                        flycheck-eslintrc "~/.eslintrc"))
+          (add-to-list 'interpreter-mode-alist (cons "node" 'js2-mode))
+          (add-to-list 'js2-mode-hook 'flycheck-mode))
+
 #+END_SRC
 
 ** Yasnippet
@@ -1031,18 +1041,6 @@ This mode allows more fine-grained movement and editing commands
   (global-set-key [down-mouse-2] 'mouse-flash-position)
   )
 #+END_SRC
-** Terminal
-#+BEGIN_SRC emacs-lisp
-(use-package sane-term
-  :ensure t
-  :bind (("<f10>" . sane-term-create)))
-#+END_SRC
-
-*** Open terminal from emacs
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
-#+END_SRC
-
 ** Windows
 #+BEGIN_SRC emacs-lisp
 (windmove-default-keybindings)
@@ -1264,7 +1262,7 @@ message listing the hooks."
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-(defun copy-file-name-to-clipboard ()
+(defun copy-file-path-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
   (let ((filename (if (equal major-mode 'dired-mode)
