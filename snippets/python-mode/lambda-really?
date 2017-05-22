@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: lambda-really?
-# key: lambda
-# --
-lambda ${think_about_it('are you sure you want to use a lambda?')}

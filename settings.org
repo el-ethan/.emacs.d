@@ -815,6 +815,28 @@ Repeated invocations toggle between the two most recently open buffers."
           (lambda ()
             (toggle-truncate-lines t)))
 #+END_SRC
+** Company
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :config
+  (global-company-mode 1)
+  (setq company-idle-delay 0)
+  (setq company-tooltip-limit 15)
+  (setq company-minimum-prefix-length 2)
+  ;; (setq company-tooltip-flip-when-above t)
+  ;; (setq company-dabbrev-ignore-case 'keep-prefix)
+  (setq company-dabbrev-downcase nil)
+  )
+#+END_SRC
+
+** Flycheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :init
+  (global-flycheck-mode)
+  (setq flycheck-checker-error-threshold 1000)
+  )
+#+END_SRC
 
 ** JavaScript
 #+BEGIN_SRC emacs-lisp
@@ -837,12 +859,14 @@ Repeated invocations toggle between the two most recently open buffers."
                         js2-auto-indent-p t
                         js2-global-externs '("angular")
                         js2-indent-on-enter-key t
-                        flycheck-disabled-checkers '(javascript-jshint)
-                        flycheck-checkers '(javascript-eslint)
-                        flycheck-eslintrc "~/.eslintrc"))
-          (add-to-list 'interpreter-mode-alist (cons "node" 'js2-mode))
-          (add-to-list 'js2-mode-hook 'flycheck-mode))
+                        flycheck-disabled-checkers (append flycheck-disabled-checkers '(javascript-jshint))
 
+                        )
+          )
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
+  (add-to-list 'interpreter-mode-alist (cons "node" 'js2-mode))
+  (add-to-list 'js2-mode-hook 'flycheck-mode))
 #+END_SRC
 
 ** Yasnippet
@@ -943,14 +967,6 @@ This mode allows more fine-grained movement and editing commands
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+END_SRC
 
-** Flycheck
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck
-  :init
-  (global-flycheck-mode)
-  )
-#+END_SRC
-
 ** Flymake
 #+BEGIN_SRC emacs-lisp
 (use-package flymake-python-pyflakes
@@ -960,19 +976,6 @@ This mode allows more fine-grained movement and editing commands
   (setq flymake-python-pyflakes-executable "/usr/local/bin/pylint")
   (setq flymake-python-pyflakes-extra-arguments '("--max-line-length=79"))
 )
-#+END_SRC
-** Company
-#+BEGIN_SRC emacs-lisp
-(use-package company
-  :config
-  (global-company-mode 1)
-  (setq company-idle-delay 0)
-  (setq company-tooltip-limit 15)
-  (setq company-minimum-prefix-length 2)
-  ;; (setq company-tooltip-flip-when-above t)
-  ;; (setq company-dabbrev-ignore-case 'keep-prefix)
-  (setq company-dabbrev-downcase nil)
-  )
 #+END_SRC
 
 ** Auto-complete
@@ -1262,6 +1265,7 @@ message listing the hooks."
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
+
 (defun copy-file-path-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
@@ -1308,5 +1312,5 @@ message listing the hooks."
            ))))
 
 ;; Any directory set in this way will have files open in read-only mode by default
-(dir-locals-set-directory-class "/Users/alight/.virtualenvs/" 'xpython)
+(dir-locals-set-directory-class "/Users/alight/.envs/" 'xpython)
 #+END_SRC
