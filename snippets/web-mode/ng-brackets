@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ng-brackets
+# key: {|
+# --
+{| $0 |}

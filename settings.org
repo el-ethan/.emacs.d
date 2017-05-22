@@ -550,7 +550,7 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
   :diminish projectile-mode
   :config
   (progn
-    (setq projectile-enable-caching t)
+    ;; (setq projectile-enable-caching t)
     (add-to-list 'projectile-globally-ignored-directories "javascript/builds")
     (add-to-list 'projectile-globally-ignored-directories "alightorm/alembic/versions")
     (setq projectile-indexing-method 'alien)
