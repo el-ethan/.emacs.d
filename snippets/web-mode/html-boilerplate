@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: html-boilerplate
+# key: htmlbp
+# --
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>$0</title>
+  </head>
+  <body>
+  </body>
+</html>

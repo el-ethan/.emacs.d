@@ -136,7 +136,7 @@ Emacs configuration
 
 ** History and auto-save
 #+BEGIN_SRC emacs-lisp
-(setq savehist-file "/home/ethan/.emacs.d/savehist")
+(setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)
 ;; t means no truncation
 (setq history-length t)
@@ -147,7 +147,7 @@ Emacs configuration
         search-ring
         regexp-search-ring))
 
-(setq auto-save-file-name-transforms '((".*" "/home/ethan/.emacs.d/auto-save-list/" t)))
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 #+END_SRC
 
 ** utf-8
@@ -326,7 +326,7 @@ Emacs configuration
 #+END_SRC
 ** Corgi
 #+BEGIN_SRC emacs-lisp
-(load "/home/ethan/Dropbox/development/corgi/corgi.el")
+(load "~/Dropbox/development/corgi/corgi.el")
 #+END_SRC
 ** Org-mode
 *** General settings
@@ -466,7 +466,6 @@ Emacs configuration
   ;; Only ask for confirmation of kills within agenda
   ;; only if TODO spans more than 2 lines
   (setq org-agenda-confirm-kill 2)
-
   (setq org-deadline-warning-days 3)
 #+END_SRC
 
@@ -643,7 +642,7 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;
 ;; ace jump mode major function
 ;;
-(add-to-list 'load-path "/home/ethan/.emacs.d/elisp/ace-jump-mode/")
+(add-to-list 'load-path "~/.emacs.d/elisp/ace-jump-mode/")
 (autoload
   'ace-jump-mode
   "ace-jump-mode"
@@ -771,6 +770,14 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ** Clojure
 
+*** Paredit
+#+BEGIN_SRC emacs-lisp
+(use-package paredit
+:init
+(add-hook 'clojure-mode-hook 'enable-paredit-mode)
+(add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
+)
+#+END_SRC
 *** Cider
 #+BEGIN_SRC emacs-lisp
 (use-package cider)
@@ -1267,7 +1274,7 @@ message listing the hooks."
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-
+(require 'pomodoro)
 (defun my-org-deadline (arg &optional time repeat)
 (interactive "P")
   (let ((org-time-stamp-formats
@@ -1304,5 +1311,5 @@ message listing the hooks."
            ))))
 
 ;; Any directory set in this way will have files open in read-only mode by default
-(dir-locals-set-directory-class "/home/ethan/.virtualenvs/" 'xpython)
+(dir-locals-set-directory-class "~/.virtualenvs/" 'xpython)
 #+END_SRC
