@@ -215,7 +215,6 @@ Emacs configuration
 
 (use-package color-theme-sanityinc-tomorrow
   :init
-  :disabled t
   (load-theme 'sanityinc-tomorrow-eighties)
   )
 
@@ -226,7 +225,7 @@ Emacs configuration
               :inherit nil
               :background "gray13"))
 
-(es/enable-misterioso)
+;; (es/enable-misterioso)
 
 ;; THEME switching stuff from Daniel Mai
 (defun switch-theme (theme)
@@ -352,14 +351,22 @@ Emacs configuration
 *** Keybindings
 #+BEGIN_SRC emacs-lisp
 (global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'corgi-org-agenda)
+;; (global-set-key "\C-ca" 'org-agenda)
 
 (define-key org-agenda-mode-map "d" 'org-agenda-deadline)
 (define-key org-agenda-mode-map "s" 'org-agenda-schedule)
 
+
+;; (define-key smerge-mode-map (kbd "C-c m o") 'smerge-keep-other)
+;; (define-key smerge-mode-map (kbd "C-c m m") 'smerge-keep-mine)
+;; (define-key smerge-mode-map (kbd "C-c m n") 'smerge-next)
+
 ;; Open this config file
 (global-set-key (kbd "C-c s")
         (lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
+
+(global-set-key (kbd "C-c a")
+        (lambda () (interactive) (find-file "~/org_files/alight.org")))
 
 ;; bindings for capture templates
 (define-key global-map "\C-ci" ;inbox
@@ -425,47 +432,9 @@ Emacs configuration
       (org-agenda-start-on-weekday nil)
       (org-agenda-ndays 1)
       (org-deadline-warning-days 0)))
-    ("f" "Talking points"
-         ((tags-todo "+beilei")
-          (tags-todo "+mom")
-          (tags-todo "+dad"))
-     ((org-agenda-prefix-format "- ")
-      (org-show-context-detail 'minimal)
-      (org-agenda-todo-keyword-format "")))
-    ("n" "notes"
-         ((tags-todo "+notes"))
-     ((org-agenda-prefix-format "- ")
-      (org-show-context-detail 'minimal)
-      (org-agenda-todo-keyword-format "")))
-    (";" "Someday"
-     ((tags-todo "+someday"))
-     ((org-agenda-prefix-format "- ")
-      (org-show-context-detail 'minimal)
-      (org-agenda-remove-tags t)
-      (org-agenda-todo-keyword-format "")))
-    ("p" "Projects"
-     ((tags-todo "+projects"))
-     ((org-agenda-prefix-format "- ")
-      (org-show-context-detail 'minimal)
-      (org-agenda-remove-tags t)
-      (org-agenda-todo-keyword-format "")))
-    ("l" "Emacs"
-     ((tags-todo "+emacs"))
-     ((org-agenda-prefix-format "- ")
-      (org-show-context-detail 'minimal)
-      (org-agenda-remove-tags t)
-      (org-agenda-todo-keyword-format "")))
-    ("2" "Mobile tasks"
-     ((tags "-DEADLINE={.+}-SCHEDULED={.+}/+TODO")
-      (agenda ""))
-     ((org-agenda-prefix-format "- ")
-      (org-agenda-todo-keyword-format "")
-      (org-agenda-start-on-weekday nil)
-      (org-agenda-ndays 3)
-      (org-deadline-warning-days 0))
-         ("~/Dropbox/org_files/taskpaper_files/da_guai.taskpaper"))))
+    ))
 
-  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"))
+  (setq org-agenda-files '("~/org_files/alight.org"))
 
   ;; Only ask for confirmation of kills within agenda
   ;; only if TODO spans more than 2 lines
@@ -476,22 +445,22 @@ Emacs configuration
 
 *** Capture templates
 #+BEGIN_SRC emacs-lisp
-  ;; (setq org-capture-templates
-  ;;   '(("i" "New TODO to Inbox" entry (file+headline
-  ;;     "~/Dropbox/org_files/da_guai.org" "Inbox")
-  ;;     "* TODO %?" :kill-buffer t)
+  (setq org-capture-templates
+    '(("i" "New TODO to Inbox" entry (file+headline
+      "~/org_files/alight.org" "Inbox")
+      "* TODO %?" :kill-buffer t)))
 
-  ;;   ("n" "New note to xnotes.org" entry (file
-  ;;    "~/Dropbox/org_files/xnotes.org")
-  ;;    "* %T\n\n%i%?" :prepend t :empty-lines 1)
+    ;; ("n" "New note to xnotes.org" entry (file
+    ;;  "~/Dropbox/org_files/xnotes.org")
+    ;;  "* %T\n\n%i%?" :prepend t :empty-lines 1)
 
-  ;;   ("w" "New work note" entry (file
-  ;;     "~/Dropbox/org_files/worknotes.org")
-  ;;     "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
+    ;; ("w" "New work note" entry (file
+    ;;   "~/Dropbox/org_files/worknotes.org")
+    ;;   "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
 
-  ;;   ("d" "New daydayup entry" entry (file
-  ;;     "~/Dropbox/org_files/daydayup.org")
-  ;;     "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
+    ;; ("d" "New daydayup entry" entry (file
+    ;;   "~/Dropbox/org_files/daydayup.org")
+    ;;   "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
 #+END_SRC
 
 *** make things look nice
@@ -518,7 +487,7 @@ Emacs configuration
     :commands deft-new-file-named
     :config
     (setq deft-directory "~/org_files")
-    (setq deft-default-extension "md")
+    (setq deft-default-extension "org")
     (setq deft-text-mode 'org-mode)
     (setq deft-extensions '("txt" "org" "taskpaper" "md"))
     (setq deft-use-filename-as-title t)
@@ -1197,6 +1166,7 @@ message listing the hooks."
               )))
 
 (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
+(setq dired-listing-switches "-aBhlt")
 #+END_SRC
 
 ** nginx-mode
