@@ -357,9 +357,15 @@ Emacs configuration
 (define-key org-agenda-mode-map "s" 'org-agenda-schedule)
 
 
-;; (define-key smerge-mode-map (kbd "C-c m o") 'smerge-keep-other)
-;; (define-key smerge-mode-map (kbd "C-c m m") 'smerge-keep-mine)
-;; (define-key smerge-mode-map (kbd "C-c m n") 'smerge-next)
+(defun configure-smerge ()
+  "Configure smerge-mode"
+  (interactive)
+  (define-key smerge-mode-map (kbd "C-c m o") 'smerge-keep-other)
+  (define-key smerge-mode-map (kbd "C-c m m") 'smerge-keep-mine)
+  (define-key smerge-mode-map (kbd "C-c m n") 'smerge-next)
+  )
+
+(add-hook 'smerge-mode-hook 'configure-smerge)
 
 ;; Open this config file
 (global-set-key (kbd "C-c s")
