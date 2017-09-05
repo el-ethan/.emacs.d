@@ -1235,7 +1235,6 @@ message listing the hooks."
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-
 (defun copy-file-path-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
@@ -1245,6 +1244,18 @@ message listing the hooks."
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+(defun copy-file-dotpath-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new (replace-regexp-in-string "/" "."
+                                          (replace-regexp-in-string "/Users/alight/development/gaia/" ""
+                                                                    (replace-regexp-in-string "\.py" "" filename))))
+      (message "Dotpath to file '%s' copied to clipboard." filename))))
 
 (defun my-org-deadline (arg &optional time repeat)
 (interactive "P")
