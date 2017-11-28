@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: jasmine-test
+# key: iit
+# --
+it('$1', inject(($2) => {
+    $3
+}));
