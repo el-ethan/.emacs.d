@@ -1,7 +1,15 @@
 # -*- mode: snippet -*-
-# name: jasmine-test
-# key: iit
+# name: js-test
+# key: ;jst
 # --
-it('$1', inject(($2) => {
-    $3
-}));
+describe('$0', () => {
+    beforeEach(module('app'));
+    describe('', () => {
+        beforeEach(() => {
+        });
+
+        it('', inject(() => {
+
+        }));
+    });
+});

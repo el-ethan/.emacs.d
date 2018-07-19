@@ -11,6 +11,13 @@ Emacs configuration
 (global-set-key (kbd "C-c s")
 		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
 #+END_SRC
+** Shortcut to bash profile
+#+BEGIN_SRC emacs-lisp
+;; Open this config file
+(global-set-key (kbd "C-c b")
+		(lambda () (interactive) (find-file "~/.bash_profile")))
+#+END_SRC
+
 ** GUI stuff
 #+BEGIN_SRC emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -171,6 +178,17 @@ Emacs configuration
   (load-theme 'apropospriate-dark t)
 )
 
+(use-package material-theme
+  :init
+  (load-theme 'material t)
+)
+
+(use-package oceanic-theme
+  :init
+  :disabled t
+  (load-theme 'oceanic t)
+)
+
 (use-package afternoon-theme
   :init
   :disabled t
@@ -215,6 +233,7 @@ Emacs configuration
 
 (use-package color-theme-sanityinc-tomorrow
   :init
+  :disabled t
   (load-theme 'sanityinc-tomorrow-eighties)
   )
 
@@ -588,9 +607,9 @@ Repeated invocations toggle between the two most recently open buffers."
       helm-recentf-fuzzy-match t
       helm-M-x-fuzzy-match t)
     (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols))
-    (setq helm-source-recentf
-      (helm-make-source "Recentf" 'helm-recentf-source
-        :fuzzy-match t))
+    ;; (setq helm-source-recentf
+    ;;   (helm-make-source "Recentf" 'helm-recentf-source
+    ;;     :fuzzy-match t))
     :bind (("C-x b" . helm-mini)
            ("C-x f" . helm-recentf)
        ("C-s" . helm-occur)
@@ -712,7 +731,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "jj" 'helm-projectile-find-file)
     (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
     (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
-    (key-chord-define-global "\\\\" 'es/helm-mini-or-projectile-find-file)
+    (key-chord-define-global "\\\\" 'helm-mini)
     (key-chord-define-global "MM" 'hydra-modes/body)
     (key-chord-define-global "FF" 'delete-other-windows)
     (key-chord-define-global "GG" 'magit-status)
@@ -811,6 +830,10 @@ Repeated invocations toggle between the two most recently open buffers."
   (global-flycheck-mode)
   (setq flycheck-checker-error-threshold 1000)
   )
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq flycheck-python-pylint-executable "/usr/local/bin/pylint")
+            (setq flycheck-pylintrc "/Users/alight/.pylintrc")))
 #+END_SRC
 
 ** JavaScript
@@ -1238,6 +1261,15 @@ message listing the hooks."
   :ensure t
   )
 
+#+END_SRC
+
+** Edit as root
+#+BEGIN_SRC emacs-lisp
+;; (defadvice find-file (after find-file-sudo activate)
+;;   "Find file as root if necessary."
+;;   (unless (and buffer-file-name
+;;                (file-writable-p buffer-file-name))
+;;     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp

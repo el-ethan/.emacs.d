@@ -1,0 +1,19 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+54.174.165.65   qa.ethan
+52.23.161.95    qa.web
+
+# to do oauth locally
+# 127.0.0.1       app.channelmix.com
+# 127.0.0.1       access.channelmix.com
+
+#::1             localhost 
+
+#for c3 testing
+#54.88.201.145   app.channelmix.com access.channelmix.com

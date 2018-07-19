@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: angular-service
+# key: ;as
+# --
+
+angular.module('app')
+.service('$0', [function() {
+    $1
+}]);

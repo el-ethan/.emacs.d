@@ -3,5 +3,5 @@
 # key: xin
 # binding: direct-keybinding
 # --
-print \'\{\}\\nIn: `(python-info-current-defun)`\'.format('*' * 100)
-print '*' * 100
+print(\'\{\}\\nIn: `(python-info-current-defun)`\'.format('*' * 100))
+print('*' * 100)
