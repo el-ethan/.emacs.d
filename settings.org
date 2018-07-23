@@ -5,19 +5,16 @@ Emacs configuration
 :VISIBILITY: children
 :END:
 
-** Shortcut to config file
+** Shortcuts to files
 #+BEGIN_SRC emacs-lisp
 ;; Open this config file
 (global-set-key (kbd "C-c s")
 		(lambda () (interactive) (find-file "~/.emacs.d/settings.org")))
-#+END_SRC
-** Shortcut to bash profile
-#+BEGIN_SRC emacs-lisp
-;; Open this config file
+
+;; Open .bash_profile
 (global-set-key (kbd "C-c b")
 		(lambda () (interactive) (find-file "~/.bash_profile")))
 #+END_SRC
-
 ** GUI stuff
 #+BEGIN_SRC emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -1260,17 +1257,8 @@ message listing the hooks."
 (use-package highlight-symbol
   :ensure t
   )
-
 #+END_SRC
 
-** Edit as root
-#+BEGIN_SRC emacs-lisp
-;; (defadvice find-file (after find-file-sudo activate)
-;;   "Find file as root if necessary."
-;;   (unless (and buffer-file-name
-;;                (file-writable-p buffer-file-name))
-;;     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-#+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
 (defun copy-file-path-to-clipboard ()
