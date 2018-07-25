@@ -1261,7 +1261,7 @@ message listing the hooks."
   )
 #+END_SRC
 
-** TEMP
+** File path helpers
 #+BEGIN_SRC emacs-lisp
 (defun copy-file-path-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
@@ -1285,6 +1285,9 @@ message listing the hooks."
                                                                     (replace-regexp-in-string "\.py" "" filename))))
       (message "Dotpath to file '%s' copied to clipboard." filename))))
 
+#+END_SRC
+** TEMP
+#+BEGIN_SRC emacs-lisp
 (defun my-org-deadline (arg &optional time repeat)
 (interactive "P")
   (let ((org-time-stamp-formats
