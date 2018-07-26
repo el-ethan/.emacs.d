@@ -727,7 +727,6 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global ";f" 'flip-frame)
     (key-chord-define-global ";t" 'elpy-test-pytest-runner)
     (key-chord-define-global "jj" 'helm-projectile-find-file)
-    (key-chord-define-global "pp" 'helm-projectile-switch-project)
     (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
     (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
     (key-chord-define-global "\\\\" 'helm-mini)
@@ -1214,16 +1213,24 @@ message listing the hooks."
 
 ** Anaconda-mode
 #+BEGIN_SRC emacs-lisp
-(use-package anaconda-mode
+;; (use-package anaconda-mode
+;;   :init
+;;   (add-hook 'python-mode-hook 'anaconda-mode)
+;;   (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+;; )
+;; (use-package company-anaconda
+;;   :init
+;;   (eval-after-load "company"
+;;     '(add-to-list 'company-backends 'company-anaconda))
+;; )
+#+END_SRC
+** elpy-mode
+#+BEGIN_SRC emacs-lisp
+(use-package elpy
   :init
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+  (add-hook 'python-mode-hook 'elpy-mode)
 )
-(use-package company-anaconda
-  :init
-  (eval-after-load "company"
-    '(add-to-list 'company-backends 'company-anaconda))
-)
+(elpy-enable)
 #+END_SRC
 
 ** Skewer
