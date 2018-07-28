@@ -123,13 +123,13 @@ Emacs configuration
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
 
-(defvar es/electic-pair-modes
-  '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode yaml-mode))
+;; (defvar es/electic-pair-modes
+;;   '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode yaml-mode, rjsx-mode js2-jsx-mode))
 
-(defun es/inhibit-electric-pair-mode (char)
-  (not (member major-mode es/electic-pair-modes)))
+;; (defun es/inhibit-electric-pair-mode (char)
+;;   (not (member major-mode es/electic-pair-modes)))
 
-(setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
+;; (setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
 
 ;; (setq-default electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
 #+END_SRC
@@ -166,6 +166,10 @@ Emacs configuration
   :disabled t
   (load-theme 'apropospriate-dark t)
 )
+(use-package material-theme
+  :init
+  (load-theme 'material t)
+  )
 (use-package afternoon-theme
   :init
   :disabled t
@@ -209,6 +213,7 @@ Emacs configuration
 
 (use-package color-theme-sanityinc-tomorrow
   :init
+  :disabled t
   (load-theme 'sanityinc-tomorrow-eighties)
   )
 
@@ -326,7 +331,7 @@ Emacs configuration
 #+END_SRC
 ** Corgi
 #+BEGIN_SRC emacs-lisp
-(load "~/Dropbox/development/corgi/corgi.el")
+;; (load "~/Dropbox/development/corgi/corgi.el")
 #+END_SRC
 ** Org-mode
 *** General settings
@@ -461,7 +466,8 @@ Emacs configuration
       (org-deadline-warning-days 0))
          ("~/Dropbox/org_files/taskpaper_files/da_guai.taskpaper"))))
 
-  (setq org-agenda-files '("~/Dropbox/org_files/da_guai.org"))
+(setq org-agenda-files
+      '("~/Dropbox/org_files/da_guai/da_guai.org" "~/Dropbox/org_files/da_guai/inbox.org"))
 
   ;; Only ask for confirmation of kills within agenda
   ;; only if TODO spans more than 2 lines
@@ -473,7 +479,7 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
     '(("i" "New TODO to Inbox" entry (file+headline
-      "~/Dropbox/org_files/da_guai.org" "Inbox")
+      "~/Dropbox/org_files/da_guai/da_guai.org" "Inbox")
       "* TODO %?" :kill-buffer t)
 
     ("n" "New note to xnotes.org" entry (file
@@ -519,8 +525,9 @@ Emacs configuration
     (setq deft-use-filename-as-title t)
     (setq deft-recursive t)
     (setq deft-use-filter-string-for-filename t)
+    (setq deft-auto-save-interval 5.0)
     :bind (("C-c d" . deft)))
-  ;;(setq deft-auto-save-interval 0)
+
 
 ;;advise deft-new-file-named to replace spaces in file names with _
 (defun bjm-deft-strip-spaces (args)
@@ -599,16 +606,16 @@ Repeated invocations toggle between the two most recently open buffers."
     :init
     ;;(require 'helm-config)
     (helm-mode 1)
-    (setq helm-recentf-fuzzy-match t
+    (setq
       helm-buffers-fuzzy-matching t
       helm-completion-in-region-fuzzy-match t
       helm-mode-fuzzy-match t
-      helm-recentf-fuzzy-match t
+      ;; helm-recentf-fuzzy-match t
       helm-M-x-fuzzy-match t)
     (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols))
-    (setq helm-source-recentf
-      (helm-make-source "Recentf" 'helm-recentf-source
-        :fuzzy-match t))
+    ;; (setq helm-source-recentf
+    ;;   (helm-make-source "Recentf" 'helm-recentf-source
+    ;;     :fuzzy-match t))
     :bind (("C-x b" . helm-mini)
            ("C-x f" . helm-recentf)
        ("C-s" . helm-occur)
@@ -728,7 +735,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "jj" 'helm-projectile-find-file)
     (key-chord-define-global "JJ" 'helm-projectile-find-file-in-known-projects)
     (key-chord-define-global "BB" 'my/switch-to-previous-buffer)
-    (key-chord-define-global "\\\\" 'es/helm-mini-or-projectile-find-file)
+    (key-chord-define-global "\\\\" 'helm-mini)
     (key-chord-define-global "MM" 'hydra-modes/body)
     (key-chord-define-global "FF" 'delete-other-windows)
     (key-chord-define-global "GG" 'magit-status)
@@ -828,7 +835,6 @@ Repeated invocations toggle between the two most recently open buffers."
           (lambda ()
             (toggle-truncate-lines t)))
 #+END_SRC
-
 ** JavaScript
 #+BEGIN_SRC emacs-lisp
 (defun replace-alist-mode (alist oldmode newmode)
@@ -846,6 +852,11 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
+** React
+#+BEGIN_SRC emacs-lisp
+(use-package rjsx-mode)
+#+END_SRC
+
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
@@ -857,9 +868,9 @@ Repeated invocations toggle between the two most recently open buffers."
     (add-hook 'term-mode-hook (lambda()
 				(setq yas-dont-activate t)))
     (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-    (define-key yas-minor-mode-map (kbd "<tab>") nil)
-    (define-key yas-minor-mode-map (kbd "TAB") nil)
-    (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
+    ;; (define-key yas-minor-mode-map (kbd "<tab>") nil)
+    ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
+    ;; (define-key yas-minor-mode-map (kbd "TAB") #'yas-expand)
     (yas-global-mode 1)))
 #+END_SRC
 
@@ -1217,7 +1228,7 @@ message listing the hooks."
               (seq ".pyc" eol)
               )))
 
-(add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
+;; (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
 #+END_SRC
 
 ** nginx-mode
