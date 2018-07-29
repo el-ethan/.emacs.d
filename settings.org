@@ -563,6 +563,7 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
   :defer t
   :commands helm-projectile-find-file
   :init
+  (setq projectile-keymap-prefix (kbd "C-c p"))
   (helm-projectile-on))
 #+END_SRC
 
@@ -1285,7 +1286,6 @@ message listing the hooks."
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-(require 'pomodoro)
 (defun my-org-deadline (arg &optional time repeat)
 (interactive "P")
   (let ((org-time-stamp-formats
