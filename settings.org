@@ -31,20 +31,9 @@ Emacs configuration
 #+BEGIN_SRC emacs-lisp
 ;; Emacs lisp files
 (add-to-list 'load-path "~/.emacs.d/elisp/")
-
 (require 'package)
-
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-
-;; (add-to-list 'package-archives
-;;              '("elpy" . "https://jorgenschaefer.github.io/packages/"))
-
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-
 (package-initialize)
-
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 #+END_SRC
@@ -126,20 +115,20 @@ Emacs configuration
 (global-auto-revert-mode)
 #+END_SRC
 
+** Read only
+#+BEGIN_SRC emacs-lisp
+(dir-locals-set-class-variables
+ 'xpython
+ '((nil . ((buffer-read-only . t)
+           ))))
+
+;; Any directory set in this way will have files open in read-only mode by default
+(dir-locals-set-directory-class "/Users/alight/.envs/" 'xpython)
+#+END_SRC
 ** Electric-pair
 #+BEGIN_SRC emacs-lisp
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
-
-(defvar es/electic-pair-modes
-  '(python-mode org-mode lisp-interaction-mode js2-mode emacs-lisp-mode yaml-mode))
-
-(defun es/inhibit-electric-pair-mode (char)
-  (not (member major-mode es/electic-pair-modes)))
-
-(setq electric-pair-inhibit-predicate #'es/inhibit-electric-pair-mode)
-
-;; (setq-default electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
 #+END_SRC
 
 ** History and auto-save
@@ -242,37 +231,7 @@ Emacs configuration
               :background "gray13"))
 
 ;; (es/enable-misterioso)
-
-;; THEME switching stuff from Daniel Mai
-(defun switch-theme (theme)
-  "Disables any currently active themes and loads THEME."
-  ;; This interactive call is taken from `load-theme'
-  (interactive
-   (list
-    (intern (completing-read "Load custom theme: "
-                             (mapc 'symbol-name
-                                   (custom-available-themes))))))
-  (let ((enabled-themes custom-enabled-themes))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme theme t)))
-
-(defun disable-active-themes ()
-  "Disables any currently active themes listed in `custom-enabled-themes'."
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes))
-
-(bind-key "C-`" 'switch-theme)
 #+END_SRC
-** Fill-column-indicator
-#+BEGIN_SRC emacs-lisp
-  (use-package fill-column-indicator
-    :config
-    :disabled t
-    (add-hook 'python-mode-hook 'fci-mode)
-    (setq-default fill-column 80)
-    (setq-default fci-rule-color "#546D7A"))
-#+END_SRC
-
 ** Rainbow-delimiters
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
@@ -319,20 +278,6 @@ Emacs configuration
 
 (global-set-key (kbd "<f8>") 'hydra-vc/body)
 
-(use-package transpose-frame)
-
-(defhydra hydra-transpose ()
-  "transposing hydra"
-  ("l" transpose-lines "lines")
-  ("w" transpose-words "words")
-  ("s" transpose-sexps "sexps")
-  ("p" transpose-paragraphs "paragraphs")
-  ("c" transpose-chars "characters")
-  ("W" transpose-frame "windows")
-  )
-
-(global-set-key (kbd "C-t") 'hydra-transpose/body)
-
 (defhydra hydra-modes ()
   "settings hydra"
   ("l" lisp-interaction-mode "lisp interaction" :exit t)
@@ -350,38 +295,17 @@ Emacs configuration
 ** Org-mode
 *** General settings
 #+BEGIN_SRC emacs-lisp
-(setq org-use-speed-commands t)
-(setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 (setq org-hide-leading-stars t)
 (add-hook 'org-mode-hook 'org-indent-mode)
 
 ;; Open .org and .txt files in org-mode
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
-
-(add-hook 'org-agenda-finalize-hook
-      (lambda () (remove-text-properties
-         (point-min) (point-max) '(mouse-face t))))
 #+END_SRC
 
 *** Keybindings
 #+BEGIN_SRC emacs-lisp
 (global-set-key "\C-cc" 'org-capture)
-;; (global-set-key "\C-ca" 'org-agenda)
-
-(define-key org-agenda-mode-map "d" 'org-agenda-deadline)
-(define-key org-agenda-mode-map "s" 'org-agenda-schedule)
-
-
-(defun configure-smerge ()
-  "Configure smerge-mode"
-  (interactive)
-  (define-key smerge-mode-map (kbd "C-c m o") 'smerge-keep-other)
-  (define-key smerge-mode-map (kbd "C-c m m") 'smerge-keep-mine)
-  (define-key smerge-mode-map (kbd "C-c m n") 'smerge-next)
-  )
-
-(add-hook 'smerge-mode-hook 'configure-smerge)
 
 ;; Open this config file
 (global-set-key (kbd "C-c s")
@@ -405,84 +329,12 @@ Emacs configuration
 (define-key org-mode-map
   (kbd "M-;") 'my-org-comment-dwim)
 #+END_SRC
-
-*** TODOs
-#+BEGIN_SRC emacs-lisp
-(setq org-enforce-todo-dependencies t)
-
-;; Set to 'invisible and blocked tasks wont show up in agenda, t and they will be dimmed
-(setq org-agenda-dim-blocked-tasks 'invisible)
-
-;; Don't keep track of completed repeating tasks
-(setq org-log-repeat nil)
-#+END_SRC
-
-*** Agenda
-#+BEGIN_SRC emacs-lisp
-;; Enable highlight line only for org-agenda-mode (it is annoying in other modes)
-(add-hook 'org-agenda-mode-hook 'hl-line-mode)
-
-;; Make agenda full screen without typing 'o'
-(add-hook 'org-agenda-finalize-hook (lambda () (delete-other-windows)))
-
-(defun es/skip-unless-work ()
-  "Skip trees that are not waiting"
-  (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-    (if (re-search-forward ":work:" subtree-end t)
-    nil ; tag found, do not skip
-      subtree-end))) ; tag not found, continue after end of subtree
-
-;; Block agenda view for agenda and unscheduled tasks
-(setq org-agenda-custom-commands
-      '(("j" "Agenda and unscheduled tasks"
-     ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-notes-someday-emacs-work-projects-learn-questions")
-      (agenda "")
-      )
-     ((org-agenda-start-on-weekday nil)
-      (org-agenda-ndays 2)
-      (org-agenda-prefix-format "○  %t")
-      (org-show-context-detail 'minimal)
-      (org-agenda-remove-tags t)
-      (org-agenda-todo-keyword-format "")
-      (org-deadline-warning-days 0)))
-    ("w" "Work tasks"
-     ((tags-todo
-       "-DEADLINE={.+}-SCHEDULED={.+}-dad-mom-beilei-someday-emacs-projects")
-      (agenda "" nil))
-     ((org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp ":home:"))
-      (org-agenda-start-on-weekday nil)
-      (org-agenda-ndays 1)
-      (org-deadline-warning-days 0)))
-    ))
-
-  (setq org-agenda-files '("~/org_files/alight/alight.org" "~/org_files/alight/in_progress.org"))
-
-  ;; Only ask for confirmation of kills within agenda
-  ;; only if TODO spans more than 2 lines
-  (setq org-agenda-confirm-kill 2)
-
-  (setq org-deadline-warning-days 3)
-#+END_SRC
-
 *** Capture templates
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
     '(("i" "New TODO to Inbox" entry (file+headline
       "~/org_files/alight.org" "Inbox")
       "* TODO %?" :kill-buffer t)))
-
-    ;; ("n" "New note to xnotes.org" entry (file
-    ;;  "~/Dropbox/org_files/xnotes.org")
-    ;;  "* %T\n\n%i%?" :prepend t :empty-lines 1)
-
-    ;; ("w" "New work note" entry (file
-    ;;   "~/Dropbox/org_files/worknotes.org")
-    ;;   "* %T\n\n%i%?" :kill-buffer t :prepend t :empty-lines 1)
-
-    ;; ("d" "New daydayup entry" entry (file
-    ;;   "~/Dropbox/org_files/daydayup.org")
-    ;;   "* %T\n\n%?" :kill-buffer t :prepend t :empty-lines 1)))
 #+END_SRC
 
 *** make things look nice
@@ -516,7 +368,6 @@ Emacs configuration
     (setq deft-recursive t)
     (setq deft-use-filter-string-for-filename t)
     :bind (("C-c d" . deft)))
-  ;;(setq deft-auto-save-interval 0)
 
 ;;advise deft-new-file-named to replace spaces in file names with _
 (defun bjm-deft-strip-spaces (args)
@@ -534,6 +385,18 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
 (global-set-key (kbd "<f9>") 'es/make-scratches-in-deft)
 #+END_SRC
 
+** Smerge
+#+BEGIN_SRC emacs-lisp
+(defun configure-smerge ()
+  "Configure smerge-mode"
+  (interactive)
+  (define-key smerge-mode-map (kbd "C-c m o") 'smerge-keep-other)
+  (define-key smerge-mode-map (kbd "C-c m m") 'smerge-keep-mine)
+  (define-key smerge-mode-map (kbd "C-c m n") 'smerge-next)
+  )
+
+(add-hook 'smerge-mode-hook 'configure-smerge)
+#+END_SRC
 ** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
@@ -596,7 +459,6 @@ Repeated invocations toggle between the two most recently open buffers."
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :init
-    ;;(require 'helm-config)
     (helm-mode 1)
     (setq helm-recentf-fuzzy-match t
       helm-buffers-fuzzy-matching t
@@ -605,17 +467,11 @@ Repeated invocations toggle between the two most recently open buffers."
       helm-recentf-fuzzy-match t
       helm-M-x-fuzzy-match t)
     (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols))
-    ;; (setq helm-source-recentf
-    ;;   (helm-make-source "Recentf" 'helm-recentf-source
-    ;;     :fuzzy-match t))
     :bind (("C-x b" . helm-mini)
            ("C-x f" . helm-recentf)
        ("C-s" . helm-occur)
        ("M-x" .  helm-M-x)
            ("M-y" . helm-show-kill-ring)))
-
-(define-key helm-map
-  (kbd "<down-mouse-2>") 'mouse-yank-primary)
 
 (define-key helm-map
   (kbd "<drag-mouse-2>") 'ignore)
@@ -674,16 +530,6 @@ Repeated invocations toggle between the two most recently open buffers."
 #+END_SRC
 ** Registers and bookmarks
 #+BEGIN_SRC emacs-lisp
-(defhydra hydra-register (global-map "<f1>")
-  "register hydra"
-  ("r" point-to-register "point")
-  ("j" jump-to-register "jump")
-  ("t" copy-to-register "copy text")
-  ("i" insert-register "insert text")
-  ("a" append-to-register "append text")
-  ("p" prepend-to-register "prepend text")
-  )
-
 (defun my/quick-save-bookmark ()
   "Save bookmark with name as 'buffer:row:col'"
   (interactive)
@@ -695,7 +541,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (message "Bookmarked saved at current position"))
 
 (global-set-key (kbd "C-S-b") 'my/quick-save-bookmark)
-;(bind-key "<menu>" 'helm-bookmarks)
 #+END_SRC
 
 ** Assorted key bindings
@@ -704,7 +549,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C-\-") 'text-scale-decrease)
 (global-set-key "\C-xp" 'pop-to-mark-command)
-(global-set-key (kbd "s-n") 'make-frame)
 (define-key dired-mode-map "b" 'dired-up-directory)
 ;; Don't suspended when I accidently hit C-z
 (global-unset-key (kbd "C-z"))
@@ -758,7 +602,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 #+END_SRC
 
-** Anaconda-mode
+*** Anaconda-mode
 #+BEGIN_SRC emacs-lisp
 (use-package anaconda-mode
   :init
@@ -771,7 +615,7 @@ Repeated invocations toggle between the two most recently open buffers."
     '(add-to-list 'company-backends 'company-anaconda))
 )
 #+END_SRC
-** elpy-mode
+*** elpy-mode
 #+BEGIN_SRC emacs-lisp
 (use-package elpy
   :disabled t
@@ -800,39 +644,9 @@ Repeated invocations toggle between the two most recently open buffers."
             (assq-delete-all 'which-func-mode mode-line-misc-info))
 
 #+END_SRC
-** RealGUD
-#+BEGIN_SRC emacs-lisp
-(use-package realgud)
-#+END_SRC
 ** Yaml-mode
 #+BEGIN_SRC emacs-lisp
-(use-package yaml-mode
-  :config
-  (add-hook 'yaml-mode-hook
-        (lambda ()
-          (local-set-key (kbd "C-c C-s") 'elpy-rgrep-symbol)))
-  (add-to-list 'auto-mode-alist '("\\.kv\\'" . yaml-mode))
-  )
-#+END_SRC
-*
-** Lisp
-*** Eldoc
-#+BEGIN_SRC emacs-lisp
-(use-package "eldoc"
-  :diminish eldoc-mode
-  :commands turn-on-eldoc-mode
-  :defer t
-  :init
-  (progn
-  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-  (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)))
-#+END_SRC
-
-** SQL
-#+BEGIN_SRC emacs-lisp
-(add-hook 'sql-interactive-mode-hook
-          (lambda ()
-            (toggle-truncate-lines t)))
+(use-package yaml-mode)
 #+END_SRC
 ** Company
 #+BEGIN_SRC emacs-lisp
@@ -842,8 +656,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (setq company-idle-delay 0)
   (setq company-tooltip-limit 15)
   (setq company-minimum-prefix-length 2)
-  ;; (setq company-tooltip-flip-when-above t)
-  ;; (setq company-dabbrev-ignore-case 'keep-prefix)
   (setq company-dabbrev-downcase nil)
   )
 #+END_SRC
@@ -903,13 +715,11 @@ Repeated invocations toggle between the two most recently open buffers."
     (add-hook 'term-mode-hook (lambda()
 				(setq yas-dont-activate t)))
     (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-    ;; (define-key yas-minor-mode-map (kbd "<tab>") nil)
-    ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
-    ;; (define-key yas-minor-mode-map (kbd "SPC") #'yas-expand)
     (yas-global-mode 1)))
 #+END_SRC
 
-** Magit
+** Git
+*** Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :init
@@ -919,7 +729,7 @@ Repeated invocations toggle between the two most recently open buffers."
     :bind ("C-c g" . magit-status))
 #+END_SRC
 
-** Git Gutter
+*** Git Gutter
 #+BEGIN_SRC emacs-lisp
 (use-package git-gutter+
   :init
@@ -930,7 +740,7 @@ Repeated invocations toggle between the two most recently open buffers."
   )
 #+END_SRC
 
-** Git-timemachine
+*** Git-timemachine
 #+BEGIN_SRC emacs-lisp
 (use-package git-timemachine
   :defer t
@@ -944,7 +754,6 @@ Repeated invocations toggle between the two most recently open buffers."
     :config
     (setq shift-select-mode nil)
     :bind ("M-SPC" . er/expand-region))
-
 #+END_SRC
 
 ** Syntax-subword
@@ -984,34 +793,21 @@ This mode allows more fine-grained movement and editing commands
 
 ** Fly spell
 #+BEGIN_SRC emacs-lisp
-  ;; Enable flyspell-mode
   (add-hook 'org-mode-hook 'flyspell-mode)
-  (add-hook  'text-mode-hook 'flyspell-mode)
+  (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+END_SRC
-
-** Flymake
-#+BEGIN_SRC emacs-lisp
-(use-package flymake-python-pyflakes
-  :init
-  :disabled t
-  (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
-  (setq flymake-python-pyflakes-executable "/usr/local/bin/pylint")
-  (setq flymake-python-pyflakes-extra-arguments '("--max-line-length=79"))
-)
-#+END_SRC
-
 ** Auto-complete
 #+BEGIN_SRC emacs-lisp
-  (use-package auto-complete
-    :ensure t
-    :init
-    (require 'auto-complete-config)
-    (add-to-list 'ac-dictionary-directories "~/.emacs.d/es-ac-dict")
-    (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
-    (add-to-list 'ac-modes 'sql-interactive-mode)
-    (add-hook 'sql-interactive-mode-hook (lambda () (auto-complete-mode 1) (company-mode)))
-)
+ ;;  (use-package auto-complete
+;;     :ensure t
+;;     :init
+;;     (require 'auto-complete-config)
+;;     (add-to-list 'ac-dictionary-directories "~/.emacs.d/es-ac-dict")
+;;     (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+;;     (add-to-list 'ac-modes 'sql-interactive-mode)
+;;     (add-hook 'sql-interactive-mode-hook (lambda () (auto-complete-mode 1) (company-mode)))
+;; )
 #+END_SRC
 
 ** Undo-tree
@@ -1027,45 +823,10 @@ This mode allows more fine-grained movement and editing commands
   )
 #+END_SRC
 
-** Copy line
-#+BEGIN_SRC emacs-lisp
- (defun copy-line (arg)
-  "Copy lines (as many as prefix argument) in the kill ring.
-    Ease of use features:
-    - Move to start of next line.
-    - Appends the copy on sequential calls.
-    - Use newline as last char even on the last line of the buffer.
-    - If region is active, copy its lines."
-  (interactive "p")
-  (let ((beg (line-beginning-position))
-	(end (line-end-position arg)))
-    (when mark-active
-      (if (> (point) (mark))
-	  (setq beg (save-excursion (goto-char (mark)) (line-beginning-position)))
-	(setq end (save-excursion (goto-char (mark)) (line-end-position)))))
-    (if (eq last-command 'copy-line)
-	(kill-append (buffer-substring beg end) (< end beg))
-      (kill-ring-save beg end)))
-  (kill-append "\n" nil)
-  (beginning-of-line (or (and arg (1+ arg)) 2))
-  (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
-
-(global-set-key (kbd "C-S-l") 'copy-line)
-
-#+END_SRC
-
 ** Editor-config
 #+BEGIN_SRC emacs-lisp
 (load "editorconfig")
 (editorconfig-mode 1)
-#+END_SRC
-*** Mouse+
-#+BEGIN_SRC emacs-lisp
-(use-package mouse+
-  :ensure t
-  :init
-  (global-set-key [down-mouse-2] 'mouse-flash-position)
-  )
 #+END_SRC
 ** Windows
 #+BEGIN_SRC emacs-lisp
@@ -1129,60 +890,11 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   :defer t
 )
 #+END_SRC
-
-** Assorted custom functions
-#+BEGIN_SRC emacs-lisp
-(defmacro my/with-advice (adlist &rest body)
-  "Execute BODY with temporary advice in ADLIST.
-
-Each element of ADLIST should be a list of the form
-  (SYMBOL WHERE FUNCTION [PROPS])
-suitable for passing to `advice-add'.  The BODY is wrapped in an
-`unwind-protect' form, so the advice will be removed even in the
-event of an error or nonlocal exit."
-  (declare (debug ((&rest (&rest form)) body))
-           (indent 1))
-  `(progn
-     ,@(mapcar (lambda (adform)
-                 (cons 'advice-add adform))
-               adlist)
-     (unwind-protect (progn ,@body)
-       ,@(mapcar (lambda (adform)
-                   `(advice-remove ,(car adform) ,(nth 2 adform)))
-                 adlist))))
-
-(defun my/call-logging-hooks (command &optional verbose)
-  "Call COMMAND, reporting every hook run in the process.
-Interactively, prompt for a command to execute.
-
-Return a list of the hooks run, in the order they were run.
-Interactively, or with optional argument VERBOSE, also print a
-message listing the hooks."
-  (interactive "CCommand to log hooks: \np")
-  (let* ((log     nil)
-         (logger (lambda (&rest hooks)
-                   (setq log (append log hooks nil)))))
-    (my/with-advice
-        ((#'run-hooks :before logger))
-      (call-interactively command))
-    (when verbose
-      (message
-       (if log "Hooks run during execution of %s:"
-         "No hooks run during execution of %s.")
-       command)
-      (dolist (hook log)
-        (message "> %s" hook)))
-    log))
-#+END_SRC
-
 ** web-mode
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
   :defer t
   :init
-  ;; (add-hook 'web-mode-hook
-  ;;       (lambda ()
-  ;;         (local-set-key (kbd "M-SPC") 'web-mode-mark-and-expand)))
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -1221,13 +933,6 @@ message listing the hooks."
 
 (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
 (setq dired-listing-switches "-aBhlt")
-#+END_SRC
-
-** nginx-mode
-#+BEGIN_SRC emacs-lisp
-(use-package nginx-mode
-  :defer t
-  )
 #+END_SRC
 
 ** define-word
@@ -1300,41 +1005,4 @@ message listing the hooks."
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
-(defun my-org-deadline (arg &optional time repeat)
-(interactive "P")
-  (let ((org-time-stamp-formats
-          (if repeat
-            `(,(concat "<%Y-%m-%d %a " repeat ">") .
-              ,(concat "<%Y-%m-%d %a %H:%M " repeat ">"))
-             org-time-stamp-formats)))
-    (org-deadline arg time)))
-
-(defun org-agenda-repeating-p ()
-  (let ((pos (get-text-property 0 'org-marker (thing-at-point 'line))))
-    (save-window-excursion
-      (org-goto-marker-or-bmk pos)
-      (org-get-repeat))
-    ))
-
-
-(defun query-if-repeating (&rest args)
-  (if (not (org-agenda-repeating-p))
-      t
-    (y-or-n-p "Entry repeats.  Kill?"))
-  )
-
-(advice-add 'org-agenda-kill :before-while 'query-if-repeating)
-
-(define-key org-agenda-mode-map
-  [remap org-agenda-next-line] 'org-agenda-next-item)
-(define-key org-agenda-mode-map
-  [remap org-agenda-previous-line] 'org-agenda-previous-item)
-
-(dir-locals-set-class-variables
- 'xpython
- '((nil . ((buffer-read-only . t)
-           ))))
-
-;; Any directory set in this way will have files open in read-only mode by default
-(dir-locals-set-directory-class "/Users/alight/.envs/" 'xpython)
 #+END_SRC
