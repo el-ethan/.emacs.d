@@ -456,7 +456,7 @@ Emacs configuration
       (org-deadline-warning-days 0)))
     ))
 
-  (setq org-agenda-files '("~/org_files/alight.org"))
+  (setq org-agenda-files '("~/org_files/alight/alight.org" "~/org_files/alight/in_progress.org"))
 
   ;; Only ask for confirmation of kills within agenda
   ;; only if TODO spans more than 2 lines
@@ -755,6 +755,33 @@ Repeated invocations toggle between the two most recently open buffers."
       (comment-or-uncomment-region (line-beginning-position) (line-end-position)))))
 
 (global-set-key (kbd "M-;") 'comment-or-uncomment-line-or-region)
+
+#+END_SRC
+
+** Anaconda-mode
+#+BEGIN_SRC emacs-lisp
+(use-package anaconda-mode
+  :init
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+)
+(use-package company-anaconda
+  :init
+  (eval-after-load "company"
+    '(add-to-list 'company-backends 'company-anaconda))
+)
+#+END_SRC
+** elpy-mode
+#+BEGIN_SRC emacs-lisp
+(use-package elpy
+  :disabled t
+  :init
+  (add-hook 'python-mode-hook 'elpy-mode)
+  (setq elpy-rpc-backend "jedi")
+  (pyvenv-workon "gaia")
+  :config
+  (elpy-enable)
+)
 
 #+END_SRC
 
@@ -1209,28 +1236,6 @@ message listing the hooks."
   :bind
   ("C-x d" . define-word-at-point)
   )
-#+END_SRC
-
-** Anaconda-mode
-#+BEGIN_SRC emacs-lisp
-;; (use-package anaconda-mode
-;;   :init
-;;   (add-hook 'python-mode-hook 'anaconda-mode)
-;;   (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-;; )
-;; (use-package company-anaconda
-;;   :init
-;;   (eval-after-load "company"
-;;     '(add-to-list 'company-backends 'company-anaconda))
-;; )
-#+END_SRC
-** elpy-mode
-#+BEGIN_SRC emacs-lisp
-(use-package elpy
-  :init
-  (add-hook 'python-mode-hook 'elpy-mode)
-)
-(elpy-enable)
 #+END_SRC
 
 ** Skewer
