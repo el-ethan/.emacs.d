@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: html-temp-code
+# key: ;rt
+# --
+<!--
+!!!!!!! TEMP CODE: REMOVE !!!!!!!
+
+$1
+
+!!!!!!! TEMP CODE: REMOVE !!!!!!!
+-->

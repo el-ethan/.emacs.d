@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: new-factory
+# key: ;af
+# --
+angular.module('app')
+.factory('$1', ['$2', function($2) {
+    return function() {
+        $3
+    };
+}]);

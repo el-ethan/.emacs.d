@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: temp-comment-python
+# key: ;rt
+# --
+########## REMOVE ##########
+# $1
+########## REMOVE ##########

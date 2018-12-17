@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: new-angular-test
+# key: ;at
+# --
+describe('$1', function() {
+    beforeEach(module('app'));
+    it('$2', inject(() => {
+        $3
+    }));
+});
