@@ -588,7 +588,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ** Python
 #+BEGIN_SRC emacs-lisp
-(use-package pyenv-mode)
+
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
   (interactive)
@@ -622,7 +622,6 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (add-hook 'python-mode-hook 'elpy-mode)
   (setq elpy-rpc-backend "jedi")
-  (pyvenv-workon "gaia")
   :config
   (elpy-enable)
 )
