@@ -4,7 +4,15 @@ Emacs configuration
 :PROPERTIES:
 :VISIBILITY: children
 :END:
-
+** Mac-specific pt.1
+#+BEGIN_SRC emacs-lisp
+;key bindings for mac
+(when (eq system-type 'darwin) ;; mac specific settings
+  (setq mac-option-modifier 'control)
+  (setq mac-command-modifier 'meta)
+  (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+  )
+#+END_SRC
 ** Shortcuts to files
 #+BEGIN_SRC emacs-lisp
 ;; Open this config file
@@ -49,16 +57,9 @@ Emacs configuration
 
 (require 'use-package)
 #+END_SRC
-** Mac
+** Mac-specific pt.2
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell)
-;key bindings for mac
-(when (eq system-type 'darwin) ;; mac specific settings
-  (setq mac-option-modifier 'control)
-  (setq mac-command-modifier 'meta)
-  (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
-  )
-
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 #+END_SRC
