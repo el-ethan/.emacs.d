@@ -519,9 +519,9 @@ Emacs configuration
     :commands deft-new-file-named
     :config
     (setq deft-directory "~/Dropbox/org_files")
-    (setq deft-default-extension "org")
+    (setq deft-default-extension "md")
     (setq deft-text-mode 'org-mode)
-    (setq deft-extensions '("txt" "org" "taskpaper"))
+    (setq deft-extensions '("txt" "org" "taskpaper" "md"))
     (setq deft-use-filename-as-title t)
     (setq deft-recursive t)
     (setq deft-use-filter-string-for-filename t)
@@ -851,11 +851,26 @@ Repeated invocations toggle between the two most recently open buffers."
   (setq js2-indent-switch-body t)
   ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   )
-#+END_SRC
+(use-package xref-js2
+  :config
+  (define-key js2-mode-map (kbd "M-.") nil)
+  (add-hook 'js2-mode-hook (lambda ()
+                             (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+)
 
+(use-package json-mode)
+#+END_SRC
+** Indium
+#+BEGIN_SRC emacs-lisp
+(use-package indium)
+#+END_SRC
 ** React
 #+BEGIN_SRC emacs-lisp
-(use-package rjsx-mode)
+(use-package rjsx-mode
+  :config
+  (setq js-indent-level 4)
+  (setq sgml-basic-offset 4)
+)
 #+END_SRC
 
 ** Yasnippet
@@ -1205,6 +1220,8 @@ message listing the hooks."
   (setq web-mode-engines-alist
     '(("django"    . "\\.html\\'"))
     )
+  (setq web-mode-content-types-alist
+      '(("jsx" . "\\.js[x]?\\'")))
   )
 #+END_SRC
 
@@ -1283,6 +1300,45 @@ message listing the hooks."
 ** gitignore-mode
 #+BEGIN_SRC emacs-lisp
 (use-package gitignore-mode)
+#+END_SRC
+
+** Dashboard
+#+BEGIN_SRC emacs-lisp
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents  . 5)
+                          (projects . 5)
+                          (bookmarks . 5)
+                          (agenda . 5)))
+)
+#+END_SRC
+
+** eslint
+#+BEGIN_SRC emacs-lisp
+;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+;; use web-mode for .jsx files
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+
+;; turn on flychecking globally
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; disable jshint since we prefer eslint checking
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+    '(javascript-jshint)))
+
+;; use eslint with web-mode for jsx files
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+
+;; customize flycheck temp file prefix
+(setq-default flycheck-temp-prefix ".flycheck")
+
+;; disable json-jsonlist checking for json files
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+    '(json-jsonlist)))
 #+END_SRC
 ** TEMP
 #+BEGIN_SRC emacs-lisp
