@@ -131,7 +131,11 @@ Emacs configuration
 (when (load "elec-pair" t t)
   (electric-pair-mode 1))
 #+END_SRC
-
+** Saved macros
+#+BEGIN_SRC emacs-lisp
+(fset 'log-highlighted
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217847 5 return 108 108 111 103 tab 39 25 5 return 108 108 111 103 tab 25] 0 "%d")) arg)))
+#+END_SRC
 ** History and auto-save
 #+BEGIN_SRC emacs-lisp
 (setq savehist-file "/Users/alight/.emacs.d/savehist")
@@ -284,9 +288,8 @@ Emacs configuration
   ("l" lisp-interaction-mode "lisp interaction" :exit t)
   ("p" python-mode "python" :exit t)
   ("o" org-mode "org" :exit t)
-  ("s" sql-mysql "MySQL interaction" :exit t)
-  ("x" sx-compose-mode "Stack Exhange compose" :exit t)
   ("m" gfm-mode "Markdown" :exit t)
+  ("r" rjsx-mode "React" :exit t)
   ("j" js2-mode "JavaScript" :exit t)
   ("w" web-mode "Web" :exit t)
   )
@@ -361,9 +364,9 @@ Emacs configuration
     :defer t
     :commands deft-new-file-named
     :config
-    (setq deft-directory "~/org_files")
-    (setq deft-default-extension "org")
-    (setq deft-text-mode 'org-mode)
+    (setq deft-directory "~/Dropbox/org_files")
+    (setq deft-default-extension "md")
+    (setq deft-text-mode 'gfm-mode)
     (setq deft-extensions '("txt" "org" "taskpaper" "md"))
     (setq deft-use-filename-as-title t)
     (setq deft-recursive t)
@@ -406,7 +409,11 @@ The file will be uniquely named with xscratch + yeardatehourminutesecond"
   :config
   (progn
     ;; (setq projectile-enable-caching t)
-    (add-to-list 'projectile-globally-ignored-directories "javascript/builds")
+    (add-to-list 'projectile-globally-ignored-directories "ui/client_portal/views/javascript/builds")
+    (add-to-list 'projectile-globally-ignored-directories "ui/client_portal/views/javascript/vendor")
+    (add-to-list 'projectile-globally-ignored-directories "ui/client_portal/Chrome_.*")
+    (add-to-list 'projectile-globally-ignored-directories "ui/client_portal/Chrome_71.0.3578_(Mac_OS_X_10.13.6)")
+    (add-to-list 'projectile-globally-ignored-directories "ui/bower_components")
     (add-to-list 'projectile-globally-ignored-directories "alightorm/alembic/versions")
     (setq projectile-indexing-method 'alien)
     (setq projectile-completion-system 'default)
@@ -582,7 +589,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (key-chord-define-global "DD" 'dired-jump)
     (key-chord-define-global "``" 'helm-bookmarks)
     (key-chord-define-global "HH" 'highlight-symbol)
-
+    (key-chord-define-global "LL" 'log-highlighted)
     )
   )
 #+END_SRC
@@ -683,6 +690,7 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; not sure what mode you want here. You could default to 'fundamental-mode
 (replace-alist-mode auto-mode-alist 'javascript-mode 'js2-mode)
 
+(use-package rjsx-mode :ensure t)
 
 (use-package js2-mode :ensure t :defer t
   :mode (("\\.js\\'" . js2-mode)
@@ -709,6 +717,13 @@ Repeated invocations toggle between the two most recently open buffers."
   (add-hook 'js2-mode-hook (lambda ()
                              (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
 )
+
+
+;; (defun build-dev ()
+;;   (shell-command "build_dev"))
+
+;; (add-hook 'js2-mode-hook
+;;           (lambda () (add-hook 'before-save-hook #'build-dev nil 'local)))
 
 (use-package json-mode)
 #+END_SRC
@@ -913,6 +928,8 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
+  (setq web-mode-enable-current-element-highlight t)
+  (setq web-mode-enable-current-column-highlight t)
   (setq web-mode-engines-alist
     '(("django"    . "\\.html\\'"))
     )
@@ -977,6 +994,7 @@ From Daniel Mai https://github.com/danielmai/.emacs.d/blob/master/config.org
 (use-package json-mode
 :init
 (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode))
+(setq magic-mode-alist (delete '("^[{[]$" . json-mode) magic-mode-alist))
  )
 #+END_SRC
 
